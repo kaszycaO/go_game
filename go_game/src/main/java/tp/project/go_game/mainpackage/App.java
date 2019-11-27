@@ -12,5 +12,6 @@ public class App
     {
         System.out.println( "Hello World!" );
         MainFrame frame = new MainFrame();
+        return;
     }
 }
