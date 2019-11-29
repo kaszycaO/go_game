@@ -3,9 +3,7 @@ package tp.project.go_game.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel{
@@ -22,6 +20,8 @@ public class Board extends JPanel{
 		this.myAdapter = myAdapter;
 		this.boardSize = boardSize;
 		
+		setSize(840,840);
+	    setLayout(null);
 		
 		
 		    initializeBoard();
@@ -32,20 +32,16 @@ public class Board extends JPanel{
 	
 	public void initializeBoard() {
 		
-		setSize(840,840);
-	    setLayout(null);
-		
-	    
-	    switch (boardSize) {
+		switch (boardSize) {
 	    
 	    case 9: 
 	    	this.img = new ImageIcon("images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
