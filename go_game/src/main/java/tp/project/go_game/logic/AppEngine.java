@@ -6,6 +6,5 @@ public class AppEngine {
 	/**
 	 * Tu będzie implementacja gry
 	 * 
-	 * 
 	 */
 }

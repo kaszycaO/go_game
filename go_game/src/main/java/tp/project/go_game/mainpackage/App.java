@@ -3,7 +3,6 @@ package tp.project.go_game.mainpackage;
 /**
  * Hello world!
  *
- *
  */
 public class App 
 {
