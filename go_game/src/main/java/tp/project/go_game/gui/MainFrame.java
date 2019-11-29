@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
 	
 	private void initializeWindow() {
 		
-		setSize(1366, 768);
+		setSize(1920, 1080);
 		setLayout(new BorderLayout());
 
 

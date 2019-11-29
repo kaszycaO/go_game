@@ -1,5 +1,7 @@
 package tp.project.go_game.gui;
 
+import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -14,7 +16,12 @@ public class ButtonPanel extends JPanel {
 	ButtonPanel(GUIAdapter myAdapter){
 		
 		this.myAdapter = myAdapter;
-		//resignButton
+		setLayout(new FlowLayout());
+		
+		resignButton = new JButton("Zrezygnuj");
+		resignButton.addActionListener(myAdapter);
+		
+		
 		
 		
 		
