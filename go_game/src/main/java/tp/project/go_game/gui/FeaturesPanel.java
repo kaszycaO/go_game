@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 public class FeaturesPanel extends JPanel {
 	
 	
-	private JButton resignButton;
-	private JButton passButton;
+	protected JButton resignButton;
+	protected JButton passButton;
 	private GUIAdapter myAdapter;
 	
 	
@@ -22,11 +22,11 @@ public class FeaturesPanel extends JPanel {
 		setLayout(new FlowLayout(FlowLayout.CENTER,10,810));
 		
 		resignButton = new JButton("Zrezygnuj");
-		resignButton.addActionListener(myAdapter);
+		resignButton.addActionListener(this.myAdapter);
 		
 		passButton = new JButton("Spasuj");
 		
-		passButton.addActionListener(myAdapter);
+		passButton.addActionListener(this.myAdapter);
 		
 		
 		add(resignButton);
