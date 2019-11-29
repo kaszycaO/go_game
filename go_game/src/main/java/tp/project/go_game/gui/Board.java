@@ -29,10 +29,10 @@ public class Board extends JPanel{
 	
 	public void initializeBoard() {
 		
-		setSize(560,560);
+		setSize(1120,1120);
 	    setLayout(null);
 		
-	    this.img = new ImageIcon("images/indeks.png").getImage();
+	    this.img = new ImageIcon("images/plansza99.png").getImage();
 		
 	}
 	
@@ -41,7 +41,7 @@ public class Board extends JPanel{
 	public void paintComponent(Graphics g) {
 	    g.drawImage(img, 0, 0, null);
 	   // g.fillOval(20, 20, 300, 300);
-	   // g.drawOval(0, 0, 200, 200);
+	    //g.drawOval(0, 0, 200, 200);
 	    
 	  }
 
