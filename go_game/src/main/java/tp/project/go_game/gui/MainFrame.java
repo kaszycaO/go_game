@@ -7,20 +7,35 @@ import javax.swing.JFrame;
 public class MainFrame extends JFrame {
 
 	
+	private GUIAdapter myAdapter;
+	
 	public MainFrame() {
 		
-		setBounds(500,500,100,100);
-		setLayout(new BorderLayout());
-		Board myBoard = new Board();
+		myAdapter = new GUIAdapter();
 		
+		Board myBoard = new Board(myAdapter);
 		
 		
 		
 		
 		
 		add(myBoard);
+	
+	}
+	
+	
+	private void initializeWindow() {
+		
+		setSize(1366, 768);
+		setLayout(new BorderLayout());
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
+		
 	}
+	
+	
+	
 }
