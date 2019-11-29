@@ -5,7 +5,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class ButtonPanel extends JPanel {
+public class FeaturesPanel extends JPanel {
 	
 	
 	private JButton resignButton;
@@ -13,17 +13,24 @@ public class ButtonPanel extends JPanel {
 	private GUIAdapter myAdapter;
 	
 	
-	ButtonPanel(GUIAdapter myAdapter){
+	FeaturesPanel(GUIAdapter myAdapter){
 		
 		this.myAdapter = myAdapter;
-		setLayout(new FlowLayout());
+		
+		setSize(200,200);
+
+		setLayout(new FlowLayout(FlowLayout.CENTER,10,810));
 		
 		resignButton = new JButton("Zrezygnuj");
 		resignButton.addActionListener(myAdapter);
 		
+		passButton = new JButton("Spasuj");
+		
+		passButton.addActionListener(myAdapter);
 		
 		
-		
+		add(resignButton);
+		add(passButton);
 		
 		
 	}

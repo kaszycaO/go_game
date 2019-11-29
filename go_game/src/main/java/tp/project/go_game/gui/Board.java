@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel{
@@ -13,11 +13,14 @@ public class Board extends JPanel{
 	
 	private Image img;
 	private GUIAdapter myAdapter;
+	private int boardSize;
+
 
 	
-	public Board(GUIAdapter myAdapter) {
+	public Board(GUIAdapter myAdapter, int boardSize) {
 		
 		this.myAdapter = myAdapter;
+		this.boardSize = boardSize;
 		
 		
 		
@@ -29,11 +32,28 @@ public class Board extends JPanel{
 	
 	public void initializeBoard() {
 		
-		setSize(1120,1120);
+		setSize(840,840);
 	    setLayout(null);
 		
-	    this.img = new ImageIcon("images/plansza99.png").getImage();
-		
+	    
+	    switch (boardSize) {
+	    
+	    case 9: 
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	break;
+	    case 13:
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	break;
+	    case 19:
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	break;
+	    default:
+	    	System.exit(0);
+	    	break;
+	    
+	    }
+	    
+	  
 	}
 	
 	
