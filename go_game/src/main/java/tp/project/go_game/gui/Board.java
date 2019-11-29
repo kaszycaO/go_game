@@ -41,7 +41,7 @@ public class Board extends JPanel{
 	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
