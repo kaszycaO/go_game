@@ -13,13 +13,8 @@ public class MainFrame extends JFrame {
 		
 		myAdapter = new GUIAdapter();
 		
-		Board myBoard = new Board(myAdapter);
+		initializeWindow();
 		
-		
-		
-		
-		
-		add(myBoard);
 	
 	}
 	
@@ -28,8 +23,13 @@ public class MainFrame extends JFrame {
 		
 		setSize(1366, 768);
 		setLayout(new BorderLayout());
+
+
+		Board myBoard = new Board(myAdapter);
 		
 		
+		
+		add(myBoard);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
