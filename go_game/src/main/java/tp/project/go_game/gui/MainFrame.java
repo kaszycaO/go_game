@@ -7,7 +7,7 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		
-		setBounds(500,500,100,150);
+		setBounds(500,500,100,100);
 		
 		
 		
