@@ -1,6 +1,7 @@
 package tp.project.go_game.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
@@ -26,7 +27,9 @@ public class MainFrame extends JFrame {
 	
 	private void initializeWindow() {
 		
-		setSize(1040, 880);
+		//setSize(1040, 880);
+		setTitle("Java Go game");
+		setPreferredSize(new Dimension(1040, 880));
 		setLayout(new BorderLayout());
 
 		myAdapter = new GUIAdapter(this);
@@ -45,7 +48,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
-		
+		pack();
 	}
 	
 	
