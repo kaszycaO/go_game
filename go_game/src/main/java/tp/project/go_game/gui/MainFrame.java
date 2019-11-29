@@ -1,6 +1,7 @@
 package tp.project.go_game.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
@@ -9,7 +10,7 @@ public class MainFrame extends JFrame {
 
 	
 	private GUIAdapter myAdapter;
-	private int boardSize = 9;
+	private int boardSize = 13;
 	
 	protected Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;

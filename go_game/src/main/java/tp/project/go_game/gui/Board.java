@@ -24,24 +24,21 @@ public class Board extends JPanel{
 	    setLayout(null);
 		
 		
-		    initializeBoard();
-		    
-		
+		    initializeBoard();	
 	}
 	
 	
 	public void initializeBoard() {
-		
 		switch (boardSize) {
 	    
 	    case 9: 
-	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
+	    	this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
+	    	this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
