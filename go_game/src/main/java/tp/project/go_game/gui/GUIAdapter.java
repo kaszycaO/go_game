@@ -4,6 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 
 
@@ -15,7 +20,18 @@ import java.awt.event.MouseEvent;
  */
 public class GUIAdapter extends MouseAdapter implements ActionListener {
 
-	
+	/**
+     * gniazdko klienta
+     */
+    Socket socket = null;
+    /**
+     * komunikaty do serwera
+     */
+    DataOutputStream  toServer = null;
+    /**
+     * komunikaty od serwera
+     */
+    DataInputStream fromServer = null;
 	MainFrame myFrame;
 	private int squareX;
 	private int squareY;
@@ -30,11 +46,13 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	}
 	
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mousePressed(MouseEvent event) {
+
 	
+
 		
 		
-		coordinatesConverter(e.getX(), e.getY());
+		coordinatesConverter(event.getX(), event.getY());
 		
 		
 		if(squareX > 0 && squareY >0) {
@@ -42,13 +60,37 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		drawConverter(squareX, squareY);	
 		myFrame.myBoard.repaint();
 		System.out.println("Kwadrat: "+squareX+" "+squareY);
-		
+		//TODO naprawic dolna krawedz
 		
 		}
+
+    
+		try {
+	           socket = new Socket("localhost", 4444);
+	           toServer = new DataOutputStream(socket.getOutputStream());
+	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
+	           toServer.writeUTF("coordinates "+event.getX()+" "+event.getY());
+
+	           String line = fromServer.readUTF();
+
+	           myFrame.myFeaturesPanel.message.setText(line);
+
+	           socket.close();
+	           toServer.close();
+	           fromServer.close();
+	        }
+	        catch (IOException e) {
+	            System.out.println(e.getMessage());
+	            System.exit(1);
+	        }
 		
 		
-	}
 	
+	}
+
+	
+
 	public void coordinatesConverter(int X, int Y) {
 		
 		int squareSize = 840/(myFrame.getBoardSize() + 1) ; 
@@ -75,10 +117,11 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		setDrawX(X * squareSize);
 		setDrawY(Y * squareSize);
 		
+  }
 		
 	
 		
-	}
+	
 	
 	
 	
@@ -89,13 +132,13 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		
 		if(e.getSource() == myFrame.myFeaturesPanel.resignButton) {
 			
-			System.out.println("Ha! przegrałeś");
+			System.out.println("Ha! przegrales");
 			
 		}
 		
 		else if (e.getSource() == myFrame.myFeaturesPanel.passButton) {
 			
-			System.out.println("Ha! spasowałeś");
+			System.out.println("Ha! spasowasowales");
 		}
 		
 		
