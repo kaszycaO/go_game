@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
 	private void initializeWindow() {
 		
 		//setSize(1040, 880);
-		setTitle("Java Go game");
+		setTitle("Go game");
 		setPreferredSize(new Dimension(1040, 880));
 		setLayout(new BorderLayout());
 
@@ -51,6 +51,11 @@ public class MainFrame extends JFrame {
 		pack();
 	}
 	
+	public int getBoardSize() {
+		
+		return boardSize;
+		
+	}
 	
 	
 }
