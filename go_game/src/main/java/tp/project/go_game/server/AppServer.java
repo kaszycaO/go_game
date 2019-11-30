@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 public class AppServer {
 	
 	/**
@@ -27,11 +28,11 @@ public class AppServer {
      * dane wysylane do klienta
      */
     DataOutputStream toClient = null;
-    String recievedMessage = "";
-    String sentMessage = "";
+    private String recievedMessage = "";
+    private String sentMessage = "";
     
     public AppServer() {
-        try {
+    	try {
             server = new ServerSocket(4444);
         }
         catch (IOException e) {
@@ -65,12 +66,12 @@ public class AppServer {
         }
     }
     
-    protected String getMessage() {
-    	return this.recievedMessage;
+    public void setMessage(String message) {
+    	this.sentMessage = message;
     }
     
-    protected void setMessage(String message) {
-    	this.sentMessage = message;
+    public String getMessage() {
+    	return this.recievedMessage;
     }
 
 }
