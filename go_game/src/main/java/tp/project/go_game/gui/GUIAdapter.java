@@ -17,6 +17,10 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 
 	
 	MainFrame myFrame;
+	private int squareX;
+	private int squareY;
+	private int drawX;
+	private int drawY;
 	
 	public GUIAdapter(MainFrame myFrame) {
 		
@@ -27,13 +31,56 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
+	
 		
 		
-		System.out.println(e.getY());
-		System.out.println(e.getY());
+		coordinatesConverter(e.getX(), e.getY());
+		
+		
+		if(squareX > 0 && squareY >0) {
+			
+		drawConverter(squareX, squareY);	
+		myFrame.myBoard.repaint();
+		System.out.println("Kwadrat: "+squareX+" "+squareY);
+		
+		
+		}
 		
 		
 	}
+	
+	public void coordinatesConverter(int X, int Y) {
+		
+		int squareSize = 840/(myFrame.getBoardSize() + 1) ; 
+		int newX = X + squareSize/2;
+		int newY = Y + squareSize/2;
+		
+		int squareX = newX/squareSize;
+		int squareY = newY/squareSize;
+		
+		System.out.println(squareX);
+		System.out.println(squareY); 
+			
+			setSquareX(squareX);
+			setSquareY(squareY);
+			
+		
+			
+		
+	}
+	
+	public void drawConverter(int X, int Y) {
+		
+		int squareSize = 840/(myFrame.getBoardSize() + 1); 
+		setDrawX(X * squareSize);
+		setDrawY(Y * squareSize);
+		
+		
+	
+		
+	}
+	
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -56,5 +103,45 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		
 		
 	}
+	
+	public void setSquareX(int X) {
+		
+		this.squareX = X;
+		
+	} 
+	public void setSquareY(int Y) {
+		
+		this.squareY = Y;
+		
+	} 
+	
+	
+	public int getSquareX() {
+		
+		return squareX;
+		
+	} 
+	public int getSquareY() {
+		
+		return squareY;
+		
+	}
+
+	
+	public int getDrawX() {
+		return drawX;
+	}
+
+	public void setDrawX(int drawX) {
+		this.drawX = drawX;
+	}
+
+	public int getDrawY() {
+		return drawY;
+	}
+
+	public void setDrawY(int drawY) {
+		this.drawY = drawY;
+	} 
 
 }

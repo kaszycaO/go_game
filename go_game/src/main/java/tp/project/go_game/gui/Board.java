@@ -23,25 +23,26 @@ public class Board extends JPanel{
 		setSize(840,840);
 	    setLayout(null);
 		
-		
+	
 		    initializeBoard();
+		    addMouseListener(myAdapter);
 		    
 		
+
 	}
 	
 	
 	public void initializeBoard() {
-		
 		switch (boardSize) {
 	    
 	    case 9: 
-	    	this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
+	    	this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
+	    	this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
@@ -56,7 +57,9 @@ public class Board extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 	    g.drawImage(img, 0, 0, null);
-	   // g.fillOval(20, 20, 300, 300);
+	    
+	    if(myAdapter.getDrawX() != 0 && myAdapter.getDrawY() !=0) 
+	    	g.fillOval(myAdapter.getDrawX() -25, myAdapter.getDrawY()-25,50,50);
 	    //g.drawOval(0, 0, 200, 200);
 	    
 	  }
