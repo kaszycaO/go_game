@@ -25,16 +25,10 @@ public class Board extends JPanel{
 		this.myAdapter = myAdapter;
 		this.boardSize = boardSize;
 		
-		
 		setSize(840,840);
 	    setLayout(null);
-		
-	
-		    initializeBoard();
-		    addMouseListener(myAdapter);
-		    
-		
-
+		initializeBoard();
+		addMouseListener(myAdapter);
 	}
 	
 	
