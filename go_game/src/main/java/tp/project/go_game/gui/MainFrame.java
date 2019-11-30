@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
 
 	
 	private GUIAdapter myAdapter;
-	private int boardSize;
+	private int boardSize = -1;
 	public AppServer server;
 	protected Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;
@@ -28,13 +28,28 @@ public class MainFrame extends JFrame {
 	
 	private void initializeWindow() {
 		String size = (String)JOptionPane.showInputDialog(this, "Wybierz rozmiar planszy", "Nowa gra", JOptionPane.QUESTION_MESSAGE,null, sizes,sizes[0]);
-		if (size.equals(sizes[0])) {
+		
+		
+		if (size == null) {
+			
+			System.exit(1);
+		}
+		
+		else if (size.equals(sizes[0])) {
 			boardSize = 9;
 		}
 		else if(size.equals(sizes[1])) {
 			boardSize = 13;
 		}
-		else boardSize = 19;
+		else if (size.equals(sizes[2])) {
+			
+			boardSize = 19;
+		}
+		
+		
+			
+	
+		
 		//setSize(1040, 880);
 		setTitle("Go game");
 		setPreferredSize(new Dimension(1040, 880));

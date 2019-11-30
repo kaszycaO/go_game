@@ -14,7 +14,12 @@ public class App
     public static void main( String[] args )
     {
     	MainFrame frame = new MainFrame();
-    	frame.server.listenSocket();
+    	if (frame.server != null) {
+    		
+    		frame.server.listenSocket();
+    		
+    	} 
+    
     	
     }
 }
