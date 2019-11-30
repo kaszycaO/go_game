@@ -15,7 +15,7 @@ import tp.project.go_game.logic.StoneFactory;
  */
 public class StoneFactoryTest 
 {
-   
+
     @Test
     public void createWhiteStoneTest()
     {

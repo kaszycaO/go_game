@@ -49,11 +49,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	public void mousePressed(MouseEvent event) {
 
 	
-
-		
-		
 		coordinatesConverter(event.getX(), event.getY());
-		
 		
 		if(squareX > 0 && squareY >0 ) {
 			
@@ -84,9 +80,6 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	            System.out.println(e.getMessage());
 	            System.exit(1);
 	        }
-		
-		
-	
 	}
 
 	
@@ -127,24 +120,29 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
-		
-		if(e.getSource() == myFrame.myFeaturesPanel.resignButton) {
-			
-			System.out.println("Ha! przegrales");
-			
-		}
-		
-		else if (e.getSource() == myFrame.myFeaturesPanel.passButton) {
-			
-			System.out.println("Ha! spasowasowales");
-		}
-		
-		
-		
-		
-		
+		try {
+	           socket = new Socket("localhost", 4444);
+	           toServer = new DataOutputStream(socket.getOutputStream());
+	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+	           if(e.getSource() == myFrame.myFeaturesPanel.resignButton) {
+	        	   toServer.writeUTF("button resign");
+	   			}
+	   		else if (e.getSource() == myFrame.myFeaturesPanel.passButton) {
+	   			toServer.writeUTF("button pass");
+	   		}
+	           String line = fromServer.readUTF();
+
+	           myFrame.myFeaturesPanel.message.setText(line);
+
+	           socket.close();
+	           toServer.close();
+	           fromServer.close();
+	        }
+	        catch (IOException ex) {
+	            System.out.println(ex.getMessage());
+	            System.exit(1);
+	        }
 	}
 	
 	public void setSquareX(int X) {
