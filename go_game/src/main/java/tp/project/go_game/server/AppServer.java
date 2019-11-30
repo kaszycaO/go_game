@@ -13,21 +13,24 @@ public class AppServer {
 	/**
      * gniazdko serwera
      */
-    ServerSocket server = null;
+    public ServerSocket server = null;
 
     /**
      * gniazdko klienta
      */
-    Socket client = null;
+    private Socket client = null;
 
     /**
      * komunikaty od klienta
      */
-    DataInputStream fromClient = null;
+    private DataInputStream fromClient = null;
     /**
      * dane wysylane do klienta
      */
-    DataOutputStream toClient = null;
+    private DataOutputStream toClient = null;
+    private String recievedMessage = "";
+    private String sentMessage = "";
+    
     
     public AppServer() {
     	try {
