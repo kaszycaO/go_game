@@ -21,7 +21,7 @@ public class FeaturesPanel extends JPanel {
 		
 		setSize(200,200);
 
-		setLayout(new FlowLayout(FlowLayout.CENTER,10,810));
+		setLayout(new FlowLayout(FlowLayout.CENTER,10,30));
 		
 		resignButton = new JButton("Zrezygnuj");
 		resignButton.addActionListener(this.myAdapter);
@@ -33,7 +33,7 @@ public class FeaturesPanel extends JPanel {
 		
 		add(resignButton);
 		add(passButton);
-		
+		add(message);
 		
 	}
 

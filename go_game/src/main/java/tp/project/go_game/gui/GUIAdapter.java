@@ -59,12 +59,9 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		drawConverter(squareX, squareY);	
 		myFrame.myBoard.repaint();
 		System.out.println("Kwadrat: "+squareX+" "+squareY);
-		
+		//TODO naprawic dolna krawedz
 		
 		}
-    
-    System.out.println(event.getY());
-		System.out.println(event.getY());
 		try {
 	           socket = new Socket("localhost", 4444);
 	           toServer = new DataOutputStream(socket.getOutputStream());
@@ -86,8 +83,6 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	        }
 	}
 		
-		
-	}
 	
 	public void coordinatesConverter(int X, int Y) {
 		
