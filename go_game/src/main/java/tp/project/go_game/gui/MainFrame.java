@@ -29,10 +29,10 @@ public class MainFrame extends JFrame {
 		setTitle("Go game");
 		setPreferredSize(new Dimension(1040, 880));
 		setLayout(new BorderLayout());
-		this.server = new AppServer();
 		myAdapter = new GUIAdapter(this);
 		myBoard = new Board(myAdapter, boardSize);
 		myFeaturesPanel = new FeaturesPanel(myAdapter);
+		this.server = new AppServer(myBoard);
 		
 		//myBoard.addActionListener(myAdapter);
 	

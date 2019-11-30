@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import tp.project.go_game.gui.Board;
+
 
 public class AppServer {
 	
+	Board board;
 	/**
      * gniazdko serwera
      */
@@ -32,7 +35,7 @@ public class AppServer {
     private String sentMessage = "";
     
     
-    public AppServer() {
+    public AppServer(Board board) {
     	try {
             server = new ServerSocket(4444);
         }
@@ -40,6 +43,7 @@ public class AppServer {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+    	this.board = board;
     }
     
     /**
