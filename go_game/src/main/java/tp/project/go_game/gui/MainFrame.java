@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
 import tp.project.go_game.server.AppServer;
@@ -12,10 +13,11 @@ public class MainFrame extends JFrame {
 
 	
 	private GUIAdapter myAdapter;
-	private int boardSize = 13;
+	private int boardSize;
 	public AppServer server;
 	protected Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;
+	private String[] sizes = {"9x9","13x13","19x19"};
 	
 
 	public MainFrame() {
@@ -24,7 +26,14 @@ public class MainFrame extends JFrame {
 	
 	
 	private void initializeWindow() {
-		
+		String size = (String)JOptionPane.showInputDialog(this, "Wybierz rozmiar planszy", "Nowa gra", JOptionPane.QUESTION_MESSAGE,null, sizes,sizes[0]);
+		if (size.equals(sizes[0])) {
+			boardSize = 9;
+		}
+		else if(size.equals(sizes[1])) {
+			boardSize = 13;
+		}
+		else boardSize = 19;
 		//setSize(1040, 880);
 		setTitle("Go game");
 		setPreferredSize(new Dimension(1040, 880));
