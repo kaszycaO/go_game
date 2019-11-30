@@ -57,7 +57,9 @@ public class Board extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 	    g.drawImage(img, 0, 0, null);
-	    g.fillOval(myAdapter.getSquareX(), myAdapter.getSquareY(),20,20);
+	    
+	    if(myAdapter.getDrawX() != 0 && myAdapter.getDrawY() !=0) 
+	    	g.fillOval(myAdapter.getDrawX() -25, myAdapter.getDrawY()-25,50,50);
 	    //g.drawOval(0, 0, 200, 200);
 	    
 	  }
