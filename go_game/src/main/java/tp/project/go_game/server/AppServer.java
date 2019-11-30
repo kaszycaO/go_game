@@ -28,8 +28,6 @@ public class AppServer {
      * dane wysylane do klienta
      */
     DataOutputStream toClient = null;
-    private String recievedMessage = "";
-    private String sentMessage = "";
     
     public AppServer() {
     	try {
@@ -66,6 +64,7 @@ public class AppServer {
         }
     }
     
+
     public void setMessage(String message) {
     	this.sentMessage = message;
     }

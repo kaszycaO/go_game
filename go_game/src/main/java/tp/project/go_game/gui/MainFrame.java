@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
 	protected Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;
 	
+
 	public MainFrame() {
 		initializeWindow();
 	}

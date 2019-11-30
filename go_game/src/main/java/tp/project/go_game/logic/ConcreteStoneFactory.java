@@ -1,5 +1,13 @@
 package tp.project.go_game.logic;
 
+
+/**
+ * 
+ * @author Oliwier Kaszyca & Dominika Szydło
+ * 
+ * Fabryka kamieni
+ *
+ */
 public class ConcreteStoneFactory implements StoneFactory {
 
 	@Override
