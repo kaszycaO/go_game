@@ -55,7 +55,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		coordinatesConverter(event.getX(), event.getY());
 		
 		
-		if(squareX > 0 && squareY >0) {
+		if(squareX > 0 && squareY >0 ) {
 			
 		drawConverter(squareX, squareY);	
 		myFrame.myBoard.repaint();
