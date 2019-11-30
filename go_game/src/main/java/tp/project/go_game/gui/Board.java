@@ -23,8 +23,12 @@ public class Board extends JPanel{
 		setSize(840,840);
 	    setLayout(null);
 		
+	
+		    initializeBoard();
+		    addMouseListener(myAdapter);
+		    
 		
-		    initializeBoard();	
+
 	}
 	
 	
@@ -53,7 +57,7 @@ public class Board extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 	    g.drawImage(img, 0, 0, null);
-	   // g.fillOval(20, 20, 300, 300);
+	    g.fillOval(myAdapter.getSquareX(), myAdapter.getSquareY(),20,20);
 	    //g.drawOval(0, 0, 200, 200);
 	    
 	  }
