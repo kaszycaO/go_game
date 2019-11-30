@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
 
 	
 	private GUIAdapter myAdapter;
-	private int boardSize = 9;
+	private int boardSize = 13;
 	
 	protected Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;
