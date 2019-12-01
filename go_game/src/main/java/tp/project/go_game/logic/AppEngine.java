@@ -131,10 +131,16 @@ public class AppEngine {
 
 
 	private boolean checkIfSuicidal() {
+		addStone();
+		boolean outcome;
 		if (checkIfStrangled(squareX,squareY)) {
-			return true;
+			outcome = true;
 		}
-		else return false;
+		else {
+			outcome = false;
+		}
+		currentBoard[squareX][squareY] = null;
+		return outcome;
 	}
 
 
