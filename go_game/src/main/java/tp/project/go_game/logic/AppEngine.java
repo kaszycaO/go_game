@@ -110,7 +110,23 @@ public class AppEngine {
 
 
 	private void addStone() {
-		// TODO Auto-generated method stub
+		
+		StoneFactory factory = new ConcreteStoneFactory();
+		
+		if(blackTurn) {
+			
+	    	Stone blackStone = factory.getStone("Black");
+			currentBoard[squareX][squareY] = blackStone; 
+				
+		} else {
+			
+			Stone whiteStone = factory.getStone("White");
+			currentBoard[squareX][squareY] = whiteStone;
+			
+		}
+		
+		
+		
 		
 	}
 
