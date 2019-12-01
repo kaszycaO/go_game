@@ -99,6 +99,9 @@ public class AppEngine {
 
 
 	private boolean checkIfKo() {
+		if (turnCounter == 0) {
+			return false;
+		}
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
