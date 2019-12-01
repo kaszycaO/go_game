@@ -91,6 +91,7 @@ public class Board extends JPanel{
 	/**
 	 * Metoda odpowiedzialna za rysowanie pionków i planszy
 	 */
+	
 	public void paintComponent(Graphics g) {
 	   
 		g.drawImage(img, 0, 0, null);
@@ -104,8 +105,9 @@ public class Board extends JPanel{
 	    			
 	    			g2d.setColor(stones[i][j].getColor());
 	    			drawConverter(i,j);
-	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
 	    			
+	    				g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
+	    		
 	    			
 	    		}
 	    		
@@ -123,8 +125,10 @@ public class Board extends JPanel{
 	public void drawConverter(int X, int Y) {
 		
 		squareSize = 840/(boardSize + 1); 
-		setDrawX(X * squareSize);
-		setDrawY(Y * squareSize);
+		
+		// +1 -> numeracja tablicy od (0,0) 
+		setDrawX((1 + X) * squareSize);
+		setDrawY((1 + Y) * squareSize);
 		
   }
 	

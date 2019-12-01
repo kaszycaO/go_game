@@ -68,32 +68,46 @@ public class AppEngine {
 		passCounter = 0;
 		squareX = Integer.parseInt(convertedMessage[1]);
 		squareY = Integer.parseInt(convertedMessage[2]);
+		
 		coordinatesConverter(squareX, squareY);
-		if (checkIfTaken()) {
-			message = "Pole zajete";
-		}
-		else {
-			if (checkIfKo()) {
-				message = "Naruszona zasada Ko";
+		
+		if((squareX >=0 && squareY >=0) && (squareX < boardSize && squareY < boardSize)) {
+			
+			
+		
+			if (checkIfTaken()) {
+				message = "Pole zajete";
 			}
 			else {
-				if (checkIfStrangles()) {
-					addStone();
-					removeStrangledStones();
-					changeTurn();
-					message = "";
-				} else {
-					if (checkIfSuicidal()) {
-						message = "Ruch samobojczy";
-					} else {
+			
+				if (checkIfKo()) {
+					message = "Naruszona zasada Ko";
+				}
+				else {
+					
+					if (checkIfStrangles()) {
 						addStone();
+						removeStrangledStones();
 						changeTurn();
 						message = "";
+					
+					} 
+					else {
+					
+						if (checkIfSuicidal()) {
+							message = "Ruch samobojczy";
+						} 
+						else {
+							addStone();
+							changeTurn();
+							message = "";
+						}
 					}
 				}
 			}
 		}
-		
+		else
+			return;
 		
 	}
 
@@ -204,12 +218,17 @@ public class AppEngine {
 
 	private void coordinatesConverter(int X, int Y) {
 		
+		System.out.println(X + "  " + Y);
+
 		int squareSize = 840/(boardSize + 1) ; 
 		int newX = X + squareSize/2;
 		int newY = Y + squareSize/2;
 		
-		int squareX = newX/squareSize;
-		int squareY = newY/squareSize;
+		// -1 -> przesuniecie kwadratu bedacego poza plansza
+		int squareX = newX/squareSize - 1;
+		int squareY = newY/squareSize - 1;
+		
+		
 					
 		this.squareX = squareX;
 		this.squareY = squareY;
