@@ -1,5 +1,7 @@
 package tp.project.go_game.logic;
 
+import javax.swing.JOptionPane;
+
 public class AppEngine {
 
 	
@@ -9,7 +11,11 @@ public class AppEngine {
 	private String message;
 	private String[] convertedMessage;
 	private Stone[][] currentBoard;
+	private Stone[][] previousBoard;
 	private Stone[][] koBoard;
+	private boolean blackTurn;
+	private int passCounter;
+	private int turnCounter;
 	
 
 	public AppEngine(int boardSize) {
@@ -18,12 +24,22 @@ public class AppEngine {
 		message = "";
 		this.currentBoard = new Stone[boardSize][boardSize];
 		this.koBoard = currentBoard;
+		this.previousBoard = currentBoard;
+		blackTurn = true;
+		passCounter = 0;
+		turnCounter = 0;
 		
 	}
 	
 	
 	public void doMove(String recievedMessage) {
 		
+		if (turnCounter>1) {
+			koBoard = previousBoard;
+		}
+		if(turnCounter>0) {
+			previousBoard = currentBoard;
+		}
 		convertedMessage = interpretMessage(recievedMessage);
 		if (convertedMessage[0].equals("button")) {
 			handleButtons();
@@ -31,6 +47,13 @@ public class AppEngine {
 		else {
 			handleMove();
 		}
+		if (blackTurn) {
+			blackTurn = false;
+		}
+		else {
+			blackTurn = true;
+		}
+		turnCounter++;
 	}
 	
 	
@@ -45,7 +68,37 @@ public class AppEngine {
 
 
 	private void handleButtons() {
-		// TODO Auto-generated method stub
+		if (convertedMessage[1].equals("pass")) {
+			passCounter += 1;
+			message = "Poddales swoj ruch";
+			if (passCounter == 2) {
+				message = "Koniec gry";
+				getScore();
+				clearBoard();
+			}
+		} else {
+			message = "Koniec gry";
+			getScore();
+			clearBoard();
+		}
+		
+	}
+	
+	private void clearBoard() {
+		for (int i=0;i<boardSize;i++) {
+			for (int j=0;j<boardSize;j++) {
+				currentBoard[i][j] = null;
+			}
+		}
+		koBoard = currentBoard;
+		blackTurn = true;
+		passCounter = 0;
+		turnCounter = 0;
+	}
+
+
+	private void getScore() {
+		JOptionPane.showMessageDialog(null,"Wygral <idk kto> <idk iloma> punktami","Podsumowanie",JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 
