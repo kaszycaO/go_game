@@ -152,6 +152,9 @@ public class Board extends JPanel{
 		this.drawY = drawY;
 	} 
 
+	public void setBoard(Stone[][] board) {
+		this.stones = board;
+	}
 	
 	
 	

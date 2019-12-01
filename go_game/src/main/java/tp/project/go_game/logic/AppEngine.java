@@ -32,7 +32,7 @@ public class AppEngine {
 	}
 	
 	
-	public void doMove(String recievedMessage) {
+	public Stone[][] doMove(String recievedMessage) {
 		
 		if (turnCounter>1) {
 			koBoard = previousBoard;
@@ -48,6 +48,7 @@ public class AppEngine {
 		else {
 			handleMove();
 		}
+		return currentBoard;
 	}
 	
 	
@@ -98,8 +99,13 @@ public class AppEngine {
 
 
 	private boolean checkIfKo() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean outcome = true;
+		for (int i=0;i<boardSize;i++) {
+			for (int j=0;j<boardSize;j++) {
+				if (currentBoard[i][j] != koBoard[i][j]) outcome = false;
+			}
+		}
+		return outcome;
 	}
 
 
@@ -144,8 +150,10 @@ public class AppEngine {
 
 
 	private boolean checkIfTaken() {
-		// TODO Auto-generated method stub
-		return false;
+		if (currentBoard[squareX][squareY]==null) {
+			return false;
+		}
+		else return true;
 	}
 
 
