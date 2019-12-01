@@ -76,17 +76,18 @@ public class AppEngine {
 			
 			if (passCounter == 2) {
 				message = "Koniec gry";
+
 			
 				clearBoard();
-			
+
 			}
-		} else if(convertedMessage[1].equals("resign")) {
+
+
+		} else if (convertedMessage[1].equals("resign")) {
 			message = "Koniec gry";
-			
 			clearBoard();
 		}
 	
-		
 	}
 	
 	private void clearBoard() {
@@ -96,11 +97,17 @@ public class AppEngine {
 			}
 		}
 		koBoard = currentBoard;
+		previousBoard = currentBoard;
 		blackTurn = true;
 		passCounter = 0;
 		turnCounter = 0;
 	}
 
+
+
+	private void getScore() {
+		//TODO ogarnac
+	}
 
 
 
