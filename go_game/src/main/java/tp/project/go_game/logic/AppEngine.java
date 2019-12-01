@@ -7,6 +7,9 @@ public class AppEngine {
 	private int squareY;
 	private int boardSize;
 	private String message;
+	private String[] convertedMessage;
+	private Stone[][] currentBoard;
+	private Stone[][] koBoard;
 	
 
 	public AppEngine(int boardSize) {
@@ -19,7 +22,7 @@ public class AppEngine {
 	
 	public void doMove(String recievedMessage) {
 		
-		
+		convertedMessage = interpretMessage(recievedMessage);
 		
 		
 		
