@@ -1,8 +1,10 @@
 package tp.project.go_game.logic;
 
-import java.util.Arrays;
 
-import javax.swing.JOptionPane;
+import java.util.Arrays;
+import java.awt.Color;
+import java.util.ArrayList;
+
 
 public class AppEngine {
 
@@ -163,8 +165,77 @@ public class AppEngine {
 
 
 	private boolean checkIfSuicidal() {
-		// TODO Auto-generated method stub
-		return false;
+		addStone();
+		boolean outcome;
+		if (checkIfStrangled(squareX,squareY)) {
+			outcome = true;
+		}
+		else {
+			outcome = false;
+		}
+		currentBoard[squareX][squareY] = null;
+		return outcome;
+	}
+
+
+	private boolean checkIfStrangled(int X, int Y) {
+		boolean outcome = true;
+		if (!checkIfGotBreaths(X,Y)) {
+			ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
+			for (Integer[] co : coords) {
+				if (blackTurn) {
+					if (currentBoard[co[0]][co[1]].getColor()==Color.black && !currentBoard[co[0]][co[1]].ifChecked) {
+						currentBoard[X][Y].ifChecked = true;
+						return checkIfStrangled(co[0],co[1]);
+					}
+				}
+				else {
+					if (currentBoard[co[0]][co[1]].getColor()==Color.white && !currentBoard[co[0]][co[1]].ifChecked) {
+						currentBoard[X][Y].ifChecked = true;
+						return checkIfStrangled(co[0],co[1]);
+					}
+				}
+			}
+			outcome = false;
+		}
+		return outcome;
+	}
+	
+	private boolean checkIfGotBreaths(int X, int Y) {
+		boolean outcome = false;
+		ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
+		for (Integer[] co : coords) {
+			if (currentBoard[co[0]][co[1]] == null) {
+				outcome = true;
+			}
+		}
+		return outcome;
+	}
+	
+	private ArrayList<Integer[]> getCoordsToCheck(int X, int Y){
+		Integer[] single = new Integer[2];
+		ArrayList<Integer[]> coords = new ArrayList<Integer[]>();
+		if (X-1> 0) {
+			single[0] = X-1;
+			single[1] = Y;
+			coords.add(single);
+		}
+		if (X+1 < boardSize) {
+			single[0] = X+1;
+			single[1] = Y;
+			coords.add(single);
+		}
+		if (Y-1> 0) {
+			single[0] = X;
+			single[1] = Y-1;
+			coords.add(single);
+		}
+		if (Y+1 < boardSize) {
+			single[0] = X;
+			single[1] = Y+1;
+			coords.add(single);
+		}
+		return coords;
 	}
 
 
@@ -197,7 +268,18 @@ public class AppEngine {
 
 
 	private boolean checkIfStrangles() {
-		// TODO Auto-generated method stub
+		addStone();
+		Color color = currentBoard[squareX][squareY].getColor();
+		ArrayList<Integer[]> coords = getCoordsToCheck(squareX,squareY);
+		for (Integer[] co : coords) {
+			if (currentBoard[co[0]][co[1]].getColor() != color) {
+				if (checkIfStrangled(co[0],co[1])) {
+					currentBoard[squareX][squareY] = null;
+					return true;
+				}
+			}
+		}
+		currentBoard[squareX][squareY] = null;
 		return false;
 	}
 
