@@ -33,10 +33,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
      */
     DataInputStream fromServer = null;
 	MainFrame myFrame;
-	private int squareX;
-	private int squareY;
-	private int drawX;
-	private int drawY;
+	
 	
 	public GUIAdapter(MainFrame myFrame) {
 		
@@ -57,6 +54,8 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	           String line = fromServer.readUTF();
 
 	           myFrame.myFeaturesPanel.message.setText(line);
+	           
+	           myFrame.myBoard.repaint();
 
 	           socket.close();
 	           toServer.close();
@@ -66,19 +65,12 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	            System.out.println(e.getMessage());
 	            System.exit(1);
 	        }
-		coordinatesConverter(event.getX(), event.getY());
-		
-		if(squareX > 0 && squareY >0 ) {
-			
-			drawConverter(squareX, squareY);	
-			myFrame.myBoard.repaint();
-			System.out.println("Kwadrat: "+squareX+" "+squareY);
-		//TODO naprawic dolna krawedz
+
 		
 		}
 
     
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -96,6 +88,8 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	           String line = fromServer.readUTF();
 
 	           myFrame.myFeaturesPanel.message.setText(line);
+	           
+	           myFrame.myBoard.repaint();
 
 	           socket.close();
 	           toServer.close();
@@ -107,68 +101,9 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	        }
 	}
 
-	public void coordinatesConverter(int X, int Y) {
-		
-		int squareSize = 840/(myFrame.getBoardSize() + 1) ; 
-		int newX = X + squareSize/2;
-		int newY = Y + squareSize/2;
-		
-		int squareX = newX/squareSize;
-		int squareY = newY/squareSize;
-		
-		System.out.println(squareX);
-		System.out.println(squareY); 
-			
-		setSquareX(squareX);
-		setSquareY(squareY);
-	}
-	
-	public void drawConverter(int X, int Y) {
-		
-		int squareSize = 840/(myFrame.getBoardSize() + 1); 
-		setDrawX(X * squareSize);
-		setDrawY(Y * squareSize);
-		
-  }
-		
-	public void setSquareX(int X) {
-		
-		this.squareX = X;
-		
-	} 
-	public void setSquareY(int Y) {
-		
-		this.squareY = Y;
-		
-	} 
-	
-	
-	public int getSquareX() {
-		
-		return squareX;
-		
-	} 
-	public int getSquareY() {
-		
-		return squareY;
-		
-	}
 
 	
-	public int getDrawX() {
-		return drawX;
-	}
 
-	public void setDrawX(int drawX) {
-		this.drawX = drawX;
-	}
-
-	public int getDrawY() {
-		return drawY;
-	}
-
-	public void setDrawY(int drawY) {
-		this.drawY = drawY;
-	} 
+	
 
 }
