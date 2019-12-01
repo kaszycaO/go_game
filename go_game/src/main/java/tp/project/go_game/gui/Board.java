@@ -33,8 +33,10 @@ public class Board extends JPanel{
 	 * Rozmiar planszy podawany przez klienta
 	 */
 	private int boardSize;
-	//chwilowa zmiana kolorów
-	private int colorCounter = 1;
+	private int squareSize;
+	
+	private int drawX;
+	private int drawY;
 	
 	private Stone stones[][];
 
@@ -94,25 +96,37 @@ public class Board extends JPanel{
 		g.drawImage(img, 0, 0, null);
 	   
 	    Graphics2D g2d = (Graphics2D) g;
-	    
-	    if(myAdapter.getDrawX() != 0 && myAdapter.getDrawY() !=0) {
-	    	//changing color
-	    	if(colorCounter%2 == 1) {
-	    		g2d.setPaint(Color.black);
+
+	    for(int i = 0; i < boardSize; i++) {
+	    	for(int j = 0; j < boardSize; j++){
+	    		
+	    		if(stones[i][j] != null) {
+	    			
+	    			g2d.setColor(stones[i][j].getColor());
+	    			drawConverter(i,j);
+	    			g2d.fillOval(drawX - squareSize/8, drawY - squareSize/8, squareSize/4, squareSize/4);
+	    			
+	    			
+	    		}
+	    		
 	    		
 	    	}
-	    	else {
-	    		g2d.setPaint(Color.white);
-	    	}
+	    	 
 	    	
-	    	colorCounter++;
-	    		
-	    	g2d.fillOval(myAdapter.getDrawX() -25, myAdapter.getDrawY()-25,50,50);
 	    	
 	    }
 	    
 	    
 	  }
+	
+	
+	public void drawConverter(int X, int Y) {
+		
+		squareSize = 840/(boardSize + 1); 
+		setDrawX(X * squareSize);
+		setDrawY(Y * squareSize);
+		
+  }
 	
 	
 	public int getBoardSize() {
@@ -122,7 +136,22 @@ public class Board extends JPanel{
 	}
 	
 	
-	
+	public int getDrawX() {
+		return drawX;
+	}
+
+	public void setDrawX(int drawX) {
+		this.drawX = drawX;
+	}
+
+	public int getDrawY() {
+		return drawY;
+	}
+
+	public void setDrawY(int drawY) {
+		this.drawY = drawY;
+	} 
+
 	
 	
 	
