@@ -8,9 +8,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import tp.project.go_game.gui.Board;
+import tp.project.go_game.logic.AppEngine;
 
 
 public class AppServer {
+	
+	
+	
+	private AppEngine engine;
 	
 	Board board;
 	/**
@@ -63,7 +68,11 @@ public class AppServer {
                 toClient = new DataOutputStream(client.getOutputStream());
                 recievedMessage = fromClient.readUTF();
                 setMessage(recievedMessage);
+                engine = new AppEngine(board.getBoardSize());
+                
+                
                 toClient.writeUTF(sentMessage);
+                
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
