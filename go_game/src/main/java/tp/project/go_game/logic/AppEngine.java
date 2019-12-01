@@ -48,27 +48,88 @@ public class AppEngine {
 		else {
 			handleMove();
 		}
-		/**if (blackTurn) {
+	}
+	
+	
+	
+	private void changeTurn() {
+		if (blackTurn) {
 			blackTurn = false;
 		}
 		else {
 			blackTurn = true;
 		}
-		turnCounter++; trzeba dac w inne miejsce*/
+		turnCounter++;
 	}
-	
-	
-	
-	
 	
 	
 	private void handleMove() {
 		passCounter = 0;
-		int xClick, yClick;
-		xClick = Integer.parseInt(convertedMessage[1]);
-		yClick = Integer.parseInt(convertedMessage[2]);
+		squareX = Integer.parseInt(convertedMessage[1]);
+		squareY = Integer.parseInt(convertedMessage[2]);
+		coordinatesConverter(squareX, squareY);
+		if (checkIfTaken()) {
+			message = "Pole zajete";
+		}
+		else {
+			if (checkIfKo()) {
+				message = "Naruszona zasada Ko";
+			}
+			else {
+				if (checkIfStrangles()) {
+					addStone();
+					removeStrangledStones();
+					changeTurn();
+					message = "";
+				} else {
+					if (checkIfSuicidal()) {
+						message = "Ruch samobojczy";
+					} else {
+						addStone();
+						changeTurn();
+						message = "";
+					}
+				}
+			}
+		}
 		
 		
+	}
+
+
+	private boolean checkIfKo() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	private boolean checkIfSuicidal() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	private void addStone() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void removeStrangledStones() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private boolean checkIfStrangles() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	private boolean checkIfTaken() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 
@@ -119,12 +180,9 @@ public class AppEngine {
 		
 		int squareX = newX/squareSize;
 		int squareY = newY/squareSize;
-		
-		System.out.println(squareX);
-		System.out.println(squareY); 
-			
-		this.squareX = squareX;
-		this.squareY = squareY;
+					
+		this.squareX = squareX-1;
+		this.squareY = squareY-1;
 	}
 	
 	private String[] interpretMessage(String message){
