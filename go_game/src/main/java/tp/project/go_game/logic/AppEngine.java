@@ -48,6 +48,19 @@ public class AppEngine {
 		this.squareX = squareX;
 		this.squareY = squareY;
 	}
+	
+	private String[] interpretMessage(String message){
+		String[] convertedMessage = {"","",""};
+		int j = 0;
+		for (int i=0;i<3;i++) {
+			while(message.charAt(j) != ' ') {
+				convertedMessage[i] += message.charAt(j);
+				j++;
+			}
+			j++;
+		}
+		return convertedMessage;
+	}
 
 	
 	
