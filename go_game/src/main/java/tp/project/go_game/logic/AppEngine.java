@@ -8,7 +8,7 @@ public class AppEngine {
 	private int boardSize;
 	
 
-	AppEngine(int boardSize) {
+	public AppEngine(int boardSize) {
 		
 		this.boardSize = boardSize;
 		
