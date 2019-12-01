@@ -102,11 +102,12 @@ public class AppEngine {
 		if (turnCounter < 2) {
 			return false;
 		}
-		addStone();
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
-				if (currentBoard[i][j] != koBoard[i][j]) outcome = false;
+				// TODO jakiś błąd!
+
+				if (currentBoard[i][j] != koBoard[i][j]) { outcome = false; }
 			}
 		}
 		currentBoard[squareX][squareY] = null;
@@ -210,8 +211,8 @@ public class AppEngine {
 		int squareX = newX/squareSize;
 		int squareY = newY/squareSize;
 					
-		this.squareX = squareX-1;
-		this.squareY = squareY-1;
+		this.squareX = squareX;
+		this.squareY = squareY;
 	}
 	
 	private String[] interpretMessage(String message){
