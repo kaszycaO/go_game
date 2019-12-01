@@ -16,6 +16,8 @@ public class AppEngine {
 		
 		this.boardSize = boardSize;
 		message = "";
+		this.currentBoard = new Stone[boardSize][boardSize];
+		this.koBoard = currentBoard;
 		
 	}
 	
@@ -23,12 +25,12 @@ public class AppEngine {
 	public void doMove(String recievedMessage) {
 		
 		convertedMessage = interpretMessage(recievedMessage);
-		
-		
-		
-		
-		
-		
+		if (convertedMessage[0].equals("button")) {
+			handleButtons();
+		}
+		else {
+			handleMove();
+		}
 	}
 	
 	
@@ -36,6 +38,18 @@ public class AppEngine {
 	
 	
 	
+	private void handleMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void handleButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	private void coordinatesConverter(int X, int Y) {
 		
 		int squareSize = 840/(boardSize + 1) ; 
