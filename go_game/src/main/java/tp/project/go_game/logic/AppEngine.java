@@ -6,18 +6,20 @@ public class AppEngine {
 	private int squareX;
 	private int squareY;
 	private int boardSize;
+	private String message;
 	
 
 	public AppEngine(int boardSize) {
 		
 		this.boardSize = boardSize;
+		message = "";
 		
 	}
 	
 	
-	public void doMove(int X, int Y) {
+	public void doMove(String recievedMessage) {
 		
-		coordinatesConverter(X,Y);
+		
 		
 		
 		
@@ -55,6 +57,10 @@ public class AppEngine {
 
 	public int getSquareX() {
 		return squareX;
+	}
+	
+	public String getMessage() {
+		return this.message;
 	}
 
 	

@@ -8,6 +8,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import tp.project.go_game.logic.Stone;
+
 /**
  * 
  * @author Oliwier Kaszyca & Dominika Szydło
@@ -34,6 +36,7 @@ public class Board extends JPanel{
 	//chwilowa zmiana kolorów
 	private int colorCounter = 1;
 	
+	private Stone stones[][];
 
 
 	/**
@@ -45,6 +48,7 @@ public class Board extends JPanel{
 		
 		this.myAdapter = myAdapter;
 		this.boardSize = boardSize;
+		stones = new Stone[boardSize][boardSize];
 		
 		setSize(840,840);
 	    setLayout(null);

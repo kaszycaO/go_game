@@ -37,7 +37,6 @@ public class AppServer {
      */
     private DataOutputStream toClient = null;
     private String recievedMessage = "";
-    private String sentMessage = "";
     
     
     public AppServer(Board board) {
@@ -49,6 +48,7 @@ public class AppServer {
             System.exit(1);
         }
     	this.board = board;
+    	engine = new AppEngine(board.getBoardSize());
     }
     
     /**
@@ -67,26 +67,14 @@ public class AppServer {
                 fromClient = new DataInputStream(new BufferedInputStream(client.getInputStream()));
                 toClient = new DataOutputStream(client.getOutputStream());
                 recievedMessage = fromClient.readUTF();
-                setMessage(recievedMessage);
-                engine = new AppEngine(board.getBoardSize());
-                
-                
-                toClient.writeUTF(sentMessage);
+                engine.doMove(recievedMessage);
+                toClient.writeUTF(engine.getMessage());
                 
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
             }
         }
-    }
-    
-
-    public void setMessage(String message) {
-    	this.sentMessage = message;
-    }
-    
-    public String getMessage() {
-    	return this.recievedMessage;
     }
 
 }
