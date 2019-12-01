@@ -99,13 +99,15 @@ public class AppEngine {
 
 
 	private boolean checkIfKo() {
-		if (turnCounter == 0) {
+		if (turnCounter == 0 || turnCounter == 1) {
 			return false;
 		}
-		boolean outcome = true;
+		boolean outcome = false;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
-				if (currentBoard[i][j] != koBoard[i][j]) outcome = false;
+				// TODO jakiś błąd!
+
+				if (currentBoard[i][j] != koBoard[i][j]) { outcome = false; }
 			}
 		}
 		return outcome;
@@ -208,8 +210,8 @@ public class AppEngine {
 		int squareX = newX/squareSize;
 		int squareY = newY/squareSize;
 					
-		this.squareX = squareX-1;
-		this.squareY = squareY-1;
+		this.squareX = squareX;
+		this.squareY = squareY;
 	}
 	
 	private String[] interpretMessage(String message){

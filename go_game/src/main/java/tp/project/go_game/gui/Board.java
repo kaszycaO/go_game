@@ -104,7 +104,7 @@ public class Board extends JPanel{
 	    			
 	    			g2d.setColor(stones[i][j].getColor());
 	    			drawConverter(i,j);
-	    			g2d.fillOval(drawX - squareSize/8, drawY - squareSize/8, squareSize/4, squareSize/4);
+	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
 	    			
 	    			
 	    		}
