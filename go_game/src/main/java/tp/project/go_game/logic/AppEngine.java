@@ -179,7 +179,7 @@ public class AppEngine {
 
 
 	private boolean checkIfStrangled(int X, int Y) {
-		boolean outcome = true;
+		boolean outcome = false;
 		if (!checkIfGotBreaths(X,Y)) {
 			ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
 			for (Integer[] co : coords) {
@@ -196,8 +196,19 @@ public class AppEngine {
 					}
 				}
 			}
-			outcome = false;
+			outcome = true;
 		}
+		
+		for(int i = 0; i < boardSize; i++) {
+			for (int j = 0; j < boardSize; j++) {
+				
+			}
+			
+			
+			
+		}
+		
+		
 		return outcome;
 	}
 	
@@ -215,7 +226,7 @@ public class AppEngine {
 	private ArrayList<Integer[]> getCoordsToCheck(int X, int Y){
 		Integer[] single = new Integer[2];
 		ArrayList<Integer[]> coords = new ArrayList<Integer[]>();
-		if (X-1> 0) {
+		if (X-1 >= 0) {
 			single[0] = X-1;
 			single[1] = Y;
 			coords.add(single);
@@ -225,7 +236,7 @@ public class AppEngine {
 			single[1] = Y;
 			coords.add(single);
 		}
-		if (Y-1> 0) {
+		if (Y-1 >= 0) {
 			single[0] = X;
 			single[1] = Y-1;
 			coords.add(single);
@@ -272,7 +283,7 @@ public class AppEngine {
 		Color color = currentBoard[squareX][squareY].getColor();
 		ArrayList<Integer[]> coords = getCoordsToCheck(squareX,squareY);
 		for (Integer[] co : coords) {
-			if (currentBoard[co[0]][co[1]].getColor() != color) {
+			if (currentBoard[co[0]][co[1]] != null && currentBoard[co[0]][co[1]].getColor() != color) {
 				if (checkIfStrangled(co[0],co[1])) {
 					currentBoard[squareX][squareY] = null;
 					return true;
