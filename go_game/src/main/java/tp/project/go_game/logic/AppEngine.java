@@ -74,12 +74,10 @@ public class AppEngine {
 			if (passCounter == 2) {
 				message = "Koniec gry";
 				getScore();
-				clearBoard();
 			}
-		} else {
+		} else if (convertedMessage[1].equals("resign")) {
 			message = "Koniec gry";
 			getScore();
-			clearBoard();
 		}
 		
 	}
@@ -91,6 +89,7 @@ public class AppEngine {
 			}
 		}
 		koBoard = currentBoard;
+		previousBoard = currentBoard;
 		blackTurn = true;
 		passCounter = 0;
 		turnCounter = 0;
@@ -98,8 +97,7 @@ public class AppEngine {
 
 
 	private void getScore() {
-		JOptionPane.showMessageDialog(null,"Wygral <idk kto> <idk iloma> punktami","Podsumowanie",JOptionPane.INFORMATION_MESSAGE);
-		
+		//TODO ogarnac
 	}
 
 
