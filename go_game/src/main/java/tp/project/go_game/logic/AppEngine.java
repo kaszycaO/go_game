@@ -56,7 +56,7 @@ public class AppEngine {
 		String[] convertedMessage = {"","",""};
 		int j = 0;
 		for (int i=0;i<3;i++) {
-			while(message.charAt(j) != ' ') {
+			while(j < message.length() && (message.charAt(j) != ' ')) {
 				convertedMessage[i] += message.charAt(j);
 				j++;
 			}
@@ -77,6 +77,11 @@ public class AppEngine {
 	
 	public String getMessage() {
 		return this.message;
+	}
+
+
+	public String[] getConvertedMessage() {
+		return convertedMessage;
 	}
 
 	
