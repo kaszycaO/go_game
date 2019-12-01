@@ -105,9 +105,9 @@ public class AppEngine {
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
-				// TODO jakiś błąd!
-
-				if (currentBoard[i][j] != koBoard[i][j]) { outcome = false; }
+				if (currentBoard[i][j] != koBoard[i][j]) { 
+					outcome = false; 
+				}
 			}
 		}
 		currentBoard[squareX][squareY] = null;
