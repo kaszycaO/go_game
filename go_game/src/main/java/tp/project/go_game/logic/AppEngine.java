@@ -48,13 +48,13 @@ public class AppEngine {
 		else {
 			handleMove();
 		}
-		if (blackTurn) {
+		/**if (blackTurn) {
 			blackTurn = false;
 		}
 		else {
 			blackTurn = true;
 		}
-		turnCounter++;
+		turnCounter++; trzeba dac w inne miejsce*/
 	}
 	
 	
@@ -63,7 +63,11 @@ public class AppEngine {
 	
 	
 	private void handleMove() {
-		// TODO Auto-generated method stub
+		passCounter = 0;
+		int xClick, yClick;
+		xClick = Integer.parseInt(convertedMessage[1]);
+		yClick = Integer.parseInt(convertedMessage[2]);
+		
 		
 	}
 
@@ -76,16 +80,12 @@ public class AppEngine {
 			
 			if (passCounter == 2) {
 				message = "Koniec gry";
-
-			
-				clearBoard();
-
+				//getScore();
 			}
-
 
 		} else if (convertedMessage[1].equals("resign")) {
 			message = "Koniec gry";
-			clearBoard();
+			//getScore();
 		}
 	
 	}
