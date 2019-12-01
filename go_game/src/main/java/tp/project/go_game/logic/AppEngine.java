@@ -40,6 +40,7 @@ public class AppEngine {
 		if(turnCounter>0) {
 			previousBoard = currentBoard;
 		}
+		
 		convertedMessage = interpretMessage(recievedMessage);
 		if (convertedMessage[0].equals("button")) {
 			handleButtons();
@@ -71,16 +72,20 @@ public class AppEngine {
 		if (convertedMessage[1].equals("pass")) {
 			passCounter += 1;
 			message = "Poddales swoj ruch";
+		
+			
 			if (passCounter == 2) {
 				message = "Koniec gry";
-				getScore();
+			
 				clearBoard();
+			
 			}
-		} else {
+		} else if(convertedMessage[1].equals("resign")) {
 			message = "Koniec gry";
-			getScore();
+			
 			clearBoard();
 		}
+	
 		
 	}
 	
@@ -97,10 +102,6 @@ public class AppEngine {
 	}
 
 
-	private void getScore() {
-		JOptionPane.showMessageDialog(null,"Wygral <idk kto> <idk iloma> punktami","Podsumowanie",JOptionPane.INFORMATION_MESSAGE);
-		
-	}
 
 
 	private void coordinatesConverter(int X, int Y) {
