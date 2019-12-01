@@ -1,7 +1,10 @@
 package tp.project.go_game.logic;
 
+
+import java.util.Arrays;
 import java.awt.Color;
 import java.util.ArrayList;
+
 
 public class AppEngine {
 
@@ -24,31 +27,55 @@ public class AppEngine {
 		this.boardSize = boardSize;
 		message = "";
 		this.currentBoard = new Stone[boardSize][boardSize];
-		this.koBoard = currentBoard;
-		this.previousBoard = currentBoard;
+		this.koBoard = new Stone[boardSize][boardSize];
+		this.previousBoard = new Stone[boardSize][boardSize];
 		blackTurn = true;
 		passCounter = 0;
 		turnCounter = 0;
 		
 	}
 	
+	public void switchArrays(Stone[][] array1, Stone[][] array2) {
+		
+		for(int i = 0 ; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				
+				array1[i][j] = array2[i][j];
+						
+				
+			}
+		
+			
+		}
+		
+		
+	}
 	
 	public Stone[][] doMove(String recievedMessage) {
 		
-		if (turnCounter>1) {
-			koBoard = previousBoard;
-		}
-		if(turnCounter>0) {
-			previousBoard = currentBoard;
+		if (turnCounter > 1) {
+
+			switchArrays(koBoard,previousBoard);
 		}
 		
+		if (turnCounter > 0) {
+
+			switchArrays(previousBoard,currentBoard);
+		}
+		
+		
+		
 		convertedMessage = interpretMessage(recievedMessage);
+		System.out.println("Gra : " + turnCounter);
 		if (convertedMessage[0].equals("button")) {
 			handleButtons();
 		}
 		else {
 			handleMove();
 		}
+		
+		
 		return currentBoard;
 	}
 	
@@ -117,15 +144,22 @@ public class AppEngine {
 		if (turnCounter < 2) {
 			return false;
 		}
+		addStone();
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
+				
+				if(currentBoard == koBoard)
+				System.out.println(currentBoard[i][j] + "  "+ koBoard[i][j]);
+				
+				
 				if (currentBoard[i][j] != koBoard[i][j]) { 
 					outcome = false; 
 				}
 			}
 		}
 		currentBoard[squareX][squareY] = null;
+		System.out.println("\n");
 		return outcome;
 	}
 
@@ -298,14 +332,12 @@ public class AppEngine {
 
 
 	private void coordinatesConverter(int X, int Y) {
-		
-		System.out.println(X + "  " + Y);
 
 		int squareSize = 840/(boardSize + 1) ; 
 		int newX = X + squareSize/2;
 		int newY = Y + squareSize/2;
 		
-		// -1 -> przesuniecie kwadratu bedacego poza plansza
+		// -1 -> przesuniecie kwadratu bedacego poza plansza aby uzyskac numeracje tablicy od (0,0)
 		int squareX = newX/squareSize - 1;
 		int squareY = newY/squareSize - 1;
 		
