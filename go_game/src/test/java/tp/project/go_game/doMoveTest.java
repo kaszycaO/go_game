@@ -35,6 +35,7 @@ public class doMoveTest {
 		}
 		assertFalse(engine.checkIfGotBreaths(1, 1));
 		assertTrue(engine.checkIfStrangled(1, 1));
+		assertTrue(engine.checkIfSuicidal(1, 1));
 	}
 	
 
