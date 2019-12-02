@@ -20,6 +20,9 @@ public class AppEngine {
 	private int passCounter;
 	private int turnCounter;
 	private StoneFactory factory;
+	boolean whiteKill;
+	boolean blackKill;
+
 	
 
 	public AppEngine(int boardSize) {
@@ -94,13 +97,23 @@ public class AppEngine {
 				}
 				else {
 					
+					if(blackTurn) blackKill = true;
+					if(!blackTurn) whiteKill = true;
+					
 					if (checkIfStrangles(squareX, squareY)) {
+						
+						
+						
+						
 						addStone(squareX, squareY);
 						removeStrangledStones();
 						changeTurn();
+						
 						message = "";
+						
 					
 					} 
+					
 					else {
 					
 						if (checkIfSuicidal(squareX, squareY)) {
@@ -165,21 +178,34 @@ public class AppEngine {
 			for (int i=0;i<coords.size()/2;i++) {
 				int newX = coords.get(2*i);
 				int newY = coords.get(2*i+1);
-				if (blackTurn) {
-					if (currentBoard[newX][newY].getColor()==Color.black && !currentBoard[newX][newY].ifChecked) {
-						currentBoard[X][Y].ifChecked = true;
-						return checkIfStrangled(newX,newY);
-					}
-				}
-				else if(!blackTurn) {
+				// TODO zjada nawet gdy się zrobi łańcuch + zjada dobrze				
+				if (blackTurn && whiteKill) {
 					if (currentBoard[newX][newY].getColor()==Color.white && !currentBoard[newX][newY].ifChecked) {
 						currentBoard[X][Y].ifChecked = true;
 						return checkIfStrangled(newX,newY);
 					}
 				}
+				else if(!blackTurn && blackKill) {
+					if (currentBoard[newX][newY].getColor()==Color.black && !currentBoard[newX][newY].ifChecked) {
+						currentBoard[X][Y].ifChecked = true;
+						return checkIfStrangled(newX,newY);
+					}
+				}
+			}	
+		} else outcome = false;
+		
+		
+		
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null)
+					currentBoard[i][j].setChecked(false);;
+				
 			}
 		}
-		else outcome = false;
+		whiteKill = false;
+		blackKill = false;
 		return outcome;
 	}
 	
@@ -187,10 +213,12 @@ public class AppEngine {
 		boolean outcome = false;
 		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 		
+		System.out.println("X: " + X + " Y: " + Y);
 		for (int i=0;i<coords.size()/2;i++) {
 	
 			if (currentBoard[coords.get(i*2)][coords.get(2*i+1)] == null) {
 				outcome = true;
+				System.out.println("Mam oddech!");
 			}
 		}
 		return outcome;
@@ -237,8 +265,9 @@ public class AppEngine {
 		ArrayList<Integer> coords = new ArrayList<Integer>();
 		for(int i=0;i<boardSize;i++) {
 			for(int j=0;j<boardSize;j++) {
-				if(i != X && j != Y) {
+				if(!(i == X && j == Y)) {
 					if(checkIfStrangled(i,j)) {
+						System.out.println("Hey, i'm in getCoords 2");
 						coords.add(i);
 						coords.add(j);
 					}
@@ -249,19 +278,25 @@ public class AppEngine {
 	}
 	
 	private void removeStone(int X, int Y) {
+		System.out.println("Jestem w remove");
 		currentBoard[X][Y] = null;
+		System.out.println(currentBoard[X][Y]);
 	}
 
 
-	private void removeStrangledStones() {
+	public void removeStrangledStones() {
+		
 		ArrayList<Integer> coords = getCoordsToRemove(squareX,squareY);
 		for(int i=0;i<coords.size()/2;i++) {
+			System.out.println("Hey, i'm in Strangled");
+			System.out.println("Removing: " + coords.get(2*i) + " i " + coords.get(2*i+1));
+			
 			removeStone(coords.get(2*i), coords.get(2*i+1));
 		}
 	}
 
 
-	private boolean checkIfStrangles(int X, int Y) {
+	public boolean checkIfStrangles(int X, int Y) {
 		addStone(X,Y);
 		Color color = currentBoard[X][Y].getColor();
 		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
@@ -373,6 +408,12 @@ public class AppEngine {
 
 	public String[] getConvertedMessage() {
 		return convertedMessage;
+	}
+	
+	public Stone[][] getCurrentBoard(){
+		
+		return currentBoard;
+		
 	}
 
 	
