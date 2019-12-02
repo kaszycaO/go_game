@@ -1,7 +1,6 @@
 package tp.project.go_game.logic;
 
 
-import java.util.Arrays;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -234,14 +233,31 @@ public class AppEngine {
 		}
 	}
 	
+	private ArrayList<Integer> getCoordsToRemove(int X, int Y){
+		ArrayList<Integer> coords = new ArrayList<Integer>();
+		for(int i=0;i<boardSize;i++) {
+			for(int j=0;j<boardSize;j++) {
+				if(i != X && j != Y) {
+					if(checkIfStrangled(i,j)) {
+						coords.add(i);
+						coords.add(j);
+					}
+				}
+			}
+		}
+		return coords;
+	}
+	
 	private void removeStone(int X, int Y) {
 		currentBoard[X][Y] = null;
 	}
 
 
 	private void removeStrangledStones() {
-		// TODO Auto-generated method stub
-		
+		ArrayList<Integer> coords = getCoordsToRemove(squareX,squareY);
+		for(int i=0;i<coords.size()/2;i++) {
+			removeStone(coords.get(2*i), coords.get(2*i+1));
+		}
 	}
 
 
