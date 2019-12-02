@@ -16,6 +16,7 @@ public class doMoveTest {
 		engine.addStone(1, 2);
 		engine.addStone(2, 1);
 		engine.changeTurn();
+		engine.addStone(1, 1);
 		ArrayList<Integer> coords = engine.getCoordsToCheck(1,1);
 		ArrayList<Integer> expectedCoords = new ArrayList<Integer>();
 	
@@ -27,6 +28,7 @@ public class doMoveTest {
 		expectedCoords.add(0);
 		expectedCoords.add(1);
 		expectedCoords.add(2);
+		engine.strangler = true;
 		
 		for(int i=0;i<4;i++) {
 			assertEquals(coords.get(2*i), expectedCoords.get(2*i));
@@ -35,6 +37,8 @@ public class doMoveTest {
 		assertFalse(engine.checkIfGotBreaths(1, 1));
 		assertTrue(engine.checkIfStrangled(1, 1));
 		assertTrue(engine.checkIfSuicidal(1, 1));
+		engine.changeTurn();
+		assertTrue(engine.checkIfStrangles(1, 0));
 	}
 	
 
