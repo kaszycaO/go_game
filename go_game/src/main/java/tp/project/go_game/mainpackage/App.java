@@ -3,7 +3,10 @@ package tp.project.go_game.mainpackage;
 import tp.project.go_game.gui.MainFrame;
 
 /**
- * Hello world!
+ * 
+ * @author Oliwier Kaszyca & Dominika Szydło
+ * 
+ * Główna klasa uruchamiająca serwer i tworząca główne okienko
  *
  */
 public class App 
@@ -11,7 +14,12 @@ public class App
     public static void main( String[] args )
     {
     	MainFrame frame = new MainFrame();
-    	frame.server.listenSocket();
+    	if (frame.server != null) {
+    		
+    		frame.server.listenSocket();
+    		
+    	} 
+    
     	
     }
 }

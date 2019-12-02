@@ -7,37 +7,48 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import tp.project.go_game.gui.Board;
+import tp.project.go_game.logic.AppEngine;
+
+
 public class AppServer {
 	
+	
+	
+	private AppEngine engine;
+	
+	Board board;
 	/**
      * gniazdko serwera
      */
-    ServerSocket server = null;
+    public ServerSocket server = null;
 
     /**
      * gniazdko klienta
      */
-    Socket client = null;
+    private Socket client = null;
 
     /**
      * komunikaty od klienta
      */
-    DataInputStream fromClient = null;
+    private DataInputStream fromClient = null;
     /**
      * dane wysylane do klienta
      */
-    DataOutputStream toClient = null;
-    String recievedMessage = "";
-    String sentMessage = "";
+    private DataOutputStream toClient = null;
+    private String recievedMessage = "";
     
-    public AppServer() {
-        try {
+    
+    public AppServer(Board board) {
+    	try {
             server = new ServerSocket(4444);
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+    	this.board = board;
+    	engine = new AppEngine(board.getBoardSize());
     }
     
     /**
@@ -56,21 +67,14 @@ public class AppServer {
                 fromClient = new DataInputStream(new BufferedInputStream(client.getInputStream()));
                 toClient = new DataOutputStream(client.getOutputStream());
                 recievedMessage = fromClient.readUTF();
-                setMessage(recievedMessage);
-                toClient.writeUTF(sentMessage);
+                board.setBoard(engine.doMove(recievedMessage));
+                toClient.writeUTF(engine.getMessage());
+                
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
             }
         }
-    }
-    
-    protected String getMessage() {
-    	return this.recievedMessage;
-    }
-    
-    protected void setMessage(String message) {
-    	this.sentMessage = message;
     }
 
 }

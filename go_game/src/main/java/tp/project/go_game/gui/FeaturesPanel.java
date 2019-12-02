@@ -6,21 +6,47 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Oliwier Kaszyca & Dominika Szydło
+ * 
+ * Panel z przyciskami i informacjami
+ *
+ */
 public class FeaturesPanel extends JPanel {
 	
-	
+	/**
+	 * Przycisk zrezygnuj
+	 */
 	protected JButton resignButton;
+	
+	/**
+	 * Przycisk spasuj
+	 */
 	protected JButton passButton;
+	
+	/**
+	 * Panel z wiadomościami dotyczącymi przebiegu gry
+	 */
 	protected JLabel message;
+	
+	/**
+	 * Adapter (klient) 
+	 */
 	private GUIAdapter myAdapter;
 	
 	
+	/**
+	 * Konstruktor klasy
+	 * 
+	 * @param myAdapter GUIAdapter (klient)
+	 * 
+	 */
 	FeaturesPanel(GUIAdapter myAdapter){
 		
 		this.myAdapter = myAdapter;
 		
 		setSize(200,200);
-
 		setLayout(new FlowLayout(FlowLayout.CENTER,10,30));
 		
 		resignButton = new JButton("Zrezygnuj");
