@@ -18,12 +18,7 @@ public class doMoveTest {
 		engine.changeTurn();
 		ArrayList<Integer> coords = engine.getCoordsToCheck(1,1);
 		ArrayList<Integer> expectedCoords = new ArrayList<Integer>();
-		
-		Integer[] sample1 = {0,1};
-		Integer[] sample2 = {2,1};
-		Integer[] sample3 = {1,0};
-		Integer[] sample4 = {1,2};
-		
+	
 		expectedCoords.add(0);
 		expectedCoords.add(1);
 		expectedCoords.add(2);
