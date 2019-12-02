@@ -12,7 +12,7 @@ import org.junit.Test;
 import tp.project.go_game.logic.AppEngine;
 
 public class SuicideTest {
-
+/*
 	Integer[] sample;
 	
 	@Test
@@ -81,12 +81,5 @@ public class SuicideTest {
 		assertFalse(engine.checkIfStrangled(1, 1));
 		assertFalse(engine.checkIfSuicidal(1, 1));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+	*/
 }

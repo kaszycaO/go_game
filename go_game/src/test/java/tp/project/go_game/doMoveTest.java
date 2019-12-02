@@ -16,22 +16,26 @@ public class doMoveTest {
 		engine.addStone(1, 2);
 		engine.addStone(2, 1);
 		engine.changeTurn();
-		ArrayList<Integer[]> coords = engine.getCoordsToCheck(1,1);
-		ArrayList<Integer[]> expectedCoords = new ArrayList<Integer[]>();
+		ArrayList<Integer> coords = engine.getCoordsToCheck(1,1);
+		ArrayList<Integer> expectedCoords = new ArrayList<Integer>();
 		
 		Integer[] sample1 = {0,1};
 		Integer[] sample2 = {2,1};
 		Integer[] sample3 = {1,0};
 		Integer[] sample4 = {1,2};
 		
-		expectedCoords.add(sample1);
-		expectedCoords.add(sample2);
-		expectedCoords.add(sample3);
-		expectedCoords.add(sample4);
+		expectedCoords.add(0);
+		expectedCoords.add(1);
+		expectedCoords.add(2);
+		expectedCoords.add(1);
+		expectedCoords.add(1);
+		expectedCoords.add(0);
+		expectedCoords.add(1);
+		expectedCoords.add(2);
 		
 		for(int i=0;i<4;i++) {
-			assertEquals(coords.get(i)[0], expectedCoords.get(i)[0]);
-			assertEquals(coords.get(i)[1], expectedCoords.get(i)[1]);
+			assertEquals(coords.get(2*i), expectedCoords.get(2*i));
+			assertEquals(coords.get(2*i+1), expectedCoords.get(2*i+1));
 		}
 		assertFalse(engine.checkIfGotBreaths(1, 1));
 		assertTrue(engine.checkIfStrangled(1, 1));

@@ -213,10 +213,8 @@ public class AppEngine {
 		}
 		if (Y+1 < boardSize) {
 			coords.add(X);
-			coords.add(Y-1);
+			coords.add(Y+1);
 		}
-		
-	
 		return coords;
 	}
 
