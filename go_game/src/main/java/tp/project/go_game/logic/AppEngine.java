@@ -264,11 +264,13 @@ public class AppEngine {
 	private boolean checkIfStrangles(int X, int Y) {
 		addStone(X,Y);
 		Color color = currentBoard[X][Y].getColor();
-		ArrayList<Integer> coords = getCoordsToCheck(squareX,squareY);
+		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 		for (int i=0;i<coords.size()/2;i++) {
-			if (currentBoard[coords.get(2*i)][coords.get(2*i+1)] != null && currentBoard[coords.get(2*i)][coords.get(2*i+1)].getColor() != color) {
-				if (checkIfStrangled(coords.get(2*i),coords.get(2*i+1))) {
-					removeStone(squareX,squareY);
+			int newX = coords.get(2*i);
+			int newY = coords.get(2*i+1);
+			if (currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() != color) {
+				if (checkIfStrangled(newX,newY)) {
+					removeStone(X,Y);
 					return true;
 				}
 			}
