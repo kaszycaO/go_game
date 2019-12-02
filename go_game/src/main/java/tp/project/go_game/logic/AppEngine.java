@@ -245,7 +245,7 @@ public class AppEngine {
 	}
 
 
-	private boolean checkIfStrangles(int X, int Y) {
+	public boolean checkIfStrangles(int X, int Y) {
 		addStone(X,Y);
 		Color color = currentBoard[X][Y].getColor();
 		ArrayList<Integer> coords = getCoordsToCheck(squareX,squareY);
