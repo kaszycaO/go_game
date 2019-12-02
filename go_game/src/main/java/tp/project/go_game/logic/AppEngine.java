@@ -205,7 +205,9 @@ public class AppEngine {
 	public boolean checkIfGotBreaths(int X, int Y) {
 		boolean outcome = false;
 		ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
+		
 		for (Integer[] co : coords) {
+	
 			if (currentBoard[co[0]][co[1]] == null) {
 				outcome = true;
 			}
@@ -214,28 +216,33 @@ public class AppEngine {
 	}
 	
 	public ArrayList<Integer[]> getCoordsToCheck(int X, int Y){
-		Integer[] single = new Integer[2];
+		Integer[] single1 = new Integer[2];
+		Integer[] single2 = new Integer[2];
+		Integer[] single3 = new Integer[2];
+		Integer[] single4 = new Integer[2];
 		ArrayList<Integer[]> coords = new ArrayList<Integer[]>();
 		if (X-1>=0) {
-			single[0] = X-1;
-			single[1] = Y;
-			coords.add(single);
+			single1[0] = X-1;
+			single1[1] = Y;
+			coords.add(single1);
 		}
 		if (X+1 < boardSize) {
-			single[0] = X+1;
-			single[1] = Y;
-			coords.add(single);
+			single2[0] = X+1;
+			single2[1] = Y;
+			coords.add(single2);
 		}
 		if (Y-1>= 0) {
-			single[0] = X;
-			single[1] = Y-1;
-			coords.add(single);
+			single3[0] = X;
+			single3[1] = Y-1;
+			coords.add(single3);
 		}
 		if (Y+1 < boardSize) {
-			single[0] = X;
-			single[1] = Y+1;
-			coords.add(single);
+			single4[0] = X;
+			single4[1] = Y+1;
+			coords.add(single4);
 		}
+		
+	
 		return coords;
 	}
 

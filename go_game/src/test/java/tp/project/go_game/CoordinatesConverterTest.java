@@ -7,7 +7,7 @@ import tp.project.go_game.logic.AppEngine;
 public class CoordinatesConverterTest {
 	
 	
-/*	
+
 	@Test
 	public void testCoordinates() {
 		
@@ -15,11 +15,18 @@ public class CoordinatesConverterTest {
 		AppEngine engine2 = new AppEngine(13);
 		AppEngine engine3 = new AppEngine(19);
 		
-		engine1.coordinatesConverter(84, 84);
-		engine2.coordinatesConverter(70, 70);
-		engine3.coordinatesConverter(60,60);
+		String message = "coordinates 84 84";
 		
-		assertEquals(engine1.getSquareX(), 1);
+		engine1.doMove(message);
+		engine2.doMove(message);
+		engine3.doMove(message);
+		
+		assertEquals(engine1.getSquareX(), 0);
+		assertEquals(engine1.getSquareY(), 0);
+		assertEquals(engine2.getSquareX(), 0);
+		assertEquals(engine2.getSquareY(), 0);
+		assertEquals(engine3.getSquareX(), 1);
+		assertEquals(engine3.getSquareY(), 1);
 	
 		
 		
@@ -28,7 +35,7 @@ public class CoordinatesConverterTest {
 	
 	
 	
-	*/
+	
 
 }
 
