@@ -1,5 +1,6 @@
 package tp.project.go_game;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -23,14 +24,15 @@ public class RemoveStoneTest {
 		engine.changeTurn();
 		
 		engine.addStone(0, 0);
+		
 		engine.changeTurn();
 		
+		assertTrue(engine.checkIfStrangles(1, 0));
 		engine.addStone(1, 0);
-		engine.changeTurn();
-	
-		//assertTrue(engine.checkIfStrangles(1, 0));
-		
 		assertTrue(engine.checkIfStrangled(0, 0));
+	
+		
+		
 		//assertFalse(engine.checkIfSuicidal(3, 3));
 		//assertFalse(engine.checkIfSuicidal(8, 8));
 	}
