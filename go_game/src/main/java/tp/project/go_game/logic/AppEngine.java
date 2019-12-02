@@ -41,32 +41,19 @@ public class AppEngine {
 		
 		for(int i = 0 ; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
-				
-				
 				array1[i][j] = array2[i][j];
-						
-				
 			}
-		
-			
 		}
-		
-		
 	}
 	
 	public Stone[][] doMove(String recievedMessage) {
 		
 		if (turnCounter > 1) {
-
 			switchArrays(koBoard,previousBoard);
 		}
-		
 		if (turnCounter > 0) {
-
 			switchArrays(previousBoard,currentBoard);
 		}
-		
-		
 		
 		convertedMessage = interpretMessage(recievedMessage);
 		System.out.println("Gra : " + turnCounter);
@@ -77,11 +64,8 @@ public class AppEngine {
 			handleMove();
 		}
 		
-		
 		return currentBoard;
 	}
-	
-	
 	
 	public void changeTurn() {
 		if (blackTurn) {
@@ -93,7 +77,6 @@ public class AppEngine {
 		turnCounter++;
 	}
 	
-	
 	public void handleMove() {
 		passCounter = 0;
 		squareX = Integer.parseInt(convertedMessage[1]);
@@ -102,9 +85,6 @@ public class AppEngine {
 		coordinatesConverter(squareX, squareY);
 		
 		if((squareX >=0 && squareY >=0) && (squareX < boardSize && squareY < boardSize)) {
-			
-			
-		
 			if (checkIfTaken(squareX, squareY)) {
 				message = "Pole zajete";
 			}
@@ -182,18 +162,20 @@ public class AppEngine {
 	public boolean checkIfStrangled(int X, int Y) {
 		boolean outcome = true;
 		if (!checkIfGotBreaths(X,Y)) {
-			ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
-			for (Integer[] co : coords) {
+			ArrayList<Integer> coords = getCoordsToCheck(X,Y);
+			for (int i=0;i<coords.size()/2;i++) {
+				int newX = coords.get(2*i);
+				int newY = coords.get(2*i+1);
 				if (blackTurn) {
-					if (currentBoard[co[0]][co[1]].getColor()==Color.black && !currentBoard[co[0]][co[1]].ifChecked) {
+					if (currentBoard[newX][newY].getColor()==Color.black && !currentBoard[newX][newY].ifChecked) {
 						currentBoard[X][Y].ifChecked = true;
-						return checkIfStrangled(co[0],co[1]);
+						return checkIfStrangled(newX,newY);
 					}
 				}
 				else if(!blackTurn) {
-					if (currentBoard[co[0]][co[1]].getColor()==Color.white && !currentBoard[co[0]][co[1]].ifChecked) {
+					if (currentBoard[newX][newY].getColor()==Color.white && !currentBoard[newX][newY].ifChecked) {
 						currentBoard[X][Y].ifChecked = true;
-						return checkIfStrangled(co[0],co[1]);
+						return checkIfStrangled(newX,newY);
 					}
 				}
 			}
@@ -204,42 +186,34 @@ public class AppEngine {
 	
 	public boolean checkIfGotBreaths(int X, int Y) {
 		boolean outcome = false;
-		ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
+		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 		
-		for (Integer[] co : coords) {
+		for (int i=0;i<coords.size()/2;i++) {
 	
-			if (currentBoard[co[0]][co[1]] == null) {
+			if (currentBoard[coords.get(i*2)][coords.get(2*i+1)] == null) {
 				outcome = true;
 			}
 		}
 		return outcome;
 	}
 	
-	public ArrayList<Integer[]> getCoordsToCheck(int X, int Y){
-		Integer[] single1 = new Integer[2];
-		Integer[] single2 = new Integer[2];
-		Integer[] single3 = new Integer[2];
-		Integer[] single4 = new Integer[2];
-		ArrayList<Integer[]> coords = new ArrayList<Integer[]>();
+	public ArrayList<Integer> getCoordsToCheck(int X, int Y){
+		ArrayList<Integer> coords = new ArrayList<Integer>();
 		if (X-1>=0) {
-			single1[0] = X-1;
-			single1[1] = Y;
-			coords.add(single1);
+			coords.add(X-1);
+			coords.add(Y);
 		}
 		if (X+1 < boardSize) {
-			single2[0] = X+1;
-			single2[1] = Y;
-			coords.add(single2);
+			coords.add(X+1);
+			coords.add(Y);
 		}
 		if (Y-1>= 0) {
-			single3[0] = X;
-			single3[1] = Y-1;
-			coords.add(single3);
+			coords.add(X);
+			coords.add(Y-1);
 		}
 		if (Y+1 < boardSize) {
-			single4[0] = X;
-			single4[1] = Y+1;
-			coords.add(single4);
+			coords.add(X);
+			coords.add(Y-1);
 		}
 		
 	
@@ -276,11 +250,11 @@ public class AppEngine {
 	private boolean checkIfStrangles(int X, int Y) {
 		addStone(X,Y);
 		Color color = currentBoard[X][Y].getColor();
-		ArrayList<Integer[]> coords = getCoordsToCheck(squareX,squareY);
-		for (Integer[] co : coords) {
-			if (currentBoard[co[0]][co[1]] != null && currentBoard[co[0]][co[1]].getColor() != color) {
-				if (checkIfStrangled(co[0],co[1])) {
-					currentBoard[squareX][squareY] = null;
+		ArrayList<Integer> coords = getCoordsToCheck(squareX,squareY);
+		for (int i=0;i<coords.size()/2;i++) {
+			if (currentBoard[coords.get(2*i)][coords.get(2*i+1)] != null && currentBoard[coords.get(2*i)][coords.get(2*i+1)].getColor() != color) {
+				if (checkIfStrangled(coords.get(2*i),coords.get(2*i+1))) {
+					removeStone(squareX,squareY);
 					return true;
 				}
 			}
