@@ -101,17 +101,10 @@ public class AppEngine {
 					if(!blackTurn) whiteKill = true;
 					
 					if (checkIfStrangles(squareX, squareY)) {
-						
-						
-						
-						
 						addStone(squareX, squareY);
 						removeStrangledStones();
 						changeTurn();
-						
-						message = "";
-						
-					
+						message = "";	
 					} 
 					
 					else {
