@@ -17,6 +17,7 @@ public class AppEngine {
 	private boolean blackTurn;
 	private int passCounter;
 	private int turnCounter;
+	private StoneFactory factory;
 	
 
 	public AppEngine(int boardSize) {
@@ -29,6 +30,7 @@ public class AppEngine {
 		blackTurn = true;
 		passCounter = 0;
 		turnCounter = 0;
+		factory = new ConcreteStoneFactory();
 		
 	}
 	
@@ -54,7 +56,7 @@ public class AppEngine {
 	
 	
 	
-	private void changeTurn() {
+	public void changeTurn() {
 		if (blackTurn) {
 			blackTurn = false;
 		}
@@ -65,7 +67,7 @@ public class AppEngine {
 	}
 	
 	
-	private void handleMove() {
+	public void handleMove() {
 		passCounter = 0;
 		squareX = Integer.parseInt(convertedMessage[1]);
 		squareY = Integer.parseInt(convertedMessage[2]);
@@ -76,18 +78,18 @@ public class AppEngine {
 			
 			
 		
-			if (checkIfTaken()) {
+			if (checkIfTaken(squareX, squareY)) {
 				message = "Pole zajete";
 			}
 			else {
 			
-				if (checkIfKo()) {
+				if (checkIfKo(squareX, squareY)) {
 					message = "Naruszona zasada Ko";
 				}
 				else {
 					
-					if (checkIfStrangles()) {
-						addStone();
+					if (checkIfStrangles(squareX, squareY)) {
+						addStone(squareX, squareY);
 						removeStrangledStones();
 						changeTurn();
 						message = "";
@@ -95,11 +97,11 @@ public class AppEngine {
 					} 
 					else {
 					
-						if (checkIfSuicidal()) {
+						if (checkIfSuicidal(squareX, squareY)) {
 							message = "Ruch samobojczy";
 						} 
 						else {
-							addStone();
+							addStone(squareX, squareY);
 							changeTurn();
 							message = "";
 						}
@@ -113,10 +115,11 @@ public class AppEngine {
 	}
 
 
-	private boolean checkIfKo() {
+	public boolean checkIfKo(int X, int Y) {
 		if (turnCounter < 2) {
 			return false;
 		}
+		addStone(X,Y);
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
@@ -125,26 +128,26 @@ public class AppEngine {
 				}
 			}
 		}
-		currentBoard[squareX][squareY] = null;
+		removeStone(X,Y);
 		return outcome;
 	}
 
 
-	private boolean checkIfSuicidal() {
-		addStone();
+	public boolean checkIfSuicidal(int X, int Y) {
+		addStone(X,Y);
 		boolean outcome;
-		if (checkIfStrangled(squareX,squareY)) {
+		if (checkIfStrangled(X,Y)) {
 			outcome = true;
 		}
 		else {
 			outcome = false;
 		}
-		currentBoard[squareX][squareY] = null;
+		removeStone(X,Y);
 		return outcome;
 	}
 
 
-	private boolean checkIfStrangled(int X, int Y) {
+	public boolean checkIfStrangled(int X, int Y) {
 		boolean outcome = true;
 		if (!checkIfGotBreaths(X,Y)) {
 			ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
@@ -155,19 +158,19 @@ public class AppEngine {
 						return checkIfStrangled(co[0],co[1]);
 					}
 				}
-				else {
+				else if(!blackTurn) {
 					if (currentBoard[co[0]][co[1]].getColor()==Color.white && !currentBoard[co[0]][co[1]].ifChecked) {
 						currentBoard[X][Y].ifChecked = true;
 						return checkIfStrangled(co[0],co[1]);
 					}
 				}
 			}
-			outcome = false;
 		}
+		else outcome = false;
 		return outcome;
 	}
 	
-	private boolean checkIfGotBreaths(int X, int Y) {
+	public boolean checkIfGotBreaths(int X, int Y) {
 		boolean outcome = false;
 		ArrayList<Integer[]> coords = getCoordsToCheck(X,Y);
 		for (Integer[] co : coords) {
@@ -178,10 +181,10 @@ public class AppEngine {
 		return outcome;
 	}
 	
-	private ArrayList<Integer[]> getCoordsToCheck(int X, int Y){
+	public ArrayList<Integer[]> getCoordsToCheck(int X, int Y){
 		Integer[] single = new Integer[2];
 		ArrayList<Integer[]> coords = new ArrayList<Integer[]>();
-		if (X-1> 0) {
+		if (X-1>=0) {
 			single[0] = X-1;
 			single[1] = Y;
 			coords.add(single);
@@ -191,7 +194,7 @@ public class AppEngine {
 			single[1] = Y;
 			coords.add(single);
 		}
-		if (Y-1> 0) {
+		if (Y-1>= 0) {
 			single[0] = X;
 			single[1] = Y-1;
 			coords.add(single);
@@ -205,25 +208,23 @@ public class AppEngine {
 	}
 
 
-	private void addStone() {
-		
-		StoneFactory factory = new ConcreteStoneFactory();
+	public void addStone(int X, int Y) {
 		
 		if(blackTurn) {
 			
 	    	Stone blackStone = factory.getStone("Black");
-			currentBoard[squareX][squareY] = blackStone; 
+			currentBoard[X][Y] = blackStone; 
 				
 		} else {
 			
 			Stone whiteStone = factory.getStone("White");
-			currentBoard[squareX][squareY] = whiteStone;
+			currentBoard[X][Y] = whiteStone;
 			
 		}
-		
-		
-		
-		
+	}
+	
+	private void removeStone(int X, int Y) {
+		currentBoard[X][Y] = null;
 	}
 
 
@@ -233,9 +234,9 @@ public class AppEngine {
 	}
 
 
-	private boolean checkIfStrangles() {
-		addStone();
-		Color color = currentBoard[squareX][squareY].getColor();
+	private boolean checkIfStrangles(int X, int Y) {
+		addStone(X,Y);
+		Color color = currentBoard[X][Y].getColor();
 		ArrayList<Integer[]> coords = getCoordsToCheck(squareX,squareY);
 		for (Integer[] co : coords) {
 			if (currentBoard[co[0]][co[1]].getColor() != color) {
@@ -245,13 +246,13 @@ public class AppEngine {
 				}
 			}
 		}
-		currentBoard[squareX][squareY] = null;
+		removeStone(X,Y);
 		return false;
 	}
 
 
-	private boolean checkIfTaken() {
-		if (currentBoard[squareX][squareY]==null) {
+	private boolean checkIfTaken(int X, int Y) {
+		if (currentBoard[X][Y]==null) {
 			return false;
 		}
 		else return true;
