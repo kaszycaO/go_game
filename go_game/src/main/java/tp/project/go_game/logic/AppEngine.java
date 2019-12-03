@@ -130,7 +130,6 @@ public class AppEngine {
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
 				
-				if(currentBoard == koBoard)
 				
 				
 				if (currentBoard[i][j] != koBoard[i][j]) { 
@@ -225,8 +224,6 @@ public class AppEngine {
 			coords.add(Y+1);
 		}
 		
-
-
 		return coords;
 	}
 
