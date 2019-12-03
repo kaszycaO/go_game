@@ -170,14 +170,14 @@ public class AppEngine {
 			for (int i=0;i<coords.size()/2;i++) {
 				int newX = coords.get(2*i);
 				int newY = coords.get(2*i+1);
-				if ((blackTurn && !strangler) || (!blackTurn && strangler)) {
-					if (currentBoard[newX][newY].getColor()==Color.white && !currentBoard[newX][newY].ifChecked) {
+				if ((blackTurn)){
+					if (currentBoard[newX][newY].getColor()==Color.black && !currentBoard[newX][newY].ifChecked) {
 						currentBoard[X][Y].ifChecked = true;
 						return checkIfStrangled(newX,newY);
 					}
 				}
-				else if((blackTurn && strangler) || (!blackTurn && !strangler)) {
-					if (currentBoard[newX][newY].getColor()==Color.black && !currentBoard[newX][newY].ifChecked) {
+				else if((!blackTurn)){
+					if (currentBoard[newX][newY].getColor()==Color.white && !currentBoard[newX][newY].ifChecked) {
 						currentBoard[X][Y].ifChecked = true;
 						return checkIfStrangled(newX,newY);
 					}
