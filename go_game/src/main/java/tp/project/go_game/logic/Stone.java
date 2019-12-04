@@ -20,6 +20,8 @@ public class Stone  {
 	 * Czy kamień został sprawdzony (używane w systemie bicia)
 	 */
 	boolean ifChecked;
+	
+	boolean ifChain;
 
 	
 	

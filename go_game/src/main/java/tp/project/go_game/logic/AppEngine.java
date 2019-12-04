@@ -21,6 +21,8 @@ public class AppEngine {
 	private int turnCounter;
 	private StoneFactory factory;
 	
+	ArrayList<Integer> chain;
+	
 
 	public AppEngine(int boardSize) {
 		
@@ -33,6 +35,7 @@ public class AppEngine {
 		passCounter = 0;
 		turnCounter = 0;
 		factory = new ConcreteStoneFactory();
+		chain = new ArrayList<>();
 		
 	}
 	
@@ -145,7 +148,7 @@ public class AppEngine {
 	public boolean checkIfSuicidal(int X, int Y) {
 
 		boolean outcome;
-		if (checkIfStrangled(X,Y)) {
+		if (checkIfStrangled2(X,Y)) {
 			outcome = true;
 		}
 		else {
@@ -156,53 +159,88 @@ public class AppEngine {
 	}
 	
 	
+	public boolean checkIfStrangled2(int X, int Y) {
+		
+		boolean breaths;
+		getChain(X,Y);
+		
+		for(int i = 0; i < chain.size()/2; i++ ) {
+			
+			breaths = checkIfGotBreaths(chain.get(2*i),chain.get(2*i+1));
+			
+			if(breaths)
+				return false;
+			
+			
+		}
+		
+		
+		return true;
+	}
+	
+	
 	public ArrayList<Integer> getChain(int X, int Y){
 		
-		ArrayList<Integer> chain = new ArrayList<>();
+	
 		Color color = currentBoard[X][Y].getColor();
 		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 		
-		chain.add(X);
-		chain.add(Y);
-		
-		currentBoard[X][Y].ifChecked = true;
+	    if(!currentBoard[X][Y].ifChecked) {
+	    	
+	    	chain.add(X);
+			chain.add(Y);
+	    	
+	    }
+	
+		currentBoard[X][Y].ifChain = true;
 		
 		for(int i = 0; i < coords.size()/2; i++) {
-			System.out.println("IIIIII"+i);
 			int newX = coords.get(2*i);
 			int newY = coords.get(2*i+1);
 			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
 				
 				chain.add(newX);
 				chain.add(newY);
-		
-				
-				
+				currentBoard[newX][newY].ifChecked = true;
 				
 			}
 			
 		}
+		
+		int checkNextX=-1;
+		int checkNextY=-1;
+		
 		for(int i = 0; i < chain.size()/2; i++) {
 		
-				
-				if(!currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChecked)
-					getChain(chain.get(2*i),chain.get(2*i+1));
+				if(!(currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChain)) {
 					
+					checkNextX = chain.get(2*i);
+					checkNextY = chain.get(2*i+1);
+					
+					break;
+						
+				}
+				
 			}
 			
 		
-		
+		if(checkNextX !=-1 && checkNextY != -1) 
+			return getChain(checkNextX,checkNextY);
 			
 			
 
 		
-		
+		System.out.println("Doszedłem tu x");
 		
 		for(int i = 0; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
 				
-				if(currentBoard[i][j] != null)
+				if(currentBoard[i][j] != null) {
+					
 					currentBoard[i][j].setChecked(false);
+					currentBoard[i][j].ifChain = false;
+				}
+				
 				
 			}
 		}
@@ -214,6 +252,8 @@ public class AppEngine {
 			
 			
 		}
+		
+		
 		
 		return chain;
 	}
@@ -332,7 +372,7 @@ public class AppEngine {
 		for(int i=0;i<boardSize;i++) {
 			for(int j=0;j<boardSize;j++) {
 				if(!(i == X && j == Y) && currentBoard[i][j] != null) {
-					if(checkIfStrangled(i,j)) {
+					if(checkIfStrangled2(i,j)) {
 						coords.add(i);
 						coords.add(j);
 					}
@@ -368,7 +408,7 @@ public class AppEngine {
 			int newX = coords.get(2*i);
 			int newY = coords.get(2*i+1);
 			if (currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() != color) {
-				if (checkIfStrangled(newX,newY)) {
+				if (checkIfStrangled2(newX,newY)) {
 					return true;
 				}
 			}
