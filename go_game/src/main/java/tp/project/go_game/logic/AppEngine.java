@@ -288,6 +288,7 @@ public class AppEngine {
 		ArrayList<Integer> colorChain = new ArrayList<>();
 		domkaChain.add(X);
 		domkaChain.add(Y);
+		currentBoard[X][Y].ifChecked = true;
 		for(int i=0; i< boardSize;i++) {
 			for(int j=0;j<boardSize;j++) {
 				if (currentBoard[j][i] != null && currentBoard[j][i].getColor() == color) {
@@ -296,17 +297,29 @@ public class AppEngine {
 				}
 			}
 		}
-		for(int i=0; i< colorChain.size()/2;i++) {
-			for(int j=0; j<domkaChain.size()/2;j++) {
-				if (checkIfNeighbour(colorChain.get(2*i),colorChain.get(2*i+1),domkaChain.get(2*j),domkaChain.get(2*j+1))) {
-					domkaChain.add(colorChain.get(2*i));
-					domkaChain.add(colorChain.get(2*i+1));
-					break;
-				}
+		for (int k=0;k<2;k++) {
+			for(int i=0; i< colorChain.size()/2;i++) {
+				if (!currentBoard[colorChain.get(2*i)][colorChain.get(2*i+1)].ifChecked) {
+				for(int j=0; j<domkaChain.size()/2;j++) {
+					if (checkIfNeighbour(colorChain.get(2*i),colorChain.get(2*i+1),domkaChain.get(2*j),domkaChain.get(2*j+1))) {
+						domkaChain.add(colorChain.get(2*i));
+						domkaChain.add(colorChain.get(2*i+1));
+						currentBoard[colorChain.get(2*i)][colorChain.get(2*i+1)].ifChecked = true;
+						break;
+					}
+				}}
 			}
 		}
 		for(int j=0; j<domkaChain.size()/2;j++) {
 			System.out.println(j+": "+domkaChain.get(2*j)+" "+domkaChain.get(2*j+1));
+		}
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null)
+					currentBoard[i][j].setChecked(false);
+				
+			}
 		}
 		return domkaChain;
 	}
