@@ -55,7 +55,6 @@ public class AppEngine {
 		}
 		
 		convertedMessage = interpretMessage(recievedMessage);
-		System.out.println("Gra : " + turnCounter);
 		if (convertedMessage[0].equals("button")) {
 			handleButtons();
 		}
@@ -88,26 +87,27 @@ public class AppEngine {
 				message = "Pole zajete";
 			}
 			else {
-			
+					addStone(squareX, squareY);
 				if (checkIfKo(squareX, squareY)) {
 					message = "Naruszona zasada Ko";
+					removeStone(squareX, squareY);
 				}
 				else {
-					
 					if (checkIfStrangles(squareX, squareY)) {
-						addStone(squareX, squareY);
+
 						removeStrangledStones();
 						changeTurn();
 						message = "";
-					
 					} 
+					
 					else {
 					
 						if (checkIfSuicidal(squareX, squareY)) {
 							message = "Ruch samobojczy";
+							removeStone(squareX, squareY);
 						} 
 						else {
-							addStone(squareX, squareY);
+
 							changeTurn();
 							message = "";
 						}
@@ -125,13 +125,11 @@ public class AppEngine {
 		if (turnCounter < 2) {
 			return false;
 		}
-		addStone(X,Y);
+
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
 				
-				if(currentBoard == koBoard)
-				System.out.println(currentBoard[i][j] + "  "+ koBoard[i][j]);
 				
 				
 				if (currentBoard[i][j] != koBoard[i][j]) { 
@@ -139,13 +137,13 @@ public class AppEngine {
 				}
 			}
 		}
-		removeStone(X,Y);
+
 		return outcome;
 	}
 
 
 	public boolean checkIfSuicidal(int X, int Y) {
-		addStone(X,Y);
+
 		boolean outcome;
 		if (checkIfStrangled(X,Y)) {
 			outcome = true;
@@ -153,33 +151,185 @@ public class AppEngine {
 		else {
 			outcome = false;
 		}
-		removeStone(X,Y);
+
 		return outcome;
 	}
+	
+	
+	public ArrayList<Integer> getChain(int X, int Y){
+		
+		ArrayList<Integer> chain = new ArrayList<>();
+		Color color = currentBoard[X][Y].getColor();
+		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
+		
+		chain.add(X);
+		chain.add(Y);
+		
+		currentBoard[X][Y].ifChecked = true;
+		
+		for(int i = 0; i < coords.size()/2; i++) {
+			System.out.println("IIIIII"+i);
+			int newX = coords.get(2*i);
+			int newY = coords.get(2*i+1);
+			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
+				
+				chain.add(newX);
+				chain.add(newY);
+		
+				
+				
+				
+			}
+			
+		}
+		for(int i = 0; i < chain.size()/2; i++) {
+		
+				
+				if(!currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChecked)
+					getChain(chain.get(2*i),chain.get(2*i+1));
+					
+			}
+			
+		
+		
+			
+			
 
+		
+		
+		
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null)
+					currentBoard[i][j].setChecked(false);
+				
+			}
+		}
+		
+		for(int j = 0; j < chain.size()/2; j++) {
+			
+
+			System.out.println(chain.get(2*j)+ " " +chain.get(2*j+1));
+			
+			
+		}
+		
+		return chain;
+	}
 
 	public boolean checkIfStrangled(int X, int Y) {
 		boolean outcome = true;
+		Color color = currentBoard[X][Y].getColor();
+
 		if (!checkIfGotBreaths(X,Y)) {
 			ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 			for (int i=0;i<coords.size()/2;i++) {
+
+
+				if (currentBoard[coords.get(2*i)][coords.get(2*i+1)].getColor() != color || currentBoard[coords.get(2*i)][coords.get(2*i+1)].ifChecked) {
+				   
+
+					coords.remove(2*i+1);
+					coords.remove(2*i);
+
+					i--;
+
+				}
+			}
+			
+			int counter = 0;
+
+			for (int i=0;i<coords.size()/2;i++) {
 				int newX = coords.get(2*i);
 				int newY = coords.get(2*i+1);
-				if (blackTurn) {
-					if (currentBoard[newX][newY].getColor()==Color.black && !currentBoard[newX][newY].ifChecked) {
+
+						counter++;
 						currentBoard[X][Y].ifChecked = true;
-						return checkIfStrangled(newX,newY);
-					}
-				}
-				else if(!blackTurn) {
-					if (currentBoard[newX][newY].getColor()==Color.white && !currentBoard[newX][newY].ifChecked) {
-						currentBoard[X][Y].ifChecked = true;
-						return checkIfStrangled(newX,newY);
-					}
+						outcome = checkIfStrangled(newX,newY);
+						
+						
+						if (!outcome || counter == coords.size()/2) {
+							for(int k = 0; k < boardSize; k++) {
+								for(int j = 0; j < boardSize; j++) {
+									if(currentBoard[k][j] != null)
+										currentBoard[k][j].setChecked(false);;
+								}
+							}
+							return outcome;
+						}
+			
+			}	
+		} 
+		
+		else outcome = false;
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null)
+					currentBoard[i][j].setChecked(false);
+				
+			}
+		}
+		return outcome;
+	}
+	
+	public boolean checkIfNeighbour(int X, int Y, int A, int B) {
+		boolean outcome = false;
+		int xDif = Math.abs(X-A);
+		int yDif = Math.abs(Y-B);
+		if ((xDif ==1 && yDif ==0) || (xDif == 0 && yDif==1)) outcome = true;
+		return outcome;
+	}
+	
+	public ArrayList<Integer> getDomkaChain(int X, int Y){
+		ArrayList<Integer> domkaChain = new ArrayList<>();
+		Color color = currentBoard[X][Y].getColor();
+		ArrayList<Integer> colorChain = new ArrayList<>();
+		domkaChain.add(X);
+		domkaChain.add(Y);
+		currentBoard[X][Y].ifChecked = true;
+		for(int i=0; i< boardSize;i++) {
+			for(int j=0;j<boardSize;j++) {
+				if (currentBoard[j][i] != null && currentBoard[j][i].getColor() == color) {
+					colorChain.add(j);
+					colorChain.add(i);
 				}
 			}
 		}
-		else outcome = false;
+		for (int k=0;k<3;k++) {
+			for(int i=0; i< colorChain.size()/2;i++) {
+				if (!currentBoard[colorChain.get(2*i)][colorChain.get(2*i+1)].ifChecked) {
+				for(int j=0; j<domkaChain.size()/2;j++) {
+					if (checkIfNeighbour(colorChain.get(2*i),colorChain.get(2*i+1),domkaChain.get(2*j),domkaChain.get(2*j+1))) {
+						domkaChain.add(colorChain.get(2*i));
+						domkaChain.add(colorChain.get(2*i+1));
+						currentBoard[colorChain.get(2*i)][colorChain.get(2*i+1)].ifChecked = true;
+						break;
+					}
+				}}
+			}
+		}
+		for(int j=0; j<domkaChain.size()/2;j++) {
+			System.out.println(j+": "+domkaChain.get(2*j)+" "+domkaChain.get(2*j+1));
+		}
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null)
+					currentBoard[i][j].setChecked(false);
+				
+			}
+		}
+		return domkaChain;
+	}
+	
+	public boolean checkIfStrangledDomki(int X, int Y) {
+		ArrayList<Integer> domkaChain = getDomkaChain(X,Y);
+		boolean outcome = true;
+		for (int i=0;i<domkaChain.size()/2;i++) {
+			if (checkIfGotBreaths(domkaChain.get(2*i),domkaChain.get(2*i+1))) outcome = false;
+		}
 		return outcome;
 	}
 	
@@ -187,12 +337,14 @@ public class AppEngine {
 		boolean outcome = false;
 		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 		
+
 		for (int i=0;i<coords.size()/2;i++) {
 	
 			if (currentBoard[coords.get(i*2)][coords.get(2*i+1)] == null) {
 				outcome = true;
 			}
 		}
+
 		return outcome;
 	}
 	
@@ -214,6 +366,7 @@ public class AppEngine {
 			coords.add(X);
 			coords.add(Y+1);
 		}
+		
 		return coords;
 	}
 
@@ -237,7 +390,7 @@ public class AppEngine {
 		ArrayList<Integer> coords = new ArrayList<Integer>();
 		for(int i=0;i<boardSize;i++) {
 			for(int j=0;j<boardSize;j++) {
-				if(i != X && j != Y) {
+				if(!(i == X && j == Y) && currentBoard[i][j] != null) {
 					if(checkIfStrangled(i,j)) {
 						coords.add(i);
 						coords.add(j);
@@ -249,20 +402,25 @@ public class AppEngine {
 	}
 	
 	private void removeStone(int X, int Y) {
+
+		
 		currentBoard[X][Y] = null;
+
 	}
 
 
-	private void removeStrangledStones() {
+	public void removeStrangledStones() {
+		
 		ArrayList<Integer> coords = getCoordsToRemove(squareX,squareY);
 		for(int i=0;i<coords.size()/2;i++) {
+		 
 			removeStone(coords.get(2*i), coords.get(2*i+1));
 		}
 	}
 
 
-	private boolean checkIfStrangles(int X, int Y) {
-		addStone(X,Y);
+	public boolean checkIfStrangles(int X, int Y) {
+		
 		Color color = currentBoard[X][Y].getColor();
 		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 		for (int i=0;i<coords.size()/2;i++) {
@@ -270,12 +428,10 @@ public class AppEngine {
 			int newY = coords.get(2*i+1);
 			if (currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() != color) {
 				if (checkIfStrangled(newX,newY)) {
-					removeStone(X,Y);
 					return true;
 				}
 			}
 		}
-		removeStone(X,Y);
 		return false;
 	}
 
@@ -296,12 +452,12 @@ public class AppEngine {
 			
 			if (passCounter == 2) {
 				message = "Koniec gry";
-				//getScore();
+
 			}
 
 		} else if (convertedMessage[1].equals("resign")) {
 			message = "Koniec gry";
-			//getScore();
+
 		}
 	
 	}
@@ -373,6 +529,12 @@ public class AppEngine {
 
 	public String[] getConvertedMessage() {
 		return convertedMessage;
+	}
+	
+	public Stone[][] getCurrentBoard(){
+		
+		return currentBoard;
+		
 	}
 
 	

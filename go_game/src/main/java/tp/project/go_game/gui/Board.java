@@ -67,16 +67,16 @@ public class Board extends JPanel{
 		switch (boardSize) {
 	    
 	    case 9: 
-	    	this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1313.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1919.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
@@ -100,26 +100,14 @@ public class Board extends JPanel{
 
 	    for(int i = 0; i < boardSize; i++) {
 	    	for(int j = 0; j < boardSize; j++){
-	    		
 	    		if(stones[i][j] != null) {
-	    			
 	    			g2d.setColor(stones[i][j].getColor());
 	    			drawConverter(i,j);
-	    			
-	    				g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
-	    		
-	    			
-	    		}
-	    		
-	    		
-	    	}
-	    	 
-	    	
-	    	
+	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);	
+	    		}	
+	    	}	
 	    }
-	    
-	    
-	  }
+	 }
 	
 	
 	public void drawConverter(int X, int Y) {
