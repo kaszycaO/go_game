@@ -47,8 +47,9 @@ public class ChainRemovalTest {
 		
 		
 		
-		//assertTrue(engine.checkIfStrangles(2, 2));
-		engine.getChain(1, 1);
+		assertTrue(engine.checkIfStrangles(2, 2));
+		engine.getDomkaChain(1, 1);
+		assertTrue(engine.checkIfStrangledDomki(1, 3));
 		//assertTrue(engine.checkIfStrangled(0, 0));
 	
 		

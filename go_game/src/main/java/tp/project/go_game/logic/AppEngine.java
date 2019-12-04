@@ -274,6 +274,52 @@ public class AppEngine {
 		return outcome;
 	}
 	
+	public boolean checkIfNeighbour(int X, int Y, int A, int B) {
+		boolean outcome = false;
+		int xDif = Math.abs(X-A);
+		int yDif = Math.abs(Y-B);
+		if ((xDif ==1 && yDif ==0) || (xDif == 0 && yDif==1)) outcome = true;
+		return outcome;
+	}
+	
+	public ArrayList<Integer> getDomkaChain(int X, int Y){
+		ArrayList<Integer> domkaChain = new ArrayList<>();
+		Color color = currentBoard[X][Y].getColor();
+		ArrayList<Integer> colorChain = new ArrayList<>();
+		domkaChain.add(X);
+		domkaChain.add(Y);
+		for(int i=0; i< boardSize;i++) {
+			for(int j=0;j<boardSize;j++) {
+				if (currentBoard[j][i] != null && currentBoard[j][i].getColor() == color) {
+					colorChain.add(j);
+					colorChain.add(i);
+				}
+			}
+		}
+		for(int i=0; i< colorChain.size()/2;i++) {
+			for(int j=0; j<domkaChain.size()/2;j++) {
+				if (checkIfNeighbour(colorChain.get(2*i),colorChain.get(2*i+1),domkaChain.get(2*j),domkaChain.get(2*j+1))) {
+					domkaChain.add(colorChain.get(2*i));
+					domkaChain.add(colorChain.get(2*i+1));
+					break;
+				}
+			}
+		}
+		for(int j=0; j<domkaChain.size()/2;j++) {
+			System.out.println(j+": "+domkaChain.get(2*j)+" "+domkaChain.get(2*j+1));
+		}
+		return domkaChain;
+	}
+	
+	public boolean checkIfStrangledDomki(int X, int Y) {
+		ArrayList<Integer> domkaChain = getDomkaChain(X,Y);
+		boolean outcome = true;
+		for (int i=0;i<domkaChain.size()/2;i++) {
+			if (checkIfGotBreaths(domkaChain.get(2*i),domkaChain.get(2*i+1))) outcome = false;
+		}
+		return outcome;
+	}
+	
 	public boolean checkIfGotBreaths(int X, int Y) {
 		boolean outcome = false;
 		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
