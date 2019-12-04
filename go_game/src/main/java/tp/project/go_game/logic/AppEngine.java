@@ -161,9 +161,7 @@ public class AppEngine {
 		Color color = currentBoard[X][Y].getColor();
 		
 		if (!checkIfGotBreaths(X,Y)) {
-			System.out.println("Halko, nie mam oddechó");
 			ArrayList<Integer> coords = getCoordsToCheck(X,Y);
-			
 			System.out.println(coords.size());
 			for (int i=0;i<coords.size()/2;i++) {
 				int newX = coords.get(2*i);
@@ -172,13 +170,22 @@ public class AppEngine {
 					if (currentBoard[newX][newY].getColor()==color && !currentBoard[newX][newY].ifChecked) {
 						System.out.println("Halko, if jest tu");
 						currentBoard[X][Y].ifChecked = true;
-						return checkIfStrangled(newX,newY);
+						//return checkIfStrangled(newX,newY);
+						outcome = checkIfStrangled(newX,newY);
+						if (!outcome) {
+							for(int k = 0; k < boardSize; k++) {
+								for(int j = 0; j < boardSize; j++) {
+									if(currentBoard[k][j] != null)
+										currentBoard[k][j].setChecked(false);;
+								}
+							}
+							return outcome;
+						}
 						
 					}
 			}	
 		} 
 		else outcome = false;
-		
 		for(int i = 0; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
 				
