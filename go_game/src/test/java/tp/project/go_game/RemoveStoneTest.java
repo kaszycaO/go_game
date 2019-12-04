@@ -27,8 +27,10 @@ public class RemoveStoneTest {
 		
 		engine.changeTurn();
 		
-		assertTrue(engine.checkIfStrangles(1, 0));
 		engine.addStone(1, 0);
+		
+		assertTrue(engine.checkIfStrangles(1, 0));
+	
 		assertTrue(engine.checkIfStrangled(0, 0));
 	
 		

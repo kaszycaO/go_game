@@ -154,32 +154,98 @@ public class AppEngine {
 
 		return outcome;
 	}
+	
+	
+	public ArrayList<Integer> getChain(int X, int Y){
+		
+		ArrayList<Integer> chain = new ArrayList<>();
+		Color color = currentBoard[X][Y].getColor();
+		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
+		
+		chain.add(X);
+		chain.add(Y);
+		
+		currentBoard[X][Y].ifChecked = true;
+		
+		for(int i = 0; i < coords.size()/2; i++) {
+			System.out.println("IIIIII"+i);
+			int newX = coords.get(2*i);
+			int newY = coords.get(2*i+1);
+			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
+				
+				chain.add(newX);
+				chain.add(newY);
+		
+				
+				
+				
+			}
+			
+		}
+		for(int i = 0; i < chain.size()/2; i++) {
+		
+				
+				if(!currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChecked)
+					getChain(chain.get(2*i),chain.get(2*i+1));
+					
+			}
+			
+		
+		
+			
+			
 
+		
+		
+		
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null)
+					currentBoard[i][j].setChecked(false);
+				
+			}
+		}
+		
+		for(int j = 0; j < chain.size()/2; j++) {
+			
+
+			System.out.println(chain.get(2*j)+ " " +chain.get(2*j+1));
+			
+			
+		}
+		
+		return chain;
+	}
 
 	public boolean checkIfStrangled(int X, int Y) {
 		boolean outcome = true;
 		Color color = currentBoard[X][Y].getColor();
-		
+
 		if (!checkIfGotBreaths(X,Y)) {
 			ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 			for (int i=0;i<coords.size()/2;i++) {
-				if (currentBoard[2*i][2*i+1] != null && currentBoard[2*i][2*i+1].getColor() != color) {
-					coords.remove(2*i);
+
+				if (currentBoard[coords.get(2*i)][coords.get(2*i+1)].getColor() != color || currentBoard[coords.get(2*i)][coords.get(2*i+1)].ifChecked) {
+				   
 					coords.remove(2*i+1);
+					coords.remove(2*i);
+					i--;
+					
 				}
 			}
+			
 			int counter = 0;
-			System.out.println(coords.size());
+
 			for (int i=0;i<coords.size()/2;i++) {
 				int newX = coords.get(2*i);
 				int newY = coords.get(2*i+1);
-				System.out.println("Halko, sprawdzam: "+ newX + " "+ newY);
-					if (!currentBoard[newX][newY].ifChecked) {
-						System.out.println("Halko, if jest tu");
-						currentBoard[X][Y].ifChecked = true;
+
 						counter++;
-						//return checkIfStrangled(newX,newY);
+						currentBoard[X][Y].ifChecked = true;
 						outcome = checkIfStrangled(newX,newY);
+						
+						
 						if (!outcome || counter == coords.size()/2) {
 							for(int k = 0; k < boardSize; k++) {
 								for(int j = 0; j < boardSize; j++) {
@@ -189,16 +255,16 @@ public class AppEngine {
 							}
 							return outcome;
 						}
-						
-					}
+			
 			}	
 		} 
+		
 		else outcome = false;
 		for(int i = 0; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
 				
 				if(currentBoard[i][j] != null)
-					currentBoard[i][j].setChecked(false);;
+					currentBoard[i][j].setChecked(false);
 				
 			}
 		}
