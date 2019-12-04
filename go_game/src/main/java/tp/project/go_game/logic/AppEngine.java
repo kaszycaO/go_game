@@ -145,7 +145,7 @@ public class AppEngine {
 	public boolean checkIfSuicidal(int X, int Y) {
 
 		boolean outcome;
-		if (checkIfStrangled(X,Y)) {
+		if (checkIfStrangledDomki(X,Y)) {
 			outcome = true;
 		}
 		else {
@@ -154,126 +154,7 @@ public class AppEngine {
 
 		return outcome;
 	}
-	
-	
-	public ArrayList<Integer> getChain(int X, int Y){
 		
-		ArrayList<Integer> chain = new ArrayList<>();
-		Color color = currentBoard[X][Y].getColor();
-		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
-		
-		chain.add(X);
-		chain.add(Y);
-		
-		currentBoard[X][Y].ifChecked = true;
-		
-		for(int i = 0; i < coords.size()/2; i++) {
-			System.out.println("IIIIII"+i);
-			int newX = coords.get(2*i);
-			int newY = coords.get(2*i+1);
-			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
-				
-				chain.add(newX);
-				chain.add(newY);
-		
-				
-				
-				
-			}
-			
-		}
-		for(int i = 0; i < chain.size()/2; i++) {
-		
-				
-				if(!currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChecked)
-					getChain(chain.get(2*i),chain.get(2*i+1));
-					
-			}
-			
-		
-		
-			
-			
-
-		
-		
-		
-		for(int i = 0; i < boardSize; i++) {
-			for(int j = 0; j < boardSize; j++) {
-				
-				if(currentBoard[i][j] != null)
-					currentBoard[i][j].setChecked(false);
-				
-			}
-		}
-		
-		for(int j = 0; j < chain.size()/2; j++) {
-			
-
-			System.out.println(chain.get(2*j)+ " " +chain.get(2*j+1));
-			
-			
-		}
-		
-		return chain;
-	}
-
-	public boolean checkIfStrangled(int X, int Y) {
-		boolean outcome = true;
-		Color color = currentBoard[X][Y].getColor();
-
-		if (!checkIfGotBreaths(X,Y)) {
-			ArrayList<Integer> coords = getCoordsToCheck(X,Y);
-			for (int i=0;i<coords.size()/2;i++) {
-
-
-				if (currentBoard[coords.get(2*i)][coords.get(2*i+1)].getColor() != color || currentBoard[coords.get(2*i)][coords.get(2*i+1)].ifChecked) {
-				   
-
-					coords.remove(2*i+1);
-					coords.remove(2*i);
-
-					i--;
-
-				}
-			}
-			
-			int counter = 0;
-
-			for (int i=0;i<coords.size()/2;i++) {
-				int newX = coords.get(2*i);
-				int newY = coords.get(2*i+1);
-
-						counter++;
-						currentBoard[X][Y].ifChecked = true;
-						outcome = checkIfStrangled(newX,newY);
-						
-						
-						if (!outcome || counter == coords.size()/2) {
-							for(int k = 0; k < boardSize; k++) {
-								for(int j = 0; j < boardSize; j++) {
-									if(currentBoard[k][j] != null)
-										currentBoard[k][j].setChecked(false);;
-								}
-							}
-							return outcome;
-						}
-			
-			}	
-		} 
-		
-		else outcome = false;
-		for(int i = 0; i < boardSize; i++) {
-			for(int j = 0; j < boardSize; j++) {
-				
-				if(currentBoard[i][j] != null)
-					currentBoard[i][j].setChecked(false);
-				
-			}
-		}
-		return outcome;
-	}
-	
 	public boolean checkIfNeighbour(int X, int Y, int A, int B) {
 		boolean outcome = false;
 		int xDif = Math.abs(X-A);
@@ -297,7 +178,7 @@ public class AppEngine {
 				}
 			}
 		}
-		for (int k=0;k<3;k++) {
+		for (int k=0;k<2;k++) {
 			for(int i=0; i< colorChain.size()/2;i++) {
 				if (!currentBoard[colorChain.get(2*i)][colorChain.get(2*i+1)].ifChecked) {
 				for(int j=0; j<domkaChain.size()/2;j++) {
@@ -391,7 +272,7 @@ public class AppEngine {
 		for(int i=0;i<boardSize;i++) {
 			for(int j=0;j<boardSize;j++) {
 				if(!(i == X && j == Y) && currentBoard[i][j] != null) {
-					if(checkIfStrangled(i,j)) {
+					if(checkIfStrangledDomki(i,j)) {
 						coords.add(i);
 						coords.add(j);
 					}
@@ -427,7 +308,7 @@ public class AppEngine {
 			int newX = coords.get(2*i);
 			int newY = coords.get(2*i+1);
 			if (currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() != color) {
-				if (checkIfStrangled(newX,newY)) {
+				if (checkIfStrangledDomki(newX,newY)) {
 					return true;
 				}
 			}
