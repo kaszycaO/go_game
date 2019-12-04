@@ -226,12 +226,15 @@ public class AppEngine {
 			ArrayList<Integer> coords = getCoordsToCheck(X,Y);
 			for (int i=0;i<coords.size()/2;i++) {
 
+
 				if (currentBoard[coords.get(2*i)][coords.get(2*i+1)].getColor() != color || currentBoard[coords.get(2*i)][coords.get(2*i+1)].ifChecked) {
 				   
+
 					coords.remove(2*i+1);
 					coords.remove(2*i);
+
 					i--;
-					
+
 				}
 			}
 			
