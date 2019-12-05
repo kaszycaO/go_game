@@ -48,7 +48,7 @@ public class doMoveTest {
 		
 		System.out.println();
 		//assertFalse(engine.checkIfGotBreaths(1, 1));
-		assertFalse(engine.checkIfStrangled(1,2));
+		assertFalse(engine.checkIfStrangledDomki(1,2));
 		//assertTrue(engine.checkIfStrangled(1, 1));
 		//assertTrue(engine.checkIfSuicidal(1, 1));
 		//engine.changeTurn();
