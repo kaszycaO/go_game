@@ -129,12 +129,14 @@ public class AppEngine {
 		boolean outcome = true;
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
-				
-				
-				
-				if (currentBoard[i][j] != koBoard[i][j]) { 
-					outcome = false; 
+				if (currentBoard[i][j] == null) {
+					if(koBoard[i][j] != null) outcome = false;
+				} else {
+					if(koBoard[i][j] == null || koBoard[i][j].getColor()!=currentBoard[i][j].getColor()) outcome = false; 
 				}
+				
+				
+				
 			}
 		}
 
