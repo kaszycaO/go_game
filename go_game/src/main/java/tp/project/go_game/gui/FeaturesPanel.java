@@ -33,7 +33,7 @@ public class FeaturesPanel extends JPanel {
 	/**
 	 * Adapter (klient) 
 	 */
-	private GUIAdapter myAdapter;
+	private Client myAdapter;
 	
 	
 	/**
@@ -42,7 +42,7 @@ public class FeaturesPanel extends JPanel {
 	 * @param myAdapter GUIAdapter (klient)
 	 * 
 	 */
-	FeaturesPanel(GUIAdapter myAdapter){
+	FeaturesPanel(Client myAdapter){
 		
 		this.myAdapter = myAdapter;
 		
