@@ -4,6 +4,7 @@ package tp.project.go_game.logic;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import tp.project.go_game.exceptions.*;
 
 public class AppEngine implements EngineInterface {
 
@@ -45,7 +46,7 @@ public class AppEngine implements EngineInterface {
 		}
 	}
 	
-	public Stone[][] doMove(String recievedMessage) {
+	public Stone[][] doMove(String recievedMessage) throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException {
 		
 		if (turnCounter > 1) {
 			switchArrays(koBoard,previousBoard);
@@ -75,7 +76,7 @@ public class AppEngine implements EngineInterface {
 		turnCounter++;
 	}
 	
-	public void handleMove() {
+	public void handleMove() throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException {
 		passCounter = 0;
 		squareX = Integer.parseInt(convertedMessage[1]);
 		squareY = Integer.parseInt(convertedMessage[2]);
@@ -85,12 +86,14 @@ public class AppEngine implements EngineInterface {
 		if((squareX >=0 && squareY >=0) && (squareX < boardSize && squareY < boardSize)) {
 			if (checkIfTaken(squareX, squareY)) {
 				message = "Pole zajete";
+				throw new CoordinatesOutOfBoundsException();
 			}
 			else {
 					addStone(squareX, squareY);
 				if (checkIfKo(squareX, squareY)) {
 					message = "Naruszona zasada Ko";
 					removeStone(squareX, squareY);
+					throw new KoRuleViolatedException();
 				}
 				else {
 					if (checkIfStrangles(squareX, squareY)) {
@@ -105,6 +108,7 @@ public class AppEngine implements EngineInterface {
 						if (checkIfSuicidal(squareX, squareY)) {
 							message = "Ruch samobojczy";
 							removeStone(squareX, squareY);
+							throw new SuicidalMoveException();
 						} 
 						else {
 
@@ -119,6 +123,8 @@ public class AppEngine implements EngineInterface {
 			return;
 		
 	}
+	
+	
 
 
 	public boolean checkIfKo(int X, int Y) {
@@ -134,12 +140,8 @@ public class AppEngine implements EngineInterface {
 				} else {
 					if(koBoard[i][j] == null || koBoard[i][j].getColor()!=currentBoard[i][j].getColor()) outcome = false; 
 				}
-				
-				
-				
 			}
 		}
-
 		return outcome;
 	}
 
