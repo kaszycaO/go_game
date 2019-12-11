@@ -12,7 +12,7 @@ import tp.project.go_game.server.AppServer;
 public class MainFrame extends JFrame {
 
 	
-	private Client myAdapter;
+	private GUIAdapter myAdapter;
 	private int boardSize = -1;
 	public AppServer server;
 	protected Board myBoard;
@@ -54,7 +54,7 @@ public class MainFrame extends JFrame {
 		setTitle("Go game");
 		setPreferredSize(new Dimension(1040, 880));
 		setLayout(new BorderLayout());
-		myAdapter = new Client(this);
+		myAdapter = new GUIAdapter(this);
 		myBoard = new Board(myAdapter, boardSize);
 		myFeaturesPanel = new FeaturesPanel(myAdapter);
 		this.server = new AppServer(myBoard);

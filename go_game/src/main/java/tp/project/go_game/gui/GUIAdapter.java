@@ -18,7 +18,7 @@ import java.net.Socket;
  * 
  * Client
  */
-public class Client extends MouseAdapter implements ActionListener {
+public class GUIAdapter extends MouseAdapter implements ActionListener {
 
 	/**
      * gniazdko klienta
@@ -35,7 +35,7 @@ public class Client extends MouseAdapter implements ActionListener {
 	MainFrame myFrame;
 	
 	
-	public Client(MainFrame myFrame) {
+	public GUIAdapter(MainFrame myFrame) {
 		
 		this.myFrame = myFrame;
 		

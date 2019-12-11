@@ -27,7 +27,7 @@ public class Board extends JPanel{
 	/**
 	 *  Instancja adaptera (klienta)
 	 */
-	private Client myAdapter;
+	private GUIAdapter myAdapter;
 	
 	/**
 	 * Rozmiar planszy podawany przez klienta
@@ -46,7 +46,7 @@ public class Board extends JPanel{
 	 * @param myAdapter GUIAdapter (klient)
 	 * @param boardSize wielkoś planszy
 	 */
-	public Board(Client myAdapter, int boardSize) {
+	public Board(GUIAdapter myAdapter, int boardSize) {
 		
 		this.myAdapter = myAdapter;
 		this.boardSize = boardSize;
