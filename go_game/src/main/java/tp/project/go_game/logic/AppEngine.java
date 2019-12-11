@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 
-public class AppEngine {
+public class AppEngine implements EngineInterface {
 
 	
 	private int squareX;
@@ -432,7 +432,7 @@ public class AppEngine {
 	}
 
 
-	private void handleButtons() {
+	public void handleButtons() {
 		if (convertedMessage[1].equals("pass")) {
 			passCounter += 1;
 			message = "Poddales swoj ruch";
