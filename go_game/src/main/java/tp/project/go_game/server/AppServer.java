@@ -16,6 +16,7 @@ public class AppServer {
 	
 	
 	private AppEngine engine;
+	private ServerInterpreter interpreter;
 	
 	Board board;
 	/**
@@ -39,6 +40,7 @@ public class AppServer {
     private String recievedMessage = "";
     
     
+    
     public AppServer(Board board) {
     	try {
             server = new ServerSocket(4444);
@@ -49,6 +51,7 @@ public class AppServer {
         }
     	this.board = board;
     	engine = new AppEngine(board.getBoardSize());
+    	interpreter = new ServerInterpreter(engine);
     }
     
     /**
@@ -67,7 +70,7 @@ public class AppServer {
                 fromClient = new DataInputStream(new BufferedInputStream(client.getInputStream()));
                 toClient = new DataOutputStream(client.getOutputStream());
                 recievedMessage = fromClient.readUTF();
-                board.setBoard(engine.doMove(recievedMessage));
+               // board.setBoard(engine.doMove(recievedMessage));
                 toClient.writeUTF(engine.getMessage());
                 
             } catch (IOException e) {
