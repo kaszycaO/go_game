@@ -27,7 +27,7 @@ public class Board extends JPanel{
 	/**
 	 *  Instancja adaptera (klienta)
 	 */
-	private GUIAdapter myAdapter;
+	private Client myAdapter;
 	
 	/**
 	 * Rozmiar planszy podawany przez klienta
@@ -46,7 +46,7 @@ public class Board extends JPanel{
 	 * @param myAdapter GUIAdapter (klient)
 	 * @param boardSize wielkoś planszy
 	 */
-	public Board(GUIAdapter myAdapter, int boardSize) {
+	public Board(Client myAdapter, int boardSize) {
 		
 		this.myAdapter = myAdapter;
 		this.boardSize = boardSize;
@@ -67,16 +67,16 @@ public class Board extends JPanel{
 		switch (boardSize) {
 	    
 	    case 9: 
-	    	this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1313.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1919.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
