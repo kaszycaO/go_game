@@ -12,10 +12,14 @@ import tp.project.go_game.server.AppServer;
 public class MainFrame extends JFrame {
 
 	
-	private GUIAdapter myAdapter;
+	public GUIAdapter myAdapter;
 	private int boardSize = -1;
 	protected Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;
+	private int xclicked;
+	private int yclicked;
+	private boolean mousePressed = false;
+	private String buttonClicked = "XD";
 	
 	
 	
@@ -50,6 +54,46 @@ public class MainFrame extends JFrame {
 		
 		return boardSize;
 		
+	}
+
+
+	public int getXclicked() {
+		return xclicked;
+	}
+
+
+	public void setXclicked(int xclicked) {
+		this.xclicked = xclicked;
+	}
+
+
+	public int getYclicked() {
+		return yclicked;
+	}
+
+
+	public void setYclicked(int yclicked) {
+		this.yclicked = yclicked;
+	}
+
+
+	public String getButtonClicked() {
+		return buttonClicked;
+	}
+
+
+	public void setButtonClicked(String buttonClicked) {
+		this.buttonClicked = buttonClicked;
+	}
+
+
+	public boolean isMousePressed() {
+		return mousePressed;
+	}
+
+
+	public void setMousePressed(boolean mousePressed) {
+		this.mousePressed = mousePressed;
 	}
 	
 	

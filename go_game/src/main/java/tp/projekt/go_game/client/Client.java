@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client {
+public class Client extends Observer {
 	
 	private ClientInterpreter interpreter;
 	/**
@@ -21,20 +21,35 @@ public class Client {
      * komunikaty od serwera
      */
     private DataInputStream fromServer = null;
+    
+    private boolean blackTurn = true;
+    private boolean blackPlayer;
 	
-	public Client(int boardSize) {
+	public Client(int boardSize, boolean blackPlayer) {
 		interpreter = new ClientInterpreter(boardSize);
+		this.blackPlayer = blackPlayer;
+		interpreter.frame.myAdapter.attach(this);
 	}
 	
-	public void exchangeWithServer() {
+	private void exchangeWithServer() {
 		try {
+			  
 	           socket = new Socket("localhost", 4444);
 	           toServer = new DataOutputStream(socket.getOutputStream());
 	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-
+	          
+	           System.out.println(interpreter.sendMessage());
 	           toServer.writeUTF(interpreter.sendMessage());
+	           
 
 	           String line = fromServer.readUTF();
+	           
+	           char checkTurn = line.charAt(0);
+	            
+	           if(checkTurn == '1') {
+	        	   
+	        	   blackTurn = !blackTurn;
+	           }
 
 	           interpreter.handleMessage(line);
 
@@ -46,5 +61,18 @@ public class Client {
 	            System.out.println(e.getMessage());
 	            System.exit(1);
 	        }
+	}
+
+	@Override
+	public void update() {
+		
+		if(blackTurn == blackPlayer) {
+			
+			System.out.println("elo");
+			exchangeWithServer();
+			
+		}
+			
+		
 	}
 }

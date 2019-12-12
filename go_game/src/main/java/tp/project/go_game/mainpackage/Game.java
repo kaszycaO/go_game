@@ -35,7 +35,7 @@ public class Game {
 			boardSize = 19;
 		}
     	server = new AppServer(boardSize, ifBot);
-    	host = new Client(boardSize);
+    	host = new Client(boardSize,true);
     	server.listenSocket();	 
 	}
 	
