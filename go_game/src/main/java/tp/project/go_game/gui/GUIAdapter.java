@@ -23,16 +23,16 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	/**
      * gniazdko klienta
      */
-    Socket socket = null;
+    private Socket socket = null;
     /**
      * komunikaty do serwera
      */
-    DataOutputStream  toServer = null;
+    private DataOutputStream  toServer = null;
     /**
      * komunikaty od serwera
      */
-    DataInputStream fromServer = null;
-	MainFrame myFrame;
+    private DataInputStream fromServer = null;
+	private MainFrame myFrame;
 	
 	
 	public GUIAdapter(MainFrame myFrame) {
@@ -41,7 +41,8 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		
 		
 	}
-	
+	//TODO trzeba poczytac o observer, zrobic atrybuty xclicked, yclicked, buttonclicked w main frame i update'owac te zmienne
+	//z mainframe'a trzeba przekazac do client interpretera, przekonwertowac, podac do klienta i na serwer
 	@Override
 	public void mousePressed(MouseEvent event) {
 		try {

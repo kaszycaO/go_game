@@ -41,7 +41,7 @@ public class AppServer {
     
     
     
-    public AppServer(Board board) {
+    public AppServer(int boardSize, boolean ifBot) {
     	try {
             server = new ServerSocket(4444);
         }
@@ -49,8 +49,7 @@ public class AppServer {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-    	this.board = board;
-    	engine = new AppEngine(board.getBoardSize());
+    	engine = new AppEngine(boardSize);
     	interpreter = new ServerInterpreter(engine);
     }
     
