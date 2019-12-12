@@ -40,15 +40,6 @@ public class AppEngine implements EngineInterface {
 		
 	}
 	
-	public void switchArrays(Stone[][] array1, Stone[][] array2) {
-		
-		for(int i = 0 ; i < boardSize; i++) {
-			for(int j = 0; j < boardSize; j++) {
-				array1[i][j] = array2[i][j];
-			}
-		}
-	}
-	
 	public Stone[][] doMove(String recievedMessage) throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException {
 		
 		if (turnCounter > 1) {
@@ -69,16 +60,6 @@ public class AppEngine implements EngineInterface {
 		return currentBoard;
 	}
 	
-	public void changeTurn() {
-		if (blackTurn) {
-			blackTurn = false;
-		}
-		else {
-			blackTurn = true;
-		}
-		turnCounter++;
-	}
-	
 	public void handleMove() throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException {
 		passCounter = 0;
 		squareX = Integer.parseInt(convertedMessage[1]);
@@ -86,7 +67,7 @@ public class AppEngine implements EngineInterface {
 		
 		coordinatesConverter(squareX, squareY);
 		
-		if((squareX >=0 && squareY >=0) && (squareX < boardSize && squareY < boardSize)) {
+		if(checkIfInBounds(squareX, squareY)) {
 			if (checkIfTaken(squareX, squareY)) {
 				message = "Pole zajete";
 				throw new CoordinatesOutOfBoundsException();
@@ -127,7 +108,11 @@ public class AppEngine implements EngineInterface {
 		
 	}
 	
-	
+	public boolean checkIfInBounds(int X, int Y) {
+		boolean outcome = false;
+		if((X >=0 && Y >=0) && (X < boardSize && Y < boardSize)) outcome = true;
+		return outcome;
+	}
 
 
 	public boolean checkIfKo(int X, int Y) {
@@ -161,106 +146,6 @@ public class AppEngine implements EngineInterface {
 		}
 
 		return outcome;
-	}
-
-	
-	
-	public boolean checkIfStrangled2(int X, int Y) {
-		
-		boolean breaths;
-		getChain(X,Y);
-		
-		for(int i = 0; i < chain.size()/2; i++ ) {
-			
-			breaths = checkIfGotBreaths(chain.get(2*i),chain.get(2*i+1));
-			
-			if(breaths)
-				return false;
-			
-			
-		}
-		
-		
-		return true;
-	}
-	
-	
-	public ArrayList<Integer> getChain(int X, int Y){
-
-		Color color = currentBoard[X][Y].getColor();
-		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
-		
-	    if(!currentBoard[X][Y].ifChecked) {
-	    	
-	    	chain.add(X);
-			chain.add(Y);
-	    	
-	    }
-	
-		currentBoard[X][Y].ifChain = true;
-		
-		for(int i = 0; i < coords.size()/2; i++) {
-			int newX = coords.get(2*i);
-			int newY = coords.get(2*i+1);
-			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
-				
-				chain.add(newX);
-				chain.add(newY);
-				currentBoard[newX][newY].ifChecked = true;
-				
-			}
-			
-		}
-		
-		int checkNextX=-1;
-		int checkNextY=-1;
-		
-		for(int i = 0; i < chain.size()/2; i++) {
-		
-				if(!(currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChain)) {
-					
-					checkNextX = chain.get(2*i);
-					checkNextY = chain.get(2*i+1);
-					
-					break;
-						
-				}
-				
-			}
-			
-		
-		if(checkNextX !=-1 && checkNextY != -1) 
-			return getChain(checkNextX,checkNextY);
-			
-			
-
-		
-		System.out.println("Doszedłem tu x");
-		
-		for(int i = 0; i < boardSize; i++) {
-			for(int j = 0; j < boardSize; j++) {
-				
-				if(currentBoard[i][j] != null) {
-					
-					currentBoard[i][j].setChecked(false);
-					currentBoard[i][j].ifChain = false;
-				}
-				
-				
-			}
-		}
-		
-		for(int j = 0; j < chain.size()/2; j++) {
-			
-
-			System.out.println(chain.get(2*j)+ " " +chain.get(2*j+1));
-			
-			
-		}
-		
-		
-		
-		return chain;
 	}
 
 	public boolean checkIfNeighbour(int X, int Y, int A, int B) {
@@ -452,6 +337,117 @@ public class AppEngine implements EngineInterface {
 	
 	}
 	
+	public boolean checkIfStrangled2(int X, int Y) {
+		
+		boolean breaths;
+		getChain(X,Y);
+		
+		for(int i = 0; i < chain.size()/2; i++ ) {
+			
+			breaths = checkIfGotBreaths(chain.get(2*i),chain.get(2*i+1));
+			
+			if(breaths)
+				return false;
+			
+			
+		}
+		
+		
+		return true;
+	}
+	
+	
+	public ArrayList<Integer> getChain(int X, int Y){
+
+		Color color = currentBoard[X][Y].getColor();
+		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
+		
+	    if(!currentBoard[X][Y].ifChecked) {
+	    	
+	    	chain.add(X);
+			chain.add(Y);
+	    	
+	    }
+	
+		currentBoard[X][Y].ifChain = true;
+		
+		for(int i = 0; i < coords.size()/2; i++) {
+			int newX = coords.get(2*i);
+			int newY = coords.get(2*i+1);
+			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
+				
+				chain.add(newX);
+				chain.add(newY);
+				currentBoard[newX][newY].ifChecked = true;
+				
+			}
+			
+		}
+		
+		int checkNextX=-1;
+		int checkNextY=-1;
+		
+		for(int i = 0; i < chain.size()/2; i++) {
+		
+				if(!(currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChain)) {
+					
+					checkNextX = chain.get(2*i);
+					checkNextY = chain.get(2*i+1);
+					
+					break;
+						
+				}
+				
+			}
+			
+		
+		if(checkNextX !=-1 && checkNextY != -1) 
+			return getChain(checkNextX,checkNextY);
+			
+			
+
+		
+		System.out.println("Doszedłem tu x");
+		
+		for(int i = 0; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				
+				if(currentBoard[i][j] != null) {
+					
+					currentBoard[i][j].setChecked(false);
+					currentBoard[i][j].ifChain = false;
+				}
+				
+				
+			}
+		}
+		
+		for(int j = 0; j < chain.size()/2; j++) {
+			
+
+			System.out.println(chain.get(2*j)+ " " +chain.get(2*j+1));
+			
+			
+		}
+		
+		
+		
+		return chain;
+	}
+
+	
+	
+	
+	
+	public void switchArrays(Stone[][] array1, Stone[][] array2) {
+		
+		for(int i = 0 ; i < boardSize; i++) {
+			for(int j = 0; j < boardSize; j++) {
+				array1[i][j] = array2[i][j];
+			}
+		}
+	}
+	
 	private void clearBoard() {
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
@@ -470,9 +466,17 @@ public class AppEngine implements EngineInterface {
 	private void getScore() {
 		//TODO ogarnac
 	}
-
-
-
+	
+	public void changeTurn() {
+		if (blackTurn) {
+			blackTurn = false;
+		}
+		else {
+			blackTurn = true;
+		}
+		turnCounter++;
+	}
+	
 	private void coordinatesConverter(int X, int Y) {
 
 		int squareSize = 840/(boardSize + 1) ; 
@@ -502,30 +506,7 @@ public class AppEngine implements EngineInterface {
 		return convertedMessage;
 	}
 
-	
-	
-	public int getSquareY() {
-		return squareY;
-	}
-
-	public int getSquareX() {
-		return squareX;
-	}
-	
 	public String getMessage() {
 		return this.message;
 	}
-
-
-	public String[] getConvertedMessage() {
-		return convertedMessage;
-	}
-	
-	public Stone[][] getCurrentBoard(){
-		
-		return currentBoard;
-		
-	}
-
-	
 }

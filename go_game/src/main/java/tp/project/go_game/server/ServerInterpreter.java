@@ -62,9 +62,6 @@ public class ServerInterpreter {
 	
 	
 	public String getMessageForServer(String message) {
-		
-		
-		
 		return this.messageForServer;
 	}
 
