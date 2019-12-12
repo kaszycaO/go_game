@@ -6,7 +6,7 @@ import tp.project.go_game.exceptions.SuicidalMoveException;
 import tp.project.go_game.logic.AppEngine;
 
 
-public class ServerInterpreter {
+public class ServerInterpreter implements ServerInterpreterInterface{
 	
 	private AppEngine engine;
 	private String messageForServer;
@@ -18,7 +18,8 @@ public class ServerInterpreter {
 		
 	}
 	
-	public String doMove(String message) {
+	@Override
+	public String handleMessage(String message) {
 		
 		
 		String[] convertedMessage = interpretMessage(message);
