@@ -11,6 +11,7 @@ public class ServerInterpreter {
 	private AppEngine engine;
 	private String messageForServer;
 	
+	
 	public ServerInterpreter(AppEngine engine) {
 		
 		this.engine = engine;
@@ -29,18 +30,17 @@ public class ServerInterpreter {
 			try {
 				engine.handleMove();
 			} catch (KoRuleViolatedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return "1";
 			} catch (CoordinatesOutOfBoundsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return "2";
+				//e.printStackTrace();
 			} catch (SuicidalMoveException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return "3";
+				//e.printStackTrace();
 			}
 		}
 		
-		return "hi";
+		return "0";
 		
 
 	}
@@ -61,7 +61,10 @@ public class ServerInterpreter {
 
 	
 	
-	public String getMessageForServer() {
+	public String getMessageForServer(String message) {
+		
+		
+		
 		return this.messageForServer;
 	}
 
