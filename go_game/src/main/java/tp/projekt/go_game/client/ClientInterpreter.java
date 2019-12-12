@@ -4,7 +4,7 @@ import tp.project.go_game.gui.MainFrame;
 
 public class ClientInterpreter implements ClientInterpreterInterface {
 	
-	private MainFrame frame;
+	protected MainFrame frame;
 	
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
@@ -12,8 +12,16 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	
 	@Override
 	public String sendMessage() {
-		// TODO wygenerowanie wiadomosci do przeslania na serwer
-		return null;
+		
+		
+		if(frame.isMousePressed()) {
+			
+			return "coordinates" + " " + frame.getXclicked() + " " + frame.getYclicked();		
+		}
+		
+		else
+			
+			return frame.getButtonClicked();
 	}
 
 	@Override
