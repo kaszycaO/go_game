@@ -1,8 +1,6 @@
 package tp.project.go_game.server;
 
-import tp.project.go_game.exceptions.CoordinatesOutOfBoundsException;
-import tp.project.go_game.exceptions.KoRuleViolatedException;
-import tp.project.go_game.exceptions.SuicidalMoveException;
+import tp.project.go_game.exceptions.*;
 import tp.project.go_game.logic.AppEngine;
 
 
@@ -20,29 +18,33 @@ public class ServerInterpreter {
 	
 	public String doMove(String message) {
 		
-		
+		String response = "";
 		String[] convertedMessage = interpretMessage(message);
 		
 		if (convertedMessage[0].equals("button")) {
-			engine.handleButtons();
+			engine.handleButtons(convertedMessage[1]);
 		}
 		else {
+			int X = Integer.parseInt(convertedMessage[1]);
+			int Y = Integer.parseInt(convertedMessage[2]); 
 			try {
-				engine.handleMove();
+				engine.handleMove(X,Y);
+				response +=  "0 ";
 			} catch (KoRuleViolatedException e) {
-				return "1";
+				response += "1 ";
 			} catch (CoordinatesOutOfBoundsException e) {
-				return "2";
+				response += "2 ";
 				//e.printStackTrace();
 			} catch (SuicidalMoveException e) {
-				return "3";
+				response += "3 ";
 				//e.printStackTrace();
+			} catch (IntersectionTakenException e) {
+				response += "4 ";
 			}
 		}
-		
-		return "0";
-		
-
+		response +=engine.getChanges();
+		engine.resetChanges();
+		return response;
 	}
 	
 	

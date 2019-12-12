@@ -12,8 +12,6 @@ public class AppEngine implements EngineInterface {
 	private int squareX;
 	private int squareY;
 	private int boardSize;
-	private String message;
-	private String[] convertedMessage;
 	private Stone[][] currentBoard;
 	private Stone[][] previousBoard;
 	private Stone[][] koBoard;
@@ -21,14 +19,12 @@ public class AppEngine implements EngineInterface {
 	private int passCounter;
 	private int turnCounter;
 	private StoneFactory factory;
-	
-	ArrayList<Integer> chain;
+	private String changes;
 	
 
 	public AppEngine(int boardSize) {
 		
 		this.boardSize = boardSize;
-		message = "";
 		this.currentBoard = new Stone[boardSize][boardSize];
 		this.koBoard = new Stone[boardSize][boardSize];
 		this.previousBoard = new Stone[boardSize][boardSize];
@@ -36,75 +32,52 @@ public class AppEngine implements EngineInterface {
 		passCounter = 0;
 		turnCounter = 0;
 		factory = new ConcreteStoneFactory();
-		chain = new ArrayList<>();
+		changes = "";
 		
 	}
 	
-	public Stone[][] doMove(String recievedMessage) throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException {
-		
+	public void handleMove(int X, int Y) throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException, IntersectionTakenException {
 		if (turnCounter > 1) {
 			switchArrays(koBoard,previousBoard);
 		}
 		if (turnCounter > 0) {
 			switchArrays(previousBoard,currentBoard);
 		}
+		coordinatesConverter(X, Y);
 		
-		convertedMessage = interpretMessage(recievedMessage);
-		if (convertedMessage[0].equals("button")) {
-			handleButtons();
-		}
-		else {
-			handleMove();
-		}
-		
-		return currentBoard;
-	}
-	
-	public void handleMove() throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException {
-		passCounter = 0;
-		squareX = Integer.parseInt(convertedMessage[1]);
-		squareY = Integer.parseInt(convertedMessage[2]);
-		
-		coordinatesConverter(squareX, squareY);
-		
-		if(checkIfInBounds(squareX, squareY)) {
-			if (checkIfTaken(squareX, squareY)) {
-				message = "Pole zajete";
-				throw new CoordinatesOutOfBoundsException();
+		if(checkIfInBounds(X, Y)) {
+			if (checkIfTaken(X, Y)) {
+				throw new IntersectionTakenException();
 			}
 			else {
-					addStone(squareX, squareY);
-				if (checkIfKo(squareX, squareY)) {
-					message = "Naruszona zasada Ko";
-					removeStone(squareX, squareY);
+					addStone(X, Y);
+				if (checkIfKo(X, Y)) {
+					removeStone(X, Y);
 					throw new KoRuleViolatedException();
 				}
 				else {
-					if (checkIfStrangles(squareX, squareY)) {
-
+					if (checkIfStrangles(X, Y)) {
 						removeStrangledStones();
 						changeTurn();
-						message = "";
+						passCounter = 0;
 					} 
 					
 					else {
 					
-						if (checkIfSuicidal(squareX, squareY)) {
-							message = "Ruch samobojczy";
-							removeStone(squareX, squareY);
+						if (checkIfSuicidal(X, Y)) {
+							removeStone(X, Y);
 							throw new SuicidalMoveException();
 						} 
 						else {
-
 							changeTurn();
-							message = "";
+							passCounter = 0;
 						}
 					}
 				}
 			}
 		}
 		else
-			return;
+			throw new CoordinatesOutOfBoundsException();
 		
 	}
 	
@@ -318,126 +291,19 @@ public class AppEngine implements EngineInterface {
 		else return true;
 	}
 
-
-	public void handleButtons() {
-		if (convertedMessage[1].equals("pass")) {
+	@Override
+	public void handleButtons(String button) {
+		if (button.equals("pass")) {
 			passCounter += 1;
-			message = "Poddales swoj ruch";
-		
-			
 			if (passCounter == 2) {
-				message = "Koniec gry";
-
+				changes += getScore();
 			}
 
-		} else if (convertedMessage[1].equals("resign")) {
-			message = "Koniec gry";
-
+		} else if (button.equals("resign")) {
+			changes += getScore();
 		}
 	
 	}
-	
-	public boolean checkIfStrangled2(int X, int Y) {
-		
-		boolean breaths;
-		getChain(X,Y);
-		
-		for(int i = 0; i < chain.size()/2; i++ ) {
-			
-			breaths = checkIfGotBreaths(chain.get(2*i),chain.get(2*i+1));
-			
-			if(breaths)
-				return false;
-			
-			
-		}
-		
-		
-		return true;
-	}
-	
-	
-	public ArrayList<Integer> getChain(int X, int Y){
-
-		Color color = currentBoard[X][Y].getColor();
-		ArrayList<Integer> coords = getCoordsToCheck(X,Y);
-		
-	    if(!currentBoard[X][Y].ifChecked) {
-	    	
-	    	chain.add(X);
-			chain.add(Y);
-	    	
-	    }
-	
-		currentBoard[X][Y].ifChain = true;
-		
-		for(int i = 0; i < coords.size()/2; i++) {
-			int newX = coords.get(2*i);
-			int newY = coords.get(2*i+1);
-			if(currentBoard[newX][newY] != null && currentBoard[newX][newY].getColor() == color && !(currentBoard[newX][newY].ifChecked)) {
-				
-				chain.add(newX);
-				chain.add(newY);
-				currentBoard[newX][newY].ifChecked = true;
-				
-			}
-			
-		}
-		
-		int checkNextX=-1;
-		int checkNextY=-1;
-		
-		for(int i = 0; i < chain.size()/2; i++) {
-		
-				if(!(currentBoard[chain.get(2*i)][chain.get(2*i+1)].ifChain)) {
-					
-					checkNextX = chain.get(2*i);
-					checkNextY = chain.get(2*i+1);
-					
-					break;
-						
-				}
-				
-			}
-			
-		
-		if(checkNextX !=-1 && checkNextY != -1) 
-			return getChain(checkNextX,checkNextY);
-			
-			
-
-		
-		System.out.println("Doszedłem tu x");
-		
-		for(int i = 0; i < boardSize; i++) {
-			for(int j = 0; j < boardSize; j++) {
-				
-				if(currentBoard[i][j] != null) {
-					
-					currentBoard[i][j].setChecked(false);
-					currentBoard[i][j].ifChain = false;
-				}
-				
-				
-			}
-		}
-		
-		for(int j = 0; j < chain.size()/2; j++) {
-			
-
-			System.out.println(chain.get(2*j)+ " " +chain.get(2*j+1));
-			
-			
-		}
-		
-		
-		
-		return chain;
-	}
-
-	
-	
-	
 	
 	public void switchArrays(Stone[][] array1, Stone[][] array2) {
 		
@@ -463,7 +329,8 @@ public class AppEngine implements EngineInterface {
 
 
 
-	private void getScore() {
+	private String getScore() {
+		return "";
 		//TODO ogarnac
 	}
 	
@@ -486,27 +353,40 @@ public class AppEngine implements EngineInterface {
 		// -1 -> przesuniecie kwadratu bedacego poza plansza aby uzyskac numeracje tablicy od (0,0)
 		int squareX = newX/squareSize - 1;
 		int squareY = newY/squareSize - 1;
-		
-		
-					
+				
 		this.squareX = squareX;
 		this.squareY = squareY;
 	}
+		
+	public void resetChanges() {
+		changes = "";
+	}
 	
-	private String[] interpretMessage(String message){
-		String[] convertedMessage = {"","",""};
-		int j = 0;
-		for (int i=0;i<3;i++) {
-			while(j < message.length() && (message.charAt(j) != ' ')) {
-				convertedMessage[i] += message.charAt(j);
-				j++;
+	public String getChanges(){
+		for (int i=0;i<boardSize;i++) {
+			for (int j=0;j<boardSize;j++) {
+				if (previousBoard[i][j] == null ) {
+					if(currentBoard[i][j] != null ) {
+						changes += Integer.toString(i);
+						changes += " ";
+						changes += Integer.toString(j);
+						changes += " ";
+						if (currentBoard[i][j].getColor() == Color.white) changes += "white ";
+						else changes += "black";
+					}
+				}
+				else {
+					if(currentBoard[i][j] == null) {
+						changes += Integer.toString(i);
+						changes += " ";
+						changes += Integer.toString(j);
+						changes += " ";
+						changes += "null ";
+					}
+				}
 			}
-			j++;
 		}
-		return convertedMessage;
+		return this.changes;
 	}
-
-	public String getMessage() {
-		return this.message;
-	}
+	
 }

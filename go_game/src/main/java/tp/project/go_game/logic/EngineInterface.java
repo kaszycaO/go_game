@@ -4,7 +4,7 @@ import tp.project.go_game.exceptions.*;
 
 public interface EngineInterface {
 	
-	public void handleMove() throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException;
+	public void handleMove(int X, int Y) throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException, IntersectionTakenException;
 	
-	public void handleButtons();
+	public void handleButtons(String button);
 }
