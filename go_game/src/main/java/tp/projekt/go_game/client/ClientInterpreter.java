@@ -5,7 +5,9 @@ import tp.project.go_game.gui.MainFrame;
 public class ClientInterpreter implements ClientInterpreterInterface {
 	
 	protected MainFrame frame;
-	
+	private int squareX;
+	private int squareY; 
+
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
 	}
@@ -15,8 +17,8 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		
 		
 		if(frame.isMousePressed()) {
-			
-			return "coordinates" + " " + frame.getXclicked() + " " + frame.getYclicked();		
+			coordinatesConverter(frame.getXclicked(), frame.getYclicked()); 
+			return "coordinates" + " " + squareX + " " + squareY;		
 		}
 		
 		else
@@ -25,8 +27,110 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	}
 
 	@Override
-	public String handleMessage(String message) {
-		// TODO wygenerwanie odpowiedzi na wiadomosc od serwera
-		return null;
+	public void handleMessage(String message) {
+		
+		String[] convertedMessage;
+		
+		
+		if(message.charAt(0) == '5') {
+			
+			// TODO wyodrebnic wynik
+			frame.setPanelMessage(message);
+		}
+		else 
+		{
+			convertedMessage = interpretMessage(message);
+			
+			
+			if(convertedMessage[0].equals("0")) {
+				
+				for(int i = 1; i <= (convertedMessage.length)/3; i++ ) {
+					
+					int X = Integer.parseInt(convertedMessage[3*i - 2]);
+					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
+					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);
+					
+				}
+				
+				
+			}
+			
+			
+		}
+		
 	}
+	
+	private String[] interpretMessage(String message){
+		// TODO rozmiar tablicy to liczba zmian liczona w engine
+		
+		char thirdLast = message.charAt(message.length() - 3);
+		char secondLast = message.charAt(message.length() - 2);
+		char firstLast = message.charAt(message.length() - 1);
+		int changes = 0;
+		
+		
+		
+		//gdyby byla 3 cyfrowa liczba zmian xd
+		
+		
+		if(thirdLast != ' ' && secondLast != ' ') {
+			StringBuilder sb = new StringBuilder();
+			sb.append(thirdLast);
+			sb.append(secondLast);
+			sb.append(firstLast);
+			String helper = sb.toString();
+
+			changes = Integer.parseInt(helper);
+		}
+		
+		
+		else if(secondLast != ' ') {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(secondLast);
+			sb.append(firstLast);
+			String helper = sb.toString();
+			changes = Integer.parseInt(helper);
+		}
+		else {
+			String helper = firstLast +"";
+			changes = Integer.parseInt(helper);
+			
+			}
+		
+		
+		String[] convertedMessage = new String[changes];
+		int j = 0;
+		for (int i=0;i<changes;i++) {
+			convertedMessage[i] = "";
+			while(j < message.length() && (message.charAt(j) != ' ')) {
+				convertedMessage[i] += message.charAt(j);
+				
+				j++;
+			}
+			
+			j++;
+		}
+		
+		
+		return convertedMessage;
+	}
+	
+	
+	
+	private void coordinatesConverter(int X, int Y) {
+
+		int squareSize = 840/(frame.getBoardSize() + 1) ; 
+		int newX = X + squareSize/2;
+		int newY = Y + squareSize/2;
+		
+		// -1 -> przesuniecie kwadratu bedacego poza plansza aby uzyskac numeracje tablicy od (0,0)
+		int squareX = newX/squareSize - 1;
+		int squareY = newY/squareSize - 1;
+				
+		this.squareX = squareX;
+		this.squareY = squareY;
+	}
+	
+	
 }

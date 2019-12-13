@@ -38,7 +38,6 @@ public class Client extends Observer {
 	           toServer = new DataOutputStream(socket.getOutputStream());
 	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 	          
-	           System.out.println(interpreter.sendMessage());
 	           toServer.writeUTF(interpreter.sendMessage());
 	           
 
@@ -68,7 +67,6 @@ public class Client extends Observer {
 		
 		if(blackTurn == blackPlayer) {
 			
-			System.out.println("elo");
 			exchangeWithServer();
 			
 		}

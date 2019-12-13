@@ -69,8 +69,7 @@ public class AppServer {
                 fromClient = new DataInputStream(new BufferedInputStream(client.getInputStream()));
                 toClient = new DataOutputStream(client.getOutputStream());
                 recievedMessage = fromClient.readUTF();
-               // board.setBoard(engine.doMove(recievedMessage));
-               toClient.writeUTF(interpreter.handleMessage(recievedMessage));
+                toClient.writeUTF(interpreter.handleMessage(recievedMessage));
                 
             } catch (IOException e) {
                 System.out.println(e.getMessage());

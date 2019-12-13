@@ -33,7 +33,7 @@ public class RemoveStoneTest {
 	
 
 		//assertTrue(engine.checkIfStrangled(0, 0));
-	     assertFalse(engine.checkIfStrangled2(0, 0));
+	  //   assertFalse(engine.checkIfStrangled2(0, 0));
 
 	
 		

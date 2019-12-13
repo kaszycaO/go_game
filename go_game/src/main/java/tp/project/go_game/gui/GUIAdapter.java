@@ -70,7 +70,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	         observer.update();
 	      }
 	   } 	
-	
+
 
 	
 

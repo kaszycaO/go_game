@@ -20,6 +20,7 @@ public class AppEngine implements EngineInterface {
 	private int turnCounter;
 	private StoneFactory factory;
 	private String changes;
+	private int changesCounter;
 	
 
 	public AppEngine(int boardSize) {
@@ -43,7 +44,6 @@ public class AppEngine implements EngineInterface {
 		if (turnCounter > 0) {
 			switchArrays(previousBoard,currentBoard);
 		}
-		coordinatesConverter(X, Y);
 		
 		if(checkIfInBounds(X, Y)) {
 			if (checkIfTaken(X, Y)) {
@@ -158,7 +158,7 @@ public class AppEngine implements EngineInterface {
 			}
 		}
 		for(int j=0; j<domkaChain.size()/2;j++) {
-			System.out.println(j+": "+domkaChain.get(2*j)+" "+domkaChain.get(2*j+1));
+			//System.out.println(j+": "+domkaChain.get(2*j)+" "+domkaChain.get(2*j+1));
 		}
 		for(int i = 0; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
@@ -330,7 +330,7 @@ public class AppEngine implements EngineInterface {
 
 
 	private String getScore() {
-		return "";
+		return "o";
 		//TODO ogarnac
 	}
 	
@@ -344,24 +344,14 @@ public class AppEngine implements EngineInterface {
 		turnCounter++;
 	}
 	
-	private void coordinatesConverter(int X, int Y) {
-
-		int squareSize = 840/(boardSize + 1) ; 
-		int newX = X + squareSize/2;
-		int newY = Y + squareSize/2;
-		
-		// -1 -> przesuniecie kwadratu bedacego poza plansza aby uzyskac numeracje tablicy od (0,0)
-		int squareX = newX/squareSize - 1;
-		int squareY = newY/squareSize - 1;
-				
-		this.squareX = squareX;
-		this.squareY = squareY;
-	}
+	
 		
 	public void resetChanges() {
 		changes = "";
 	}
 	
+	//TODO lewy gorny rog odporny na zbicie
+	//TODO znany kwadrat zbijany, nie wysyla na serwer pionka stawianego na srodku  
 	public String getChanges(){
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
@@ -371,8 +361,19 @@ public class AppEngine implements EngineInterface {
 						changes += " ";
 						changes += Integer.toString(j);
 						changes += " ";
-						if (currentBoard[i][j].getColor() == Color.white) changes += "white ";
-						else changes += "black";
+						changesCounter +=2;
+						
+						if (currentBoard[i][j].getColor() == Color.white) {
+							
+							changes += "white ";
+							changesCounter++;
+							
+						} 
+						else {
+							
+							changes += "black ";
+							changesCounter++;
+						} 
 					}
 				}
 				else {
@@ -382,11 +383,22 @@ public class AppEngine implements EngineInterface {
 						changes += Integer.toString(j);
 						changes += " ";
 						changes += "null ";
+						changesCounter +=3;
 					}
 				}
 			}
 		}
 		return this.changes;
 	}
+
+	public int getChangesCounter() {
+		return changesCounter;
+	}
+
+	public void setChangesCounter(int changesCounter) {
+		this.changesCounter = changesCounter;
+	}
+
+	
 	
 }

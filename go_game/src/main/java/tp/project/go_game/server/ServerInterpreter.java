@@ -24,6 +24,11 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		
 		if (convertedMessage[0].equals("button")) {
 			engine.handleButtons(convertedMessage[1]);
+			//nie dzialalo wczesniej, tu musi byc return
+			response +=  "5 ";
+			response +=engine.getChanges();
+			engine.resetChanges();
+			return response;
 		}
 		else {
 			int X = Integer.parseInt(convertedMessage[1]);
@@ -43,8 +48,12 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 				response += "4 ";
 			}
 		}
-		response +=engine.getChanges();
+	
+		response += engine.getChanges();
 		engine.resetChanges();
+		response += engine.getChangesCounter() + 1;
+		engine.setChangesCounter(0);
+		System.out.println(response);
 		return response;
 	}
 	

@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 	
 	public GUIAdapter myAdapter;
 	private int boardSize = -1;
-	protected Board myBoard;
+	public Board myBoard;
 	protected FeaturesPanel myFeaturesPanel;
 	private int xclicked;
 	private int yclicked;
@@ -94,6 +94,11 @@ public class MainFrame extends JFrame {
 
 	public void setMousePressed(boolean mousePressed) {
 		this.mousePressed = mousePressed;
+	}
+	
+	public void setPanelMessage(String message) {
+		
+		myFeaturesPanel.message.setText(message);
 	}
 	
 	

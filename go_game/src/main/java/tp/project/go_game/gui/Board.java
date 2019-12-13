@@ -1,5 +1,7 @@
 package tp.project.go_game.gui;
 
+import tp.project.go_game.logic.StoneFactory;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,6 +10,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import tp.project.go_game.logic.ConcreteStoneFactory;
 import tp.project.go_game.logic.Stone;
 
 /**
@@ -39,6 +42,8 @@ public class Board extends JPanel{
 	private int drawY;
 	
 	private Stone stones[][];
+	
+	private StoneFactory factory;
 
 
 	/**
@@ -51,6 +56,8 @@ public class Board extends JPanel{
 		this.myAdapter = myAdapter;
 		this.boardSize = boardSize;
 		stones = new Stone[boardSize][boardSize];
+		
+		factory = new ConcreteStoneFactory();
 		
 		setSize(840,840);
 	    setLayout(null);
@@ -144,10 +151,32 @@ public class Board extends JPanel{
 		this.drawY = drawY;
 	} 
 
-	public void setBoard(Stone[][] board) {
-		this.stones = board;
+	//public void setBoard(Stone[][] board) {
+	//	this.stones = board;
+	//}
+	public void addStoneToBoard(int x, int y, String color) {
+		
+		if(color.equals("black")) {
+			
+	    	Stone blackStone = factory.getStone("Black");
+	    	stones[x][y] = blackStone; 
+				
+		} else if(color.equals("white")) {
+			
+			Stone whiteStone = factory.getStone("White");
+			stones[x][y] = whiteStone;
+
+			
+		} else if (color.equals("null")) {
+			System.out.println("Usuwamy");
+			stones[x][y] = null;
+		}
+		
+		
+		
+		repaint();
+		
 	}
-	
 	
 	
 
