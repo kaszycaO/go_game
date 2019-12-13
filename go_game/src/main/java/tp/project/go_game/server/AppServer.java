@@ -70,8 +70,8 @@ public class AppServer {
         	
         	Game game = new Game();
         	try {
-				pool.execute(new Player(server.accept(), boardSize, "black", game));
-				pool.execute(new Player(server.accept(), boardSize,  "white", game));
+				pool.execute(new ClientHandler(server.accept(), boardSize, "black", game));
+				pool.execute(new ClientHandler(server.accept(), boardSize,  "white", game));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} catch (Exception e1) {

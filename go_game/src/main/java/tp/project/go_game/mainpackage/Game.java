@@ -1,12 +1,13 @@
 package tp.project.go_game.mainpackage;
 
+import tp.project.go_game.server.ClientHandler;
 import tp.projekt.go_game.client.Player;
 
 public class Game {
 	
-	public Player currentPlayer;
+	public ClientHandler currentPlayer;
 	
-	 public synchronized void move(Player player) {
+	 public synchronized void move(ClientHandler player) {
 	        if (player != currentPlayer) {
 	            throw new IllegalStateException("Not your turn");
 	        } else if (player.opponent == null) {

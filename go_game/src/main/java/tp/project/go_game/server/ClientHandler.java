@@ -1,4 +1,4 @@
-package tp.projekt.go_game.client;
+package tp.project.go_game.server;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -8,9 +8,8 @@ import java.net.Socket;
 
 import tp.project.go_game.mainpackage.Game;
 
-public class Player extends Observer {
+public class ClientHandler implements Runnable {
 	
-	private ClientInterpreter interpreter;
 	/**
      * gniazdko klienta
      */
@@ -23,34 +22,30 @@ public class Player extends Observer {
      * komunikaty od serwera
      */
     private DataInputStream fromServer = null;
-    
-    private boolean blackTurn = true;
-    private boolean blackPlayer;
-	public Player opponent;
+	public ClientHandler opponent;
 	private String color;
 	private Game game;
 	
-	public Player(int boardSize, String color, Game game) throws Exception {
-		interpreter = new ClientInterpreter(boardSize);
-		//this.blackPlayer = blackPlayer;
+	public ClientHandler(Socket socket, int boardSize, String color, Game game) throws Exception {
 		this.color = color;
-		interpreter.frame.myAdapter.attach(this);
 		this.socket = socket;
 		this.game = game;
         toServer = new DataOutputStream(socket.getOutputStream());
         fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 	}
-	
-	private void exchangeWithServer() {
+
+	@Override
+	public void run() {
 		try {
-			  
-	           toServer.writeUTF(interpreter.sendMessage());
-	           String line = fromServer.readUTF();
-	           char checkTurn = line.charAt(0);
-	           if(checkTurn == '1') {
-	        	   blackTurn = !blackTurn;
+	           if(color == "black") {
+	        	   game.currentPlayer = this;
+	        	   toServer.writeUTF("waitin for opponent");
 	           }
-	           interpreter.handleMessage(line);
+	           else {
+	        	   opponent = game.currentPlayer;
+	        	   opponent.opponent = this;
+	        	   opponent.toServer.writeUTF("moje zmiany");
+	           }
 	           socket.close();
 	           toServer.close();
 	           fromServer.close();
@@ -58,18 +53,7 @@ public class Player extends Observer {
 	        catch (IOException e) {
 	            System.out.println(e.getMessage());
 	            System.exit(1);
-	        }
-	}
-
-	@Override
-	public void update() {
-		
-		if(blackTurn == blackPlayer) {
-			
-			exchangeWithServer();
-			
-		}
-			
-		
+	        }		
 	}
 }
+
