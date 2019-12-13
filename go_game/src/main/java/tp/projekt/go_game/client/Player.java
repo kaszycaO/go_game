@@ -6,7 +6,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client extends Observer {
+import tp.project.go_game.mainpackage.Game;
+
+public class Player extends Observer implements Runnable {
 	
 	private ClientInterpreter interpreter;
 	/**
@@ -24,34 +26,31 @@ public class Client extends Observer {
     
     private boolean blackTurn = true;
     private boolean blackPlayer;
+	public Player opponent;
+	private String color;
+	private Game game;
 	
-	public Client(int boardSize, boolean blackPlayer) {
+	public Player(Socket socket, int boardSize, String color, Game game) throws Exception {
 		interpreter = new ClientInterpreter(boardSize);
-		this.blackPlayer = blackPlayer;
+		//this.blackPlayer = blackPlayer;
+		this.color = color;
 		interpreter.frame.myAdapter.attach(this);
+		this.socket = socket;
+		this.game = game;
+        toServer = new DataOutputStream(socket.getOutputStream());
+        fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 	}
 	
 	private void exchangeWithServer() {
 		try {
 			  
-	           socket = new Socket("localhost", 4444);
-	           toServer = new DataOutputStream(socket.getOutputStream());
-	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-	          
 	           toServer.writeUTF(interpreter.sendMessage());
-	           
-
 	           String line = fromServer.readUTF();
-	           
 	           char checkTurn = line.charAt(0);
-	            
 	           if(checkTurn == '1') {
-	        	   
 	        	   blackTurn = !blackTurn;
 	           }
-
 	           interpreter.handleMessage(line);
-
 	           socket.close();
 	           toServer.close();
 	           fromServer.close();
@@ -72,5 +71,27 @@ public class Client extends Observer {
 		}
 			
 		
+	}
+
+	@Override
+	public void run() {
+		try {
+	           if(color == "black") {
+	        	   game.currentPlayer = this;
+	        	   toServer.writeUTF("waitin for opponent");
+	           }
+	           else {
+	        	   opponent = game.currentPlayer;
+	        	   opponent.opponent = this;
+	        	   opponent.toServer.writeUTF("moje zmiany");
+	           }
+	           socket.close();
+	           toServer.close();
+	           fromServer.close();
+	        }
+	        catch (IOException e) {
+	            System.out.println(e.getMessage());
+	            System.exit(1);
+	        }		
 	}
 }
