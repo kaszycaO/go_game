@@ -6,9 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import tp.project.go_game.mainpackage.Game;
-
-public class Player extends Observer {
+public class Client extends Observer {
 	
 	private ClientInterpreter interpreter;
 	/**
@@ -26,31 +24,34 @@ public class Player extends Observer {
     
     private boolean blackTurn = true;
     private boolean blackPlayer;
-	public Player opponent;
-	private String color;
-	private Game game;
 	
-	public Player(int boardSize, String color, Game game) throws Exception {
+	public Client(int boardSize, boolean blackPlayer) {
 		interpreter = new ClientInterpreter(boardSize);
-		//this.blackPlayer = blackPlayer;
-		this.color = color;
+		this.blackPlayer = blackPlayer;
 		interpreter.frame.myAdapter.attach(this);
-		this.socket = socket;
-		this.game = game;
-        toServer = new DataOutputStream(socket.getOutputStream());
-        fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 	}
 	
 	private void exchangeWithServer() {
 		try {
 			  
+	           socket = new Socket("localhost", 4444);
+	           toServer = new DataOutputStream(socket.getOutputStream());
+	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+	          
 	           toServer.writeUTF(interpreter.sendMessage());
+	           
+
 	           String line = fromServer.readUTF();
+	           
 	           char checkTurn = line.charAt(0);
+	            
 	           if(checkTurn == '1') {
+	        	   
 	        	   blackTurn = !blackTurn;
 	           }
+
 	           interpreter.handleMessage(line);
+
 	           socket.close();
 	           toServer.close();
 	           fromServer.close();

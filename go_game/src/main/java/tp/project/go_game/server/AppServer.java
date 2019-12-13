@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import tp.project.go_game.gui.Board;
 import tp.project.go_game.logic.AppEngine;
 import tp.project.go_game.mainpackage.Game;
-import tp.projekt.go_game.client.Player;
+import tp.projekt.go_game.client.Client;
 
 
 public class AppServer {

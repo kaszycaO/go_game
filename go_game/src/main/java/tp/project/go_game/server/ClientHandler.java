@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import tp.project.go_game.logic.AppEngine;
 import tp.project.go_game.mainpackage.Game;
 
 public class ClientHandler implements Runnable {
@@ -14,24 +15,28 @@ public class ClientHandler implements Runnable {
      * gniazdko klienta
      */
     private Socket socket = null;
-    /**
-     * komunikaty do serwera
+	/**
+     * komunikaty od klienta
      */
-    private DataOutputStream  toServer = null;
+    private DataInputStream fromClient = null;
     /**
-     * komunikaty od serwera
+     * dane wysylane do klienta
      */
-    private DataInputStream fromServer = null;
+    private DataOutputStream toClient = null;
 	public ClientHandler opponent;
 	private String color;
 	private Game game;
+	private ServerInterpreter interpreter;
+	private AppEngine engine;
 	
 	public ClientHandler(Socket socket, int boardSize, String color, Game game) throws Exception {
 		this.color = color;
 		this.socket = socket;
 		this.game = game;
-        toServer = new DataOutputStream(socket.getOutputStream());
-        fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+		this.engine = new AppEngine(boardSize);
+		this.interpreter = new ServerInterpreter(engine);
+		fromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        toClient = new DataOutputStream(socket.getOutputStream());
 	}
 
 	@Override
@@ -39,21 +44,38 @@ public class ClientHandler implements Runnable {
 		try {
 	           if(color == "black") {
 	        	   game.currentPlayer = this;
-	        	   toServer.writeUTF("waitin for opponent");
+	        	   toClient.writeUTF("waitin for opponent");
 	           }
 	           else {
 	        	   opponent = game.currentPlayer;
 	        	   opponent.opponent = this;
-	        	   opponent.toServer.writeUTF("moje zmiany");
+	        	   opponent.toClient.writeUTF("moje zmiany");
 	           }
-	           socket.close();
-	           toServer.close();
-	           fromServer.close();
+	           while (fromClient != null) {
+	        	   String recievedMessage = fromClient.readUTF();
+	        	   toClient.writeUTF(interpreter.handleMessage(recievedMessage));
+	           }
 	        }
 	        catch (IOException e) {
 	            System.out.println(e.getMessage());
 	            System.exit(1);
-	        }		
+	        }
+		finally {
+			if (opponent != null && opponent.toClient != null) {
+				try {
+					opponent.toClient.writeUTF("other player left");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+			try {
+				socket.close();
+		        toClient.close();
+		        fromClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+		}
 	}
 }
 

@@ -1,7 +1,7 @@
 package tp.project.go_game.mainpackage;
 
 import tp.project.go_game.server.ClientHandler;
-import tp.projekt.go_game.client.Player;
+import tp.projekt.go_game.client.Client;
 
 public class Game {
 	

@@ -13,7 +13,7 @@ import tp.projekt.go_game.client.Observer;;
  * 
  * @author Oliwier Kaszyca
  * 
- * Player
+ * Client
  */
 public class GUIAdapter extends MouseAdapter implements ActionListener {
 
