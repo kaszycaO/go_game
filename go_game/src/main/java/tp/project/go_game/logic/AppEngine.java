@@ -355,6 +355,8 @@ public class AppEngine implements EngineInterface {
 	public String getChanges(){
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
+				
+			//	System.out.println("Kamyczek: " + i + " " + j);
 				if (previousBoard[i][j] == null ) {
 					if(currentBoard[i][j] != null ) {
 						changes += Integer.toString(i);

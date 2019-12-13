@@ -25,9 +25,12 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		if (convertedMessage[0].equals("button")) {
 			engine.handleButtons(convertedMessage[1]);
 			//nie dzialalo wczesniej, tu musi byc return
-			response +=  "5 ";
-			response +=engine.getChanges();
 			engine.resetChanges();
+			response +=  "5 ";
+			
+			response +=engine.getChanges();
+			
+			System.out.println(response);
 			return response;
 		}
 		else {

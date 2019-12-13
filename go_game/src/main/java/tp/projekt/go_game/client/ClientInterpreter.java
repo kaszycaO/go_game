@@ -62,11 +62,13 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	
 	private String[] interpretMessage(String message){
 		// TODO rozmiar tablicy to liczba zmian liczona w engine
+		int changes = 0;
+		StringBuilder sb = new StringBuilder();
 		
 		char thirdLast = message.charAt(message.length() - 3);
 		char secondLast = message.charAt(message.length() - 2);
 		char firstLast = message.charAt(message.length() - 1);
-		int changes = 0;
+		
 		
 		
 		
@@ -74,7 +76,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		
 		
 		if(thirdLast != ' ' && secondLast != ' ') {
-			StringBuilder sb = new StringBuilder();
 			sb.append(thirdLast);
 			sb.append(secondLast);
 			sb.append(firstLast);
@@ -86,7 +87,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		
 		else if(secondLast != ' ') {
 
-			StringBuilder sb = new StringBuilder();
 			sb.append(secondLast);
 			sb.append(firstLast);
 			String helper = sb.toString();
