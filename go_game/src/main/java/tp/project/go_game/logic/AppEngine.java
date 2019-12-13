@@ -21,6 +21,7 @@ public class AppEngine implements EngineInterface {
 	private StoneFactory factory;
 	private String changes;
 	private int changesCounter;
+	private int finalScore;
 	
 
 	public AppEngine(int boardSize) {
@@ -296,11 +297,11 @@ public class AppEngine implements EngineInterface {
 		if (button.equals("pass")) {
 			passCounter += 1;
 			if (passCounter == 2) {
-				changes += getScore();
+				finalScore = getScore();
 			}
 
 		} else if (button.equals("resign")) {
-			changes += getScore();
+			finalScore = getScore();
 		}
 	
 	}
@@ -329,8 +330,8 @@ public class AppEngine implements EngineInterface {
 
 
 
-	private String getScore() {
-		return "o";
+	private int getScore() {
+		return 12;
 		//TODO ogarnac
 	}
 	
@@ -399,6 +400,10 @@ public class AppEngine implements EngineInterface {
 
 	public void setChangesCounter(int changesCounter) {
 		this.changesCounter = changesCounter;
+	}
+
+	public int getFinalScore() {
+		return finalScore;
 	}
 
 	

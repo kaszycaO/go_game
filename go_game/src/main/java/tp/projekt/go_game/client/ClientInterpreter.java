@@ -31,14 +31,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		
 		String[] convertedMessage;
 		
-		
-		if(message.charAt(0) == '5') {
-			
-			// TODO wyodrebnic wynik
-			frame.setPanelMessage(message);
-		}
-		else 
-		{
+		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
 			
 			
@@ -49,12 +42,40 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 					int X = Integer.parseInt(convertedMessage[3*i - 2]);
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
 					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);
+					frame.setPanelMessage("");
 					
 				}
 				
 				
 			}
+		
 			
+			
+		}
+		else if(message.charAt(0) == '1') {
+			
+			frame.setPanelMessage("Naruszona zasada KO");
+			
+		}
+		else if(message.charAt(0) == '2') {
+			
+			frame.setPanelMessage("Uzywaj planszy!");
+			
+		}
+		else if(message.charAt(0) == '3') {
+			
+			frame.setPanelMessage("Ruch samobojczy!");
+			
+		}
+		else if(message.charAt(0) == '4') {
+			
+			frame.setPanelMessage("Pole zajete!");
+			
+		}
+		else if(message.charAt(0) == '5') {
+			
+			convertedMessage = interpretMessage(message);
+			frame.setPanelMessage("Wygral: " + 	convertedMessage[1]);
 			
 		}
 		

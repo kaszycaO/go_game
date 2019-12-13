@@ -23,17 +23,19 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		String[] convertedMessage = interpretMessage(message);
 		
 		if (convertedMessage[0].equals("button")) {
+			engine.resetChanges();
 			engine.handleButtons(convertedMessage[1]);
 			//nie dzialalo wczesniej, tu musi byc return
-			engine.resetChanges();
-			response +=  "5 ";
+		
+			response =  "5 ";
 			
-			response +=engine.getChanges();
+			response +=engine.getFinalScore();
 			
 			System.out.println(response);
 			return response;
 		}
 		else {
+			engine.resetChanges();
 			int X = Integer.parseInt(convertedMessage[1]);
 			int Y = Integer.parseInt(convertedMessage[2]); 
 			try {
@@ -53,7 +55,6 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		}
 	
 		response += engine.getChanges();
-		engine.resetChanges();
 		response += engine.getChangesCounter() + 1;
 		engine.setChangesCounter(0);
 		System.out.println(response);

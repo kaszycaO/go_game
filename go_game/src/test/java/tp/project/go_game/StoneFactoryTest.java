@@ -19,7 +19,7 @@ public class StoneFactoryTest
     @Test
     public void createWhiteStoneTest()
     {
-    	StoneFactory factory = new ConcreteStoneFactory();
+       	StoneFactory factory = new ConcreteStoneFactory();
     	Stone whiteStone = factory.getStone("White");
     	
     	assertEquals(whiteStone.getColor(), Color.white);
