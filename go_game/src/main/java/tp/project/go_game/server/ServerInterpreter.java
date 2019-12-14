@@ -42,15 +42,15 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 				engine.handleMove(X,Y);
 				response +=  "0 ";
 			} catch (KoRuleViolatedException e) {
-				response += "1 ";
+				return response += "1 ";
 			} catch (CoordinatesOutOfBoundsException e) {
-				response += "2 ";
+				return response += "2 ";
 				//e.printStackTrace();
 			} catch (SuicidalMoveException e) {
-				response += "3 ";
+				return response += "3 ";
 				//e.printStackTrace();
 			} catch (IntersectionTakenException e) {
-				response += "4 ";
+				return response += "4 ";
 			}
 		}
 	

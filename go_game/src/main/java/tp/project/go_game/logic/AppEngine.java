@@ -9,10 +9,9 @@ import tp.project.go_game.exceptions.*;
 public class AppEngine implements EngineInterface {
 
 	
-	private int squareX;
-	private int squareY;
 	private int boardSize;
-	private Stone[][] currentBoard;
+	//
+	public Stone[][] currentBoard;
 	private Stone[][] previousBoard;
 	private Stone[][] koBoard;
 	private boolean blackTurn;
@@ -58,7 +57,7 @@ public class AppEngine implements EngineInterface {
 				}
 				else {
 					if (checkIfStrangles(X, Y)) {
-						removeStrangledStones();
+						removeStrangledStones(X, Y);
 						changeTurn();
 						passCounter = 0;
 					} 
@@ -88,14 +87,28 @@ public class AppEngine implements EngineInterface {
 		return outcome;
 	}
 
-
+ //TODO dziala ale zawsze porownuje poprzednia sytuacje -> zmienic 
 	public boolean checkIfKo(int X, int Y) {
 		if (turnCounter < 2) {
 			return false;
 		}
-
-		boolean outcome = true;
-		for (int i=0;i<boardSize;i++) {
+		System.out.println("Current: " + currentBoard[1][1]);
+		System.out.println("Previous: " + previousBoard[1][1]);
+		System.out.println("Ko: " + koBoard[1][1]);
+		boolean outcome = false;
+		
+		
+		if(currentBoard[X][Y] != null && koBoard[X][Y] != null) {
+			
+			if(currentBoard[X][Y].getColor() == koBoard[X][Y].getColor()) {
+				
+				outcome = true;
+				
+			}
+			
+			
+		}
+		/*for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
 				if (currentBoard[i][j] == null) {
 					if(koBoard[i][j] != null) outcome = false;
@@ -103,7 +116,7 @@ public class AppEngine implements EngineInterface {
 					if(koBoard[i][j] == null || koBoard[i][j].getColor()!=currentBoard[i][j].getColor()) outcome = false; 
 				}
 			}
-		}
+		}*/
 		return outcome;
 	}
 
@@ -157,9 +170,6 @@ public class AppEngine implements EngineInterface {
 					}
 				}}
 			}
-		}
-		for(int j=0; j<domkaChain.size()/2;j++) {
-			//System.out.println(j+": "+domkaChain.get(2*j)+" "+domkaChain.get(2*j+1));
 		}
 		for(int i = 0; i < boardSize; i++) {
 			for(int j = 0; j < boardSize; j++) {
@@ -234,7 +244,7 @@ public class AppEngine implements EngineInterface {
 		}
 	}
 	
-	private ArrayList<Integer> getCoordsToRemove(int X, int Y){
+	public ArrayList<Integer> getCoordsToRemove(int X, int Y){
 		ArrayList<Integer> coords = new ArrayList<Integer>();
 		for(int i=0;i<boardSize;i++) {
 			for(int j=0;j<boardSize;j++) {
@@ -257,9 +267,11 @@ public class AppEngine implements EngineInterface {
 	}
 
 
-	public void removeStrangledStones() {
+	public void removeStrangledStones(int X, int Y) {
 		
-		ArrayList<Integer> coords = getCoordsToRemove(squareX,squareY);
+		ArrayList<Integer> coords = getCoordsToRemove(X,Y);
+		
+		
 		for(int i=0;i<coords.size()/2;i++) {
 		 
 			removeStone(coords.get(2*i), coords.get(2*i+1));
@@ -329,10 +341,44 @@ public class AppEngine implements EngineInterface {
 	}
 
 
-
+	//TODO ogarnac bledy + sposob przesylania info o kolorze
 	private int getScore() {
-		return 12;
-		//TODO ogarnac
+		
+		int whiteScore = 0;
+		int blackScore = 0;
+		
+		for(int i = 0; i<boardSize; i++) {
+			for(int j = 0; j<boardSize; j++) {
+				
+				if(currentBoard[i][j] != null){
+					
+					if( currentBoard[i][j].getColor() == Color.white) {
+						
+						whiteScore+=1;
+					}
+					else if( currentBoard[i][j].getColor() == Color.black) {
+						
+						blackScore+=1;
+						
+					}
+					
+					
+					
+				}
+				
+				
+			}
+			
+		}
+		
+		
+		if(blackScore > whiteScore)
+			return blackScore - whiteScore;
+		
+		else
+			return whiteScore - blackScore; 
+		
+	
 	}
 	
 	public void changeTurn() {
@@ -351,13 +397,14 @@ public class AppEngine implements EngineInterface {
 		changes = "";
 	}
 	
-	//TODO lewy gorny rog odporny na zbicie
-	//TODO znany kwadrat zbijany, nie wysyla na serwer pionka stawianego na srodku  
+	
 	public String getChanges(){
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
 				
-			//	System.out.println("Kamyczek: " + i + " " + j);
+				if(i == 0 && j == 0) {
+				
+				}
 				if (previousBoard[i][j] == null ) {
 					if(currentBoard[i][j] != null ) {
 						changes += Integer.toString(i);
@@ -391,6 +438,7 @@ public class AppEngine implements EngineInterface {
 				}
 			}
 		}
+		
 		return this.changes;
 	}
 
