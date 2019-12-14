@@ -45,10 +45,10 @@ public class Client extends Observer {
 	           
 	           char checkTurn = line.charAt(0);
 	            
-	           if(checkTurn == '1') {
+	        /*   if(checkTurn == '1') {
 	        	   
 	        	   blackTurn = !blackTurn;
-	           }
+	         } */ 
 
 	           interpreter.handleMessage(line);
 
