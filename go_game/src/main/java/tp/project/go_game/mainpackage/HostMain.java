@@ -3,6 +3,7 @@ package tp.project.go_game.mainpackage;
 import javax.swing.JOptionPane;
 
 import tp.project.go_game.server.AppServer;
+import tp.projekt.go_game.client.Client;
 
 /**
  * 

@@ -7,16 +7,13 @@ public class Game {
 	
 	public ClientHandler currentPlayer;
 	
-	 public synchronized void move(ClientHandler player) {
-	        if (player != currentPlayer) {
-	            throw new IllegalStateException("Not your turn");
-	        } else if (player.opponent == null) {
-	            throw new IllegalStateException("You don't have an opponent yet");
-	        } /*else if (board[location] != null) {
-	            throw new IllegalStateException("Cell already occupied");
+	 public synchronized boolean getPermissiontoMove(ClientHandler player) {
+	        if (player != currentPlayer || player.opponent == null) {
+	            return false;
+	        } else {
+	        	currentPlayer = currentPlayer.opponent;
+	        	return true;
 	        }
-	        board[location] = currentPlayer;*/
-	        currentPlayer = currentPlayer.opponent;
 	    }
 	
 }

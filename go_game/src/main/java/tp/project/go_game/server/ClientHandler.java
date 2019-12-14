@@ -9,7 +9,7 @@ import java.net.Socket;
 import tp.project.go_game.logic.AppEngine;
 import tp.project.go_game.mainpackage.Game;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler extends Thread {
 	
 	/**
      * gniazdko klienta
@@ -37,6 +37,7 @@ public class ClientHandler implements Runnable {
 		this.interpreter = new ServerInterpreter(engine);
 		fromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         toClient = new DataOutputStream(socket.getOutputStream());
+		
 	}
 
 	@Override
@@ -44,16 +45,20 @@ public class ClientHandler implements Runnable {
 		try {
 	           if(color == "black") {
 	        	   game.currentPlayer = this;
-	        	   toClient.writeUTF("waitin for opponent");
+	        	   System.out.println("tu czarny");
 	           }
 	           else {
 	        	   opponent = game.currentPlayer;
 	        	   opponent.opponent = this;
-	        	   opponent.toClient.writeUTF("moje zmiany");
+	        	   System.out.println("tu bialy");
 	           }
-	           while (fromClient != null) {
+	           while (true) {
+	        	   if (game.getPermissiontoMove(this)) {
+	        		   System.out.println("mam pozwolenie");
 	        	   String recievedMessage = fromClient.readUTF();
 	        	   toClient.writeUTF(interpreter.handleMessage(recievedMessage));
+	        	   }
+	        	   
 	           }
 	        }
 	        catch (IOException e) {
@@ -63,7 +68,7 @@ public class ClientHandler implements Runnable {
 		finally {
 			if (opponent != null && opponent.toClient != null) {
 				try {
-					opponent.toClient.writeUTF("other player left");
+					opponent.toClient.writeUTF("przeciwnik sobie poszedl :c");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -71,8 +76,8 @@ public class ClientHandler implements Runnable {
 		}
 			try {
 				socket.close();
-		        toClient.close();
-		        fromClient.close();
+				toClient.close();
+			       fromClient.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 		}

@@ -6,10 +6,12 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	
 	protected MainFrame frame;
 	private int squareX;
-	private int squareY; 
+	private int squareY;
+	public boolean moveWasMade;
 
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
+		moveWasMade = false;
 	}
 	
 	@Override

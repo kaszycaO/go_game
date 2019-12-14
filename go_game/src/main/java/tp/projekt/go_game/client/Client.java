@@ -22,55 +22,50 @@ public class Client extends Observer {
      */
     private DataInputStream fromServer = null;
     
-    private boolean blackTurn = true;
-    private boolean blackPlayer;
+    private boolean goOn = true;
 	
-	public Client(int boardSize, boolean blackPlayer) {
+	public Client(int boardSize) {
 		interpreter = new ClientInterpreter(boardSize);
-		this.blackPlayer = blackPlayer;
 		interpreter.frame.myAdapter.attach(this);
+		try {
+			socket = new Socket("localhost", 4444);
+	        toServer = new DataOutputStream(socket.getOutputStream());
+	        fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+            System.exit(1);
+		}
+		exchangeWithServer();
 	}
 	
 	private void exchangeWithServer() {
+		while (true) {
+			if (interpreter.moveWasMade) {
+				try {
+					toServer.writeUTF(interpreter.sendMessage());
+					String line = fromServer.readUTF();
+					interpreter.handleMessage(line);
+				}
+				catch (IOException e) {
+					System.out.println(e.getMessage());
+					System.exit(1);
+				}
+			}
+			if (!goOn) {
+				break;
+			}
+		}
 		try {
-			  
-	           socket = new Socket("localhost", 4444);
-	           toServer = new DataOutputStream(socket.getOutputStream());
-	           fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-	          
-	           toServer.writeUTF(interpreter.sendMessage());
-	           
-
-	           String line = fromServer.readUTF();
-	           
-	           char checkTurn = line.charAt(0);
-	            
-	           if(checkTurn == '1') {
-	        	   
-	        	   blackTurn = !blackTurn;
-	           }
-
-	           interpreter.handleMessage(line);
-
-	           socket.close();
-	           toServer.close();
-	           fromServer.close();
-	        }
-	        catch (IOException e) {
-	            System.out.println(e.getMessage());
-	            System.exit(1);
-	        }
+			socket.close();
+	        toServer.close();
+	        fromServer.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+            System.exit(1);
+		}
 	}
-
 	@Override
 	public void update() {
-		
-		if(blackTurn == blackPlayer) {
-			
-			exchangeWithServer();
-			
-		}
-			
-		
+		interpreter.moveWasMade = true;
 	}
 }
