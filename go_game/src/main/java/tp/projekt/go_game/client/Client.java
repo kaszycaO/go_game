@@ -109,6 +109,8 @@ public class Client extends Observer {
 	}
 	@Override
 	public void update() {
+
 		exchangeWithServer();
+
 	}
 }

@@ -66,11 +66,11 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	   }
 
 	   public void notifyAllObservers(){
+
 	      for (Observer observer : observers) {
 	         observer.update();
 	      }
 	   } 	
-
 
 	
 

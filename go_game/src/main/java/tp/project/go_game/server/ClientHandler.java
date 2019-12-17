@@ -36,6 +36,7 @@ public class ClientHandler {
 	public ClientHandler(Socket socket, String color) {
 		this.color = color;
 		this.socket = socket;
+
 		this.plays = true;
         initializePlayer();
 	}
@@ -67,6 +68,7 @@ public class ClientHandler {
 				}
 				else {
 					toClient.writeUTF(Integer.toString(boardSize));
+
 				}
 			}
 			recievedMessage = fromClient.readUTF();

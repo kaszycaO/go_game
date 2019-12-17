@@ -87,7 +87,6 @@ public class AppEngine implements EngineInterface {
 		return outcome;
 	}
 
- //TODO dziala ale zawsze porownuje poprzednia sytuacje -> zmienic 
 	public boolean checkIfKo(int X, int Y) {
 		if (turnCounter < 2) {
 			return false;
@@ -158,7 +157,7 @@ public class AppEngine implements EngineInterface {
 				}
 			}
 		}
-		for (int k=0;k<2;k++) {
+		for (int k=0;k<5;k++) {
 			for(int i=0; i< colorChain.size()/2;i++) {
 				if (!currentBoard[colorChain.get(2*i)][colorChain.get(2*i+1)].ifChecked) {
 				for(int j=0; j<domkaChain.size()/2;j++) {

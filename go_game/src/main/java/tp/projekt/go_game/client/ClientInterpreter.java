@@ -7,7 +7,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	protected MainFrame frame;
 	private int squareX;
 	private int squareY;
-
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
 	}
@@ -25,6 +24,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	public void handleMessage(String message) {
 		
 		String[] convertedMessage;
+
 		//TODO przerobic na switch case'a
 		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
