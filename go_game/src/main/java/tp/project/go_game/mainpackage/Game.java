@@ -7,13 +7,16 @@ public class Game {
 	
 	public ClientHandler currentPlayer;
 	
-	 public synchronized boolean getPermissiontoMove(ClientHandler player) {
-	        if (player != currentPlayer || player.opponent == null) {
-	            return false;
-	        } else {
-	        	currentPlayer = currentPlayer.opponent;
-	        	return true;
-	        }
-	    }
+	public boolean getPermissiontoMove(ClientHandler player) {
+		if (player != currentPlayer || player.opponent == null) {
+	          return false;
+	   } else {
+	     currentPlayer = currentPlayer.opponent;
+	     return true;
+	   }
+	}
 	
+	public void setCurrentPlayer(ClientHandler player) {
+		this.currentPlayer = player;
+	}
 }

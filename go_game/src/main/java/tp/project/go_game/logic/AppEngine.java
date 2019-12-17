@@ -406,6 +406,8 @@ public class AppEngine implements EngineInterface {
 		return finalScore;
 	}
 
-	
+	public int getTurnCounter() {
+		return this.turnCounter;
+	}
 	
 }

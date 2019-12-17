@@ -14,12 +14,13 @@ public class AppServer {
      * gniazdko serwera
      */
     public ServerSocket server = null;
+    private ClientHandler client1;
+    private ClientHandler client2;
+    private boolean ifBot;
     private int boardSize;
     
-    
-    
-    public AppServer(int boardSize, boolean ifBot) {
-    	this.boardSize = boardSize;
+    public AppServer() {
+    	this.ifBot =false;
     	try {
             server = new ServerSocket(4444);
         }
@@ -29,21 +30,28 @@ public class AppServer {
         }
     }
     
-    public void listenSocket() {
-
-        while(true) {
-        	Game game = new Game();
-        	try {
-				Thread client1 = new ClientHandler(server.accept(), boardSize, "black", game);
-				client1.start();
-				Thread client2 = new ClientHandler(server.accept(), boardSize,  "white", game);
-				client2.start();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
+    public void listenSocket() throws Exception {
+    	
+        try {
+			client1 = new ClientHandler(server.accept(), "black");
+			this.boardSize = client1.getBoardSize();
+			if (client1.checkIfBot() == 1) {
+				//TODO tu robi sie bot
+			} else if (client1.checkIfBot() == 0) {
+				client2 = new ClientHandler(server.accept(), "white",boardSize);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        while (client1.checkIfPresent() || client2.checkIfPresent()) {
+        	do {
+        		client1.run();
+        	} while (!client1.checkIfMoveWasLegit());
+        	do {
+        		client2.run();
+        	} while (!client2.checkIfMoveWasLegit());
         }
+        System.exit(0);
     }
-
+    
 }

@@ -6,6 +6,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 public class Client extends Observer {
 	
 	private ClientInterpreter interpreter;
@@ -21,12 +23,17 @@ public class Client extends Observer {
      * komunikaty od serwera
      */
     private DataInputStream fromServer = null;
-    
-    private boolean goOn = true;
+    private int boardSize;
+    private boolean ifBot;
+    private String[] sizes = {"9x9","13x13","19x19"};
 	
-	public Client(int boardSize) {
-		interpreter = new ClientInterpreter(boardSize);
-		interpreter.frame.myAdapter.attach(this);
+	public Client() {
+		this.boardSize = -1;
+		initializeClient();
+		getGameParameters();
+	}
+	
+	private void initializeClient() {
 		try {
 			socket = new Socket("localhost", 4444);
 	        toServer = new DataOutputStream(socket.getOutputStream());
@@ -35,26 +42,50 @@ public class Client extends Observer {
 			System.out.println(e.getMessage());
             System.exit(1);
 		}
-		exchangeWithServer();
 	}
 	
-	private void exchangeWithServer() {
-		while (true) {
-			if (interpreter.moveWasMade) {
-				try {
-					toServer.writeUTF(interpreter.sendMessage());
-					String line = fromServer.readUTF();
-					interpreter.handleMessage(line);
-				}
-				catch (IOException e) {
-					System.out.println(e.getMessage());
-					System.exit(1);
-				}
+	private void getGameParameters() {
+		try {
+			toServer.writeUTF("params");
+			String line = fromServer.readUTF();
+			if (line.charAt(0)=='-') {
+				getParsFromClient();
+				String bot = "f";
+				if (ifBot) bot = "t";
+				toServer.writeUTF(Integer.toString(boardSize)+" "+bot);
 			}
-			if (!goOn) {
-				break;
+			else {
+				this.boardSize = Integer.parseInt(line);
+				toServer.writeUTF("got");
 			}
+			this.interpreter = new ClientInterpreter(boardSize);
+			interpreter.frame.myAdapter.attach(this);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
+	}
+	
+	private void getParsFromClient() {
+    	int n = JOptionPane.showConfirmDialog(null, "Czy chcesz grac przeciwko innemu uzytkownikowi?", "Wybierz tryb rozgrywki", JOptionPane.YES_NO_OPTION);
+		String size = (String)JOptionPane.showInputDialog(null, "Wybierz rozmiar planszy", "Nowa gra", JOptionPane.QUESTION_MESSAGE,null, sizes,sizes[0]);
+		if (n == JOptionPane.NO_OPTION) ifBot = true;
+		else ifBot = false;
+		if (size == null) {	
+			System.exit(1);
+		}
+		else if (size.equals(sizes[0])) {
+			boardSize = 9;
+		}
+		else if(size.equals(sizes[1])) {
+			boardSize = 13;
+		}
+		else if (size.equals(sizes[2])) {	
+			boardSize = 19;
+		}
+	}
+	
+	private void closeConnection() {
 		try {
 			socket.close();
 	        toServer.close();
@@ -64,8 +95,21 @@ public class Client extends Observer {
             System.exit(1);
 		}
 	}
+	
+	private void exchangeWithServer() {
+			try {
+				toServer.writeUTF(interpreter.sendMessage());
+				String line = fromServer.readUTF();
+				interpreter.handleMessage(line);
+			}
+			catch (IOException e) {				
+				System.out.println(e.getMessage());
+				System.exit(1);
+			}
+	}
+		
 	@Override
 	public void update() {
-		interpreter.moveWasMade = true;
+		exchangeWithServer();
 	}
 }

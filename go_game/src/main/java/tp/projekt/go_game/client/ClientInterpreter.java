@@ -7,32 +7,25 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	protected MainFrame frame;
 	private int squareX;
 	private int squareY;
-	public boolean moveWasMade;
 
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
-		moveWasMade = false;
 	}
 	
 	@Override
 	public String sendMessage() {
-		
-		
 		if(frame.isMousePressed()) {
 			coordinatesConverter(frame.getXclicked(), frame.getYclicked()); 
 			return "coordinates" + " " + squareX + " " + squareY;		
 		}
-		
-		else
-			
-			return frame.getButtonClicked();
+		else return frame.getButtonClicked();
 	}
 
 	@Override
 	public void handleMessage(String message) {
 		
 		String[] convertedMessage;
-		
+		//TODO przerobic na switch case'a
 		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
 			
@@ -45,14 +38,8 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
 					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);
 					frame.setPanelMessage("");
-					
 				}
-				
-				
 			}
-		
-			
-			
 		}
 		else if(message.charAt(0) == '1') {
 			
@@ -80,11 +67,11 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 			frame.setPanelMessage("Wygral: " + 	convertedMessage[1]);
 			
 		}
-		
 	}
 	
 	private String[] interpretMessage(String message){
 		// TODO rozmiar tablicy to liczba zmian liczona w engine
+		//TODO przerobic na liste
 		int changes = 0;
 		StringBuilder sb = new StringBuilder();
 		
