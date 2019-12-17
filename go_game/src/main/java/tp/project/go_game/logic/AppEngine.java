@@ -94,7 +94,6 @@ public class AppEngine implements EngineInterface {
 		return outcome;
 	}
 
- //TODO dziala ale zawsze porownuje poprzednia sytuacje -> zmienic 
 	public boolean checkIfKo(int X, int Y) {
 		if (turnCounter < 2) {
 			return false;
@@ -463,9 +462,9 @@ public class AppEngine implements EngineInterface {
 	}
 
 	public int getTurnCounter() {
-		return turnCounter;
+
+		return this.turnCounter;
 	}
 
-	
 	
 }

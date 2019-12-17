@@ -1,47 +1,26 @@
 package tp.project.go_game.server;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
-
-import tp.project.go_game.gui.Board;
-import tp.project.go_game.logic.AppEngine;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import tp.project.go_game.mainpackage.Game;
 
 
 public class AppServer {
 	
-	
-	
-	private AppEngine engine;
-	private ServerInterpreter interpreter;
-	
-	Board board;
+
 	/**
      * gniazdko serwera
      */
     public ServerSocket server = null;
-
-    /**
-     * gniazdko klienta
-     */
-    private Socket client = null;
-
-    /**
-     * komunikaty od klienta
-     */
-    private DataInputStream fromClient = null;
-    /**
-     * dane wysylane do klienta
-     */
-    private DataOutputStream toClient = null;
-    private String recievedMessage = "";
+    private ClientHandler client1;
+    private ClientHandler client2;
+    private boolean ifBot;
+    private int boardSize;
     
-    
-    
-    public AppServer(int boardSize, boolean ifBot) {
+    public AppServer() {
+    	this.ifBot =false;
     	try {
             server = new ServerSocket(4444);
         }
@@ -49,33 +28,30 @@ public class AppServer {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-    	engine = new AppEngine(boardSize);
-    	interpreter = new ServerInterpreter(engine);
     }
     
-    /**
-     * odbieranie polecenia od klienta
-     */
-    public void listenSocket() {
-
-        while(true) {
-            try {
-                client = server.accept();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                System.exit(1);
-            }
-            try {
-                fromClient = new DataInputStream(new BufferedInputStream(client.getInputStream()));
-                toClient = new DataOutputStream(client.getOutputStream());
-                recievedMessage = fromClient.readUTF();
-                toClient.writeUTF(interpreter.handleMessage(recievedMessage));
-                
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                System.exit(1);
-            }
+    public void listenSocket() throws Exception {
+    	
+        try {
+			client1 = new ClientHandler(server.accept(), "black");
+			this.boardSize = client1.getBoardSize();
+			if (client1.checkIfBot() == 1) {
+				//TODO tu robi sie bot
+			} else if (client1.checkIfBot() == 0) {
+				client2 = new ClientHandler(server.accept(), "white",boardSize);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        while (client1.checkIfPresent() || client2.checkIfPresent()) {
+        	do {
+        		client1.run();
+        	} while (!client1.checkIfMoveWasLegit());
+        	do {
+        		client2.run();
+        	} while (!client2.checkIfMoveWasLegit());
         }
+        System.exit(0);
     }
-
+    
 }

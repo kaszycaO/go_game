@@ -63,7 +63,7 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		System.out.println(response);
 		return response;
 	}
-	
+
 	
 	private String[] interpretMessage(String message){
 		String[] convertedMessage = {"","",""};
