@@ -20,7 +20,7 @@ public class AppEngine implements EngineInterface {
 	private StoneFactory factory;
 	private String changes;
 	private int changesCounter;
-	private int finalScore;
+	private int finalScore = 0;
 	
 
 	public AppEngine(int boardSize) {
@@ -38,12 +38,8 @@ public class AppEngine implements EngineInterface {
 	}
 	
 	public void handleMove(int X, int Y) throws KoRuleViolatedException, CoordinatesOutOfBoundsException, SuicidalMoveException, IntersectionTakenException {
-		if (turnCounter > 1) {
-			switchArrays(koBoard,previousBoard);
-		}
-		if (turnCounter > 0) {
-			switchArrays(previousBoard,currentBoard);
-		}
+		
+		prepareArrays();
 		
 		if(checkIfInBounds(X, Y)) {
 			if (checkIfTaken(X, Y)) {
@@ -61,7 +57,7 @@ public class AppEngine implements EngineInterface {
 						changeTurn();
 						passCounter = 0;
 					} 
-					
+				
 					else {
 					
 						if (checkIfSuicidal(X, Y)) {
@@ -81,6 +77,17 @@ public class AppEngine implements EngineInterface {
 		
 	}
 	
+	
+	public void prepareArrays() {
+		
+		if (turnCounter > 1) {
+			switchArrays(koBoard,previousBoard);
+		}
+		if (turnCounter > 0) {
+			switchArrays(previousBoard,currentBoard);
+		}
+		
+	}
 	public boolean checkIfInBounds(int X, int Y) {
 		boolean outcome = false;
 		if((X >=0 && Y >=0) && (X < boardSize && Y < boardSize)) outcome = true;
@@ -91,9 +98,9 @@ public class AppEngine implements EngineInterface {
 		if (turnCounter < 2) {
 			return false;
 		}
-		System.out.println("Current: " + currentBoard[1][1]);
-		System.out.println("Previous: " + previousBoard[1][1]);
-		System.out.println("Ko: " + koBoard[1][1]);
+		System.out.println("Current: " + currentBoard[2][1]);
+		System.out.println("Previous: " + previousBoard[2][1]);
+		System.out.println("Ko: " + koBoard[2][1]);
 		boolean outcome = false;
 		
 		
@@ -257,8 +264,8 @@ public class AppEngine implements EngineInterface {
 		}
 		return coords;
 	}
-	
-	private void removeStone(int X, int Y) {
+
+	public void removeStone(int X, int Y) {
 
 		
 		currentBoard[X][Y] = null;
@@ -296,7 +303,7 @@ public class AppEngine implements EngineInterface {
 	}
 
 
-	private boolean checkIfTaken(int X, int Y) {
+	public boolean checkIfTaken(int X, int Y) {
 		if (currentBoard[X][Y]==null) {
 			return false;
 		}
@@ -369,7 +376,8 @@ public class AppEngine implements EngineInterface {
 			}
 			
 		}
-		
+		System.out.println("Biale: " + whiteScore);
+		System.out.println("Czarne: " + blackScore);
 		
 		if(blackScore > whiteScore)
 			return blackScore - whiteScore;
@@ -454,7 +462,9 @@ public class AppEngine implements EngineInterface {
 	}
 
 	public int getTurnCounter() {
+
 		return this.turnCounter;
 	}
+
 	
 }

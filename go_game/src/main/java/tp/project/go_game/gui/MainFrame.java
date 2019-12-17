@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
 	private int xclicked;
 	private int yclicked;
 	private boolean mousePressed = false;
-	private String buttonClicked = "XD";
+	private String buttonClicked;
 	
 	
 	
