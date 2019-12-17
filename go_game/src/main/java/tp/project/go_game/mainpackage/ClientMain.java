@@ -5,7 +5,7 @@ import tp.projekt.go_game.client.Client;
 public class ClientMain {
 
 	public static void main(String[] args) {
-		Client client = new Client(9);
+		Client client = new Client(19);
 	}
 
 }

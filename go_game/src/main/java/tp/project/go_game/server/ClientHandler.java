@@ -37,7 +37,7 @@ public class ClientHandler extends Thread {
 		this.interpreter = new ServerInterpreter(engine);
 		fromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         toClient = new DataOutputStream(socket.getOutputStream());
-		
+	
 	}
 
 	@Override
@@ -56,7 +56,9 @@ public class ClientHandler extends Thread {
 	        	   if (game.getPermissiontoMove(this)) {
 	        		   System.out.println("mam pozwolenie");
 	        	   String recievedMessage = fromClient.readUTF();
+	        	   System.out.println(interpreter.handleMessage(recievedMessage));
 	        	   toClient.writeUTF(interpreter.handleMessage(recievedMessage));
+	        	
 	        	   }
 	        	   
 	           }
@@ -66,7 +68,7 @@ public class ClientHandler extends Thread {
 	            System.exit(1);
 	        }
 		finally {
-			if (opponent != null && opponent.toClient != null) {
+			if (opponent == null && opponent.toClient == null) {
 				try {
 					opponent.toClient.writeUTF("przeciwnik sobie poszedl :c");
 				} catch (IOException e) {

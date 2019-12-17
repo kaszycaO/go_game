@@ -7,7 +7,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	protected MainFrame frame;
 	private int squareX;
 	private int squareY;
-	public boolean moveWasMade;
+	private boolean moveWasMade;
 
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
@@ -32,6 +32,9 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	public void handleMessage(String message) {
 		
 		String[] convertedMessage;
+		
+		System.out.println(message);
+
 		
 		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
@@ -153,6 +156,14 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 				
 		this.squareX = squareX;
 		this.squareY = squareY;
+	}
+
+	public boolean isMoveWasMade() {
+		return moveWasMade;
+	}
+
+	public void setMoveWasMade(boolean moveWasMade) {
+		this.moveWasMade = moveWasMade;
 	}
 	
 	

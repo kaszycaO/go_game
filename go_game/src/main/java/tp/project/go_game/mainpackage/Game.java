@@ -8,6 +8,7 @@ public class Game {
 	public ClientHandler currentPlayer;
 	
 	 public synchronized boolean getPermissiontoMove(ClientHandler player) {
+
 	        if (player != currentPlayer || player.opponent == null) {
 	            return false;
 	        } else {

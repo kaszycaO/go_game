@@ -38,9 +38,23 @@ public class Client extends Observer {
 		exchangeWithServer();
 	}
 	
+	private void closeConnection() {
+		try {
+			socket.close();
+	        toServer.close();
+	        fromServer.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+            System.exit(1);
+		}
+		
+		
+	}
+	
 	private void exchangeWithServer() {
-		while (true) {
-			if (interpreter.moveWasMade) {
+		//while (true) {
+			//if (interpreter.isMoveWasMade()) {
+				System.out.println("Elo in info to serv");
 				try {
 					toServer.writeUTF(interpreter.sendMessage());
 					String line = fromServer.readUTF();
@@ -50,22 +64,25 @@ public class Client extends Observer {
 					System.out.println(e.getMessage());
 					System.exit(1);
 				}
-			}
-			if (!goOn) {
-				break;
-			}
-		}
-		try {
-			socket.close();
-	        toServer.close();
-	        fromServer.close();
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-            System.exit(1);
-		}
+				
+				//interpreter.setMoveWasMade(false);
+
+			//}
+		//	if (!goOn) {
+			//	break;
+			//}
+	//	}
+		
 	}
 	@Override
 	public void update() {
-		interpreter.moveWasMade = true;
+		
+		exchangeWithServer();
+		
+		if (!goOn)
+			closeConnection();
+			
+		//System.out.println("siup");
+		//interpreter.setMoveWasMade(true);
 	}
 }
