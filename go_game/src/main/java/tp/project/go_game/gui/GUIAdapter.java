@@ -26,19 +26,15 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		
 		observers = new ArrayList<Observer>();
 		this.myFrame = myFrame;
-		
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent event) {
-		
 		myFrame.setXclicked(event.getX());
 		myFrame.setYclicked(event.getY());
 		myFrame.setMousePressed(true);
 		notifyAllObservers();
-		
-		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -47,17 +43,17 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		if(e.getSource() == myFrame.myFeaturesPanel.resignButton) {
      	  
      	    myFrame.setButtonClicked("button resign");
-     		notifyAllObservers();
+     	   notifyAllObservers();
 			
 		}
 		else if (e.getSource() == myFrame.myFeaturesPanel.passButton) {
 			
 			  myFrame.setButtonClicked("button pass");
-				notifyAllObservers();
+			  notifyAllObservers();
 				
 		}
-		
 	}
+		
 
 	
 

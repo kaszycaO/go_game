@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Client extends Observer {
 	
@@ -102,24 +103,29 @@ public class Client extends Observer {
 	
 	private void exchangeWithServer() {
 			try {
-				System.out.println("wysylam ruch");
 				toServer.writeUTF(interpreter.sendMessage());
 				String line = fromServer.readUTF();
-				System.out.println("dostalem "+line);
 				interpreter.handleMessage(line);
-				if(!interpreter.isDoMove())
-				handleOpponentsMove();
 			}
 			catch (IOException e) {				
 				System.out.println(e.getMessage());
 				System.exit(1);
 			}
+			if(!interpreter.isDoMove()) {
+				SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					
+					handleOpponentsMove();
+				
+				}});
+				
+			}
+			else return;
 	}
 	
 	private void handleOpponentsMove() {
 		try {
 			yourTurn = false;
-			System.out.println("czekam na ruch przeciwnika");
 			String line = fromServer.readUTF();
 			interpreter.handleMessage(line);
 			yourTurn = true;
@@ -130,9 +136,8 @@ public class Client extends Observer {
 	
 	@Override
 	public void update() {
-
-		if(yourTurn) exchangeWithServer();
-		else return;
-
+		if (yourTurn) {
+			exchangeWithServer();
+		}
 	}
 }

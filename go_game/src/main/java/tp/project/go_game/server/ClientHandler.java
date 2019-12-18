@@ -24,18 +24,13 @@ public class ClientHandler {
     private DataOutputStream toClient = null;
 	public ClientHandler opponent;
 	private String color;
-	private ServerInterpreter interpreter;
-	private AppEngine engine;
 	private boolean plays;
 	private int boardSize =-1;
 	private int ifBot = -1;
-	private int turn1 = 0;
-	private int turn2 = 0;
 	
 	public ClientHandler(Socket socket, String color) {
 		this.color = color;
 		this.socket = socket;
-
 		this.plays = true;
         initializePlayer();
 	}
@@ -67,7 +62,6 @@ public class ClientHandler {
 				}
 				else {
 					toClient.writeUTF(Integer.toString(boardSize));
-
 				}
 			}
 			recievedMessage = fromClient.readUTF();
@@ -89,8 +83,6 @@ public class ClientHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.engine = new AppEngine(this.boardSize);
-		this.interpreter = new ServerInterpreter(engine);
 	}
 	
 	public void closeConnection() {
@@ -107,26 +99,23 @@ public class ClientHandler {
 	public boolean checkIfPresent() {
 		return this.plays;
 	}
-
-	public void processYourMove() {
+	
+	public String getMove(){
+		String msg = "";
 		try {
-			System.out.println("proc kolor "+color);
-			String recievedMessage = fromClient.readUTF();
-			System.out.println("dostal wiadomosc "+recievedMessage);
-	  		String response = interpreter.handleMessage(recievedMessage);
-	  		toClient.writeUTF(response);
-	  		System.out.println("wyslal odpowiedz "+response);
-	  		opponent.interpreter.handleMessage(recievedMessage);
-	  		System.out.println("interpreter oponenta dostal "+recievedMessage);
-	  		opponent.toClient.writeUTF(response);
-	  		System.out.println("wyslal do oponenta "+response);
-	    }
-	   catch (IOException e) {
-	        System.out.println(e.getMessage());
-	        System.exit(1);
-	    }
-		turn1 = turn2;
-		turn2 = engine.getTurnCounter();
+			msg = fromClient.readUTF();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	
+	public void sendMessage(String msg) {
+		try {
+			toClient.writeUTF(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int checkIfBot() {
@@ -135,23 +124,6 @@ public class ClientHandler {
 	
 	public int getBoardSize() {
 		return this.boardSize;
-	}
-	
-	public boolean checkIfMoveWasLegit() {
-		boolean outcome =false;
-		if (turn1 != turn2) {
-			outcome = true;
-		}
-		return outcome;
-	}
-	
-	public void setTurn2(int turn2) {
-		this.turn2 = turn2;
-	}
-	
-	public void setTurn1(int turn1) {
-		this.turn1 = turn1;
-	}
-	
+	}	
 }
 
