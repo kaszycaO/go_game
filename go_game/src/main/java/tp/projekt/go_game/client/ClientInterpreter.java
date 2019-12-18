@@ -7,6 +7,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	public MainFrame frame;
 	private int squareX;
 	private int squareY;
+	private boolean doMove = true;
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
 	}
@@ -19,17 +20,17 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		}
 		else return frame.getButtonClicked();
 	}
-
+	
 	@Override
 	public void handleMessage(String message) {
 		
 		String[] convertedMessage;
-
+		doMove = true;
 		//TODO przerobic na switch case'a
 		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
-			
-			
+			doMove = false;
+			System.out.println(message);
 			if(convertedMessage[0].equals("0")) {
 				
 				for(int i = 1; i <= (convertedMessage.length)/3; i++ ) {
@@ -38,6 +39,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
 					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);
 					frame.setPanelMessage("");
+					
 				}
 			}
 		}
@@ -143,6 +145,10 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 				
 		this.squareX = squareX;
 		this.squareY = squareY;
+	}
+
+	public boolean isDoMove() {
+		return doMove;
 	}
 	
 	

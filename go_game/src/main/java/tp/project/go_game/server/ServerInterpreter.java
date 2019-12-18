@@ -60,7 +60,6 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		response += engine.getChanges();
 		response += engine.getChangesCounter() + 1;
 		engine.setChangesCounter(0);
-		System.out.println(response);
 		return response;
 	}
 

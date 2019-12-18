@@ -26,6 +26,7 @@ public class Client extends Observer {
     private int boardSize;
     private boolean ifBot;
     private String[] sizes = {"9x9","13x13","19x19"};
+    private boolean yourTurn = true;
 	
 	public Client() {
 		this.boardSize = -1;
@@ -104,8 +105,9 @@ public class Client extends Observer {
 				System.out.println("wysylam ruch");
 				toServer.writeUTF(interpreter.sendMessage());
 				String line = fromServer.readUTF();
+				System.out.println("dostalem "+line);
 				interpreter.handleMessage(line);
-				//TODO to sie nie powinno robic jak ruch nie byl legitny
+				if(!interpreter.isDoMove())
 				handleOpponentsMove();
 			}
 			catch (IOException e) {				
@@ -116,9 +118,11 @@ public class Client extends Observer {
 	
 	private void handleOpponentsMove() {
 		try {
+			yourTurn = false;
 			System.out.println("czekam na ruch przeciwnika");
 			String line = fromServer.readUTF();
 			interpreter.handleMessage(line);
+			yourTurn = true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -127,6 +131,7 @@ public class Client extends Observer {
 	@Override
 	public void update() {
 
+		if(yourTurn)
 		exchangeWithServer();
 
 	}

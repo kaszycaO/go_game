@@ -110,13 +110,16 @@ public class ClientHandler {
 
 	public void processYourMove() {
 		try {
+			System.out.println("proc kolor "+color);
 			String recievedMessage = fromClient.readUTF();
-			System.out.println(recievedMessage);
+			System.out.println("dostal wiadomosc "+recievedMessage);
 	  		String response = interpreter.handleMessage(recievedMessage);
-	  		System.out.println(response);
 	  		toClient.writeUTF(response);
-	  		String response2 = opponent.interpreter.handleMessage(recievedMessage);
-	  		opponent.toClient.writeUTF(response2);
+	  		System.out.println("wyslal odpowiedz "+response);
+	  		opponent.interpreter.handleMessage(recievedMessage);
+	  		System.out.println("interpreter oponenta dostal "+recievedMessage);
+	  		opponent.toClient.writeUTF(response);
+	  		System.out.println("wyslal do oponenta "+response);
 	    }
 	   catch (IOException e) {
 	        System.out.println(e.getMessage());
@@ -135,11 +138,9 @@ public class ClientHandler {
 	}
 	
 	public boolean checkIfMoveWasLegit() {
-		System.out.println("jestem w legit");
 		boolean outcome =false;
 		if (turn1 != turn2) {
 			outcome = true;
-			System.out.println("move byl legit");
 		}
 		return outcome;
 	}
