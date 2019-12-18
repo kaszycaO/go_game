@@ -119,8 +119,7 @@ public class AppEngine implements EngineInterface {
 				if (currentBoard[i][j] == null) {
 					if(koBoard[i][j] != null) outcome = false;
 				} else {
-					if(koBoard[i][j] == null || koBoard[i][j].getColor()!=currentBoard[i][j].getColor()) outcome = false; 
-				}
+					if(koBoard[i][j] == null || koBoard[i][j].getColor()!=currentBoard[i][j].getColor()) outcome = false; 				}
 			}
 		}*/
 		return outcome;

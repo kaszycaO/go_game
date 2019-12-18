@@ -74,16 +74,16 @@ public class Board extends JPanel{
 		switch (boardSize) {
 	    
 	    case 9: 
-	    	this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1313.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1919.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
@@ -104,7 +104,6 @@ public class Board extends JPanel{
 		g.drawImage(img, 0, 0, null);
 	   
 	    Graphics2D g2d = (Graphics2D) g;
-	    System.out.println("repaint");
 	    for(int i = 0; i < boardSize; i++) {
 	    	for(int j = 0; j < boardSize; j++){
 	    		if(stones[i][j] != null) {
@@ -170,8 +169,9 @@ public class Board extends JPanel{
 			
 		} else if (color.equals("null")) {
 			stones[x][y] = null;
-			System.out.println("null");
 		}
+		
+
 		repaint();
 		
 	}
