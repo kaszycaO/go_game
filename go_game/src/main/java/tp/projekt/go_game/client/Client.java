@@ -1,14 +1,13 @@
 package tp.projekt.go_game.client;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Client extends Observer {
 	
@@ -50,7 +49,7 @@ public class Client extends Observer {
 	private void getGameParameters() {
 
 			toServer.println("params");
-			String line = fromServer.nextLine();
+			String line = getMessage();
 			if (line.charAt(0)=='-') {
 				getParsFromClient();
 				String bot = "f";
@@ -66,9 +65,10 @@ public class Client extends Observer {
 			if (line.charAt(0)!='-') {
 				handleOpponentsMove();
 			}
-	
-		
+
 	}
+
+
 	
 	private void getParsFromClient() {
     	int n = JOptionPane.showConfirmDialog(null, "Czy chcesz grac przeciwko innemu uzytkownikowi?", "Wybierz tryb rozgrywki", JOptionPane.YES_NO_OPTION);
@@ -104,11 +104,19 @@ public class Client extends Observer {
 			
 				System.out.println("wysylam ruch");
 				toServer.println(interpreter.sendMessage());
-				String line = fromServer.nextLine();
+				String line = getMessage();
 				System.out.println("dostalem "+line);
 				interpreter.handleMessage(line);
-				if(!interpreter.isDoMove())
-				handleOpponentsMove();
+				if(!interpreter.isDoMove()) {
+					
+					// TY ŚMIECIU!
+					SwingUtilities.invokeLater(new Runnable() {
+					    public void run() {
+					    	handleOpponentsMove();
+					    }});
+					
+				}
+				
 			
 			
 	}
@@ -117,7 +125,7 @@ public class Client extends Observer {
 		
 			yourTurn = false;
 			System.out.println("czekam na ruch przeciwnika");
-			String line = fromServer.nextLine();
+			String line = getMessage();
 			interpreter.handleMessage(line);
 			yourTurn = true;
 		
@@ -130,4 +138,22 @@ public class Client extends Observer {
 		else return;
 
 	}
+	
+	public String getMessage() {
+		
+		String responseMessage = null;
+		
+		while(fromServer.hasNextLine()) {
+			
+			responseMessage = fromServer.nextLine();
+			
+			if(responseMessage!=null) {
+				
+				break;
+			}
+		}
+		
+		return responseMessage;
+	}
+	
 }

@@ -23,7 +23,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	
 	@Override
 	public void handleMessage(String message) {
-		
+	
 		String[] convertedMessage;
 		doMove = true;
 		//TODO przerobic na switch case'a

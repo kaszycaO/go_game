@@ -58,9 +58,28 @@ public class ClientHandler {
 		getParams();
 	}
 	
+	
+	public String getMessage() {
+		
+		String responseMessage = null;
+		
+		while(fromClient.hasNextLine()) {
+			
+			responseMessage = fromClient.nextLine();
+			
+			if(responseMessage!=null) {
+				
+				break;
+			}
+			
+		}
+		
+		return responseMessage;
+	}
+	
 	private void getParams() {
 		
-			String recievedMessage = fromClient.nextLine();
+			String recievedMessage = getMessage();
 			if (recievedMessage.equals("params")) {
 				if(this.boardSize == -1) {
 					toClient.println("-");
@@ -70,7 +89,7 @@ public class ClientHandler {
 
 				}
 			}
-			recievedMessage = fromClient.nextLine();
+			recievedMessage = getMessage();
 			if (!recievedMessage.equals("got")) {
 				String[] msg = {"",""};
 				int j=0;
@@ -108,7 +127,7 @@ public class ClientHandler {
 
 	public void processYourMove() {
 		System.out.println("proc kolor "+color);
-		String recievedMessage = fromClient.nextLine();
+		String recievedMessage = getMessage();
 		System.out.println("dostal wiadomosc "+recievedMessage);
 		String response = interpreter.handleMessage(recievedMessage);
 		toClient.println(response);

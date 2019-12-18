@@ -31,7 +31,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent event) {
+	public void mouseClicked(MouseEvent event) {
 		
 		myFrame.setXclicked(event.getX());
 		myFrame.setYclicked(event.getY());

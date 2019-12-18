@@ -46,6 +46,7 @@ public class Board extends JPanel{
 	private StoneFactory factory;
 
 
+
 	/**
 	 *  Konstruktor klasy
 	 * @param myAdapter GUIAdapter (klient)
@@ -163,18 +164,21 @@ public class Board extends JPanel{
 			
 	    	Stone blackStone = factory.getStone("Black");
 	    	stones[x][y] = blackStone; 
+	    	
 				
 		} else if(color.equals("white")) {
 			
 			Stone whiteStone = factory.getStone("White");
 			stones[x][y] = whiteStone;
+	
 
 			
 		} else if (color.equals("null")) {
 			stones[x][y] = null;
-			System.out.println("null");
+	
 		}
-
+		
+	
 		repaint();
 		
 	}
