@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 import tp.project.go_game.logic.AppEngine;
-import tp.project.go_game.mainpackage.Game;
 
 public class ClientHandler {
 	
@@ -109,18 +108,21 @@ public class ClientHandler {
 		return this.plays;
 	}
 
-	public void run() {
+	public void processYourMove() {
 		try {
-	  		 String recievedMessage = fromClient.readUTF();
-	  		 if(recievedMessage == null) return;
-	  		 toClient.writeUTF(interpreter.handleMessage(recievedMessage));
-	  		 opponent.toClient.writeUTF(interpreter.handleMessage(recievedMessage));
+			String recievedMessage = fromClient.readUTF();
+			System.out.println(recievedMessage);
+	  		String response = interpreter.handleMessage(recievedMessage);
+	  		System.out.println(response);
+	  		toClient.writeUTF(response);
+	  		String response2 = opponent.interpreter.handleMessage(recievedMessage);
+	  		opponent.toClient.writeUTF(response2);
 	    }
 	   catch (IOException e) {
 	        System.out.println(e.getMessage());
 	        System.exit(1);
 	    }
-		turn1 =turn2;
+		turn1 = turn2;
 		turn2 = engine.getTurnCounter();
 	}
 	
@@ -133,9 +135,22 @@ public class ClientHandler {
 	}
 	
 	public boolean checkIfMoveWasLegit() {
+		System.out.println("jestem w legit");
 		boolean outcome =false;
-		if (turn1 != turn2) outcome = true;
+		if (turn1 != turn2) {
+			outcome = true;
+			System.out.println("move byl legit");
+		}
 		return outcome;
 	}
+	
+	public void setTurn2(int turn2) {
+		this.turn2 = turn2;
+	}
+	
+	public void setTurn1(int turn1) {
+		this.turn1 = turn1;
+	}
+	
 }
 

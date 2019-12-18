@@ -67,6 +67,9 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 			frame.setPanelMessage("Wygral: " + 	convertedMessage[1]);
 			
 		}
+		else if(message.equals("eluwa")) {
+			frame.setPanelMessage("Witamy w gierce!");
+		}
 	}
 	
 	private String[] interpretMessage(String message){

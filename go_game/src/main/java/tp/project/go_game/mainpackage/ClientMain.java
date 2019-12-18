@@ -1,4 +1,4 @@
-package tp.project.go_game.mainpackage;
+ package tp.project.go_game.mainpackage;
 
 import tp.projekt.go_game.client.Client;
 

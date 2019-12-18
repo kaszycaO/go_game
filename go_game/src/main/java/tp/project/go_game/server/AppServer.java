@@ -2,9 +2,6 @@ package tp.project.go_game.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import tp.project.go_game.mainpackage.Game;
 
 
 public class AppServer {
@@ -39,18 +36,18 @@ public class AppServer {
 				//TODO tu robi sie bot
 			} else if (client1.checkIfBot() == 0) {
 				client2 = new ClientHandler(server.accept(), "white",boardSize);
+				client1.opponent = client2;
+				client2.opponent = client1;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
         while (client1.checkIfPresent() || client2.checkIfPresent()) {
         	do {
-        		System.out.println("jestem w do 1");
-        		client1.run();
+        		client1.processYourMove();
         	} while (!client1.checkIfMoveWasLegit());
         	do {
-        		client2.run();
-        		System.out.println("jestem w do 2");
+        		client2.processYourMove();
         	} while (!client2.checkIfMoveWasLegit());
         }
         System.exit(0);

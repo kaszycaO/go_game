@@ -60,6 +60,9 @@ public class Client extends Observer {
 			}
 			this.interpreter = new ClientInterpreter(boardSize);
 			interpreter.frame.myAdapter.attach(this);
+			if (line.charAt(0)!='-') {
+				handleOpponentsMove();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,19 +101,29 @@ public class Client extends Observer {
 	
 	private void exchangeWithServer() {
 			try {
-				//TODO tu dac kolor na przeciwnika
+				System.out.println("wysylam ruch");
+				toServer.writeUTF(interpreter.sendMessage());
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
-				//TODO tu zmienic na swoj
-				toServer.writeUTF(interpreter.sendMessage());
-				line = fromServer.readUTF();
-				interpreter.handleMessage(line);
+				//TODO to sie nie powinno robic jak ruch nie byl legitny
+				handleOpponentsMove();
 			}
 			catch (IOException e) {				
 				System.out.println(e.getMessage());
 				System.exit(1);
 			}
 	}
+	
+	private void handleOpponentsMove() {
+		try {
+			System.out.println("czekam na ruch przeciwnika");
+			String line = fromServer.readUTF();
+			interpreter.handleMessage(line);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void update() {
 
