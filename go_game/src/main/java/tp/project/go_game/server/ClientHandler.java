@@ -112,6 +112,7 @@ public class ClientHandler {
 	public void run() {
 		try {
 	  		 String recievedMessage = fromClient.readUTF();
+	  		 if(recievedMessage == null) return;
 	  		 toClient.writeUTF(interpreter.handleMessage(recievedMessage));
 	  		 opponent.toClient.writeUTF(interpreter.handleMessage(recievedMessage));
 	    }

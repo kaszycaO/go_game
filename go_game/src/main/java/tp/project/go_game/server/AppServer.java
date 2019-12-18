@@ -45,10 +45,12 @@ public class AppServer {
 		}
         while (client1.checkIfPresent() || client2.checkIfPresent()) {
         	do {
+        		System.out.println("jestem w do 1");
         		client1.run();
         	} while (!client1.checkIfMoveWasLegit());
         	do {
         		client2.run();
+        		System.out.println("jestem w do 2");
         	} while (!client2.checkIfMoveWasLegit());
         }
         System.exit(0);

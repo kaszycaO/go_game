@@ -98,8 +98,12 @@ public class Client extends Observer {
 	
 	private void exchangeWithServer() {
 			try {
-				toServer.writeUTF(interpreter.sendMessage());
+				//TODO tu dac kolor na przeciwnika
 				String line = fromServer.readUTF();
+				interpreter.handleMessage(line);
+				//TODO tu zmienic na swoj
+				toServer.writeUTF(interpreter.sendMessage());
+				line = fromServer.readUTF();
 				interpreter.handleMessage(line);
 			}
 			catch (IOException e) {				
