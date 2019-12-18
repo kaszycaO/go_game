@@ -1,10 +1,10 @@
 package tp.projekt.go_game.client;
 
-
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -19,11 +19,11 @@ public class Client extends Observer {
     /**
      * komunikaty do serwera
      */
-    private PrintWriter toServer = null;
+    private DataOutputStream  toServer = null;
     /**
      * komunikaty od serwera
      */
-    private Scanner fromServer = null;
+    private DataInputStream fromServer = null;
     private int boardSize;
     private boolean ifBot;
     private String[] sizes = {"9x9","13x13","19x19"};
@@ -38,8 +38,8 @@ public class Client extends Observer {
 	private void initializeClient() {
 		try {
 			socket = new Socket("localhost", 4444);
-			fromServer = new Scanner(socket.getInputStream());
-			toServer = new PrintWriter(socket.getOutputStream(), true);
+	        toServer = new DataOutputStream(socket.getOutputStream());
+	        fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
             System.exit(1);
@@ -47,28 +47,29 @@ public class Client extends Observer {
 	}
 	
 	private void getGameParameters() {
-
-			toServer.println("params");
-			String line = getMessage();
+		try {
+			toServer.writeUTF("params");
+			String line = fromServer.readUTF();
 			if (line.charAt(0)=='-') {
 				getParsFromClient();
 				String bot = "f";
 				if (ifBot) bot = "t";
-				toServer.println(Integer.toString(boardSize)+" "+bot);
+				toServer.writeUTF(Integer.toString(boardSize)+" "+bot);
 			}
 			else {
 				this.boardSize = Integer.parseInt(line);
-				toServer.println("got");
+				toServer.writeUTF("got");
 			}
 			this.interpreter = new ClientInterpreter(boardSize);
 			interpreter.frame.myAdapter.attach(this);
 			if (line.charAt(0)!='-') {
 				handleOpponentsMove();
 			}
-
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
-
-
 	
 	private void getParsFromClient() {
     	int n = JOptionPane.showConfirmDialog(null, "Czy chcesz grac przeciwko innemu uzytkownikowi?", "Wybierz tryb rozgrywki", JOptionPane.YES_NO_OPTION);
@@ -104,7 +105,7 @@ public class Client extends Observer {
 			try {
 				toServer.writeUTF(interpreter.sendMessage());
 				String line = fromServer.readUTF();
-
+				interpreter.handleMessage(line);
 			}
 			catch (IOException e) {				
 				System.out.println(e.getMessage());
@@ -123,12 +124,14 @@ public class Client extends Observer {
 	}
 	
 	private void handleOpponentsMove() {
-		
+		try {
 			yourTurn = false;
 			String line = fromServer.readUTF();
 			interpreter.handleMessage(line);
 			yourTurn = true;
-		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -137,22 +140,4 @@ public class Client extends Observer {
 			exchangeWithServer();
 		}
 	}
-	
-	public String getMessage() {
-		
-		String responseMessage = null;
-		
-		while(fromServer.hasNextLine()) {
-			
-			responseMessage = fromServer.nextLine();
-			
-			if(responseMessage!=null) {
-				
-				break;
-			}
-		}
-		
-		return responseMessage;
-	}
-	
 }
