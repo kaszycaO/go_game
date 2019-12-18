@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -91,7 +92,9 @@ public class Client extends Observer {
 	}
 	
 	private void closeConnection() {
+		interpreter.frame.dispose();
 		try {
+			toServer.writeUTF("exit");
 			socket.close();
 	        toServer.close();
 	        fromServer.close();
@@ -103,7 +106,12 @@ public class Client extends Observer {
 	
 	private void exchangeWithServer() {
 			try {
-				toServer.writeUTF(interpreter.sendMessage());
+				String msg = interpreter.sendMessage();
+				toServer.writeUTF(msg);
+				if (msg == "button exit") {
+					closeConnection();
+					return;
+				}
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
 			}
@@ -113,17 +121,16 @@ public class Client extends Observer {
 			}
 			if(!interpreter.isDoMove()) {
 				SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					
-					handleOpponentsMove();
-				
-				}});
-				
+					public void run() {
+						handleOpponentsMove();
+					}
+				});
 			}
 			else return;
 	}
 	
 	private void handleOpponentsMove() {
+		
 		try {
 			yourTurn = false;
 			String line = fromServer.readUTF();

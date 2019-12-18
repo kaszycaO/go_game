@@ -105,7 +105,6 @@ public class Board extends JPanel{
 		g.drawImage(img, 0, 0, null);
 	   
 	    Graphics2D g2d = (Graphics2D) g;
-	    System.out.println("repaint");
 	    for(int i = 0; i < boardSize; i++) {
 	    	for(int j = 0; j < boardSize; j++){
 	    		if(stones[i][j] != null) {
