@@ -104,13 +104,14 @@ public class Board extends JPanel{
 		g.drawImage(img, 0, 0, null);
 	   
 	    Graphics2D g2d = (Graphics2D) g;
-
+	    System.out.println("repaint");
 	    for(int i = 0; i < boardSize; i++) {
 	    	for(int j = 0; j < boardSize; j++){
 	    		if(stones[i][j] != null) {
 	    			g2d.setColor(stones[i][j].getColor());
 	    			drawConverter(i,j);
-	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);	
+	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
+	    			
 	    		}	
 	    	}	
 	    }
@@ -168,12 +169,9 @@ public class Board extends JPanel{
 
 			
 		} else if (color.equals("null")) {
-			System.out.println("Usuwamy");
 			stones[x][y] = null;
+			System.out.println("null");
 		}
-		
-		
-		
 		repaint();
 		
 	}

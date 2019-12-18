@@ -131,8 +131,8 @@ public class Client extends Observer {
 	@Override
 	public void update() {
 
-		if(yourTurn)
-		exchangeWithServer();
+		if(yourTurn) exchangeWithServer();
+		else return;
 
 	}
 }
