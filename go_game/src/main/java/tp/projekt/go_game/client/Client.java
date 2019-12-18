@@ -4,7 +4,9 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -18,11 +20,11 @@ public class Client extends Observer {
     /**
      * komunikaty do serwera
      */
-    private DataOutputStream  toServer = null;
+    private PrintWriter toServer = null;
     /**
      * komunikaty od serwera
      */
-    private DataInputStream fromServer = null;
+    private Scanner fromServer = null;
     private int boardSize;
     private boolean ifBot;
     private String[] sizes = {"9x9","13x13","19x19"};
@@ -37,8 +39,8 @@ public class Client extends Observer {
 	private void initializeClient() {
 		try {
 			socket = new Socket("localhost", 4444);
-	        toServer = new DataOutputStream(socket.getOutputStream());
-	        fromServer = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+			fromServer = new Scanner(socket.getInputStream());
+			toServer = new PrintWriter(socket.getOutputStream(), true);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
             System.exit(1);
@@ -46,27 +48,25 @@ public class Client extends Observer {
 	}
 	
 	private void getGameParameters() {
-		try {
-			toServer.writeUTF("params");
-			String line = fromServer.readUTF();
+
+			toServer.println("params");
+			String line = fromServer.nextLine();
 			if (line.charAt(0)=='-') {
 				getParsFromClient();
 				String bot = "f";
 				if (ifBot) bot = "t";
-				toServer.writeUTF(Integer.toString(boardSize)+" "+bot);
+				toServer.println(Integer.toString(boardSize)+" "+bot);
 			}
 			else {
 				this.boardSize = Integer.parseInt(line);
-				toServer.writeUTF("got");
+				toServer.println("got");
 			}
 			this.interpreter = new ClientInterpreter(boardSize);
 			interpreter.frame.myAdapter.attach(this);
 			if (line.charAt(0)!='-') {
 				handleOpponentsMove();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	
 		
 	}
 	
@@ -101,31 +101,26 @@ public class Client extends Observer {
 	}
 	
 	private void exchangeWithServer() {
-			try {
+			
 				System.out.println("wysylam ruch");
-				toServer.writeUTF(interpreter.sendMessage());
-				String line = fromServer.readUTF();
+				toServer.println(interpreter.sendMessage());
+				String line = fromServer.nextLine();
 				System.out.println("dostalem "+line);
 				interpreter.handleMessage(line);
 				if(!interpreter.isDoMove())
 				handleOpponentsMove();
-			}
-			catch (IOException e) {				
-				System.out.println(e.getMessage());
-				System.exit(1);
-			}
+			
+			
 	}
 	
 	private void handleOpponentsMove() {
-		try {
+		
 			yourTurn = false;
 			System.out.println("czekam na ruch przeciwnika");
-			String line = fromServer.readUTF();
+			String line = fromServer.nextLine();
 			interpreter.handleMessage(line);
 			yourTurn = true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	@Override

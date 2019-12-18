@@ -35,6 +35,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 				
 				for(int i = 1; i <= (convertedMessage.length)/3; i++ ) {
 					
+					
 					int X = Integer.parseInt(convertedMessage[3*i - 2]);
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
 					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);

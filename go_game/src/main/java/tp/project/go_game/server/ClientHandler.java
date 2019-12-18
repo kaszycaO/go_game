@@ -1,10 +1,10 @@
 package tp.project.go_game.server;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import tp.project.go_game.logic.AppEngine;
 
@@ -17,11 +17,11 @@ public class ClientHandler {
 	/**
      * komunikaty od klienta
      */
-    private DataInputStream fromClient = null;
+    private Scanner fromClient = null;
     /**
      * dane wysylane do klienta
      */
-    private DataOutputStream toClient = null;
+    private PrintWriter toClient = null;
 	public ClientHandler opponent;
 	private String color;
 	private ServerInterpreter interpreter;
@@ -50,8 +50,8 @@ public class ClientHandler {
 	
 	public void initializePlayer() {
         try {
-        	fromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-			toClient = new DataOutputStream(socket.getOutputStream());
+        	fromClient = new Scanner(socket.getInputStream());
+			toClient = new PrintWriter(socket.getOutputStream(), true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,18 +59,18 @@ public class ClientHandler {
 	}
 	
 	private void getParams() {
-		try {
-			String recievedMessage = fromClient.readUTF();
+		
+			String recievedMessage = fromClient.nextLine();
 			if (recievedMessage.equals("params")) {
 				if(this.boardSize == -1) {
-					toClient.writeUTF("-");
+					toClient.println("-");
 				}
 				else {
-					toClient.writeUTF(Integer.toString(boardSize));
+					toClient.println(Integer.toString(boardSize));
 
 				}
 			}
-			recievedMessage = fromClient.readUTF();
+			recievedMessage = fromClient.nextLine();
 			if (!recievedMessage.equals("got")) {
 				String[] msg = {"",""};
 				int j=0;
@@ -86,9 +86,7 @@ public class ClientHandler {
 				if (msg[1].equals("f")) this.ifBot = 0;
 				else this.ifBot = 1;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		this.engine = new AppEngine(this.boardSize);
 		this.interpreter = new ServerInterpreter(engine);
 	}
@@ -109,22 +107,16 @@ public class ClientHandler {
 	}
 
 	public void processYourMove() {
-		try {
-			System.out.println("proc kolor "+color);
-			String recievedMessage = fromClient.readUTF();
-			System.out.println("dostal wiadomosc "+recievedMessage);
-	  		String response = interpreter.handleMessage(recievedMessage);
-	  		toClient.writeUTF(response);
-	  		System.out.println("wyslal odpowiedz "+response);
-	  		opponent.interpreter.handleMessage(recievedMessage);
-	  		System.out.println("interpreter oponenta dostal "+recievedMessage);
-	  		opponent.toClient.writeUTF(response);
-	  		System.out.println("wyslal do oponenta "+response);
-	    }
-	   catch (IOException e) {
-	        System.out.println(e.getMessage());
-	        System.exit(1);
-	    }
+		System.out.println("proc kolor "+color);
+		String recievedMessage = fromClient.nextLine();
+		System.out.println("dostal wiadomosc "+recievedMessage);
+		String response = interpreter.handleMessage(recievedMessage);
+		toClient.println(response);
+		System.out.println("wyslal odpowiedz "+response);
+		opponent.interpreter.handleMessage(recievedMessage);
+		System.out.println("interpreter oponenta dostal "+recievedMessage);
+		opponent.toClient.println(response);
+		System.out.println("wyslal do oponenta "+response);
 		turn1 = turn2;
 		turn2 = engine.getTurnCounter();
 	}
