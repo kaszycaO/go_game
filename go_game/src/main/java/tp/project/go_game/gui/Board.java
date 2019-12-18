@@ -174,10 +174,9 @@ public class Board extends JPanel{
 			
 		} else if (color.equals("null")) {
 			stones[x][y] = null;
-	
+
 		}
 		
-	
 		repaint();
 		
 	}

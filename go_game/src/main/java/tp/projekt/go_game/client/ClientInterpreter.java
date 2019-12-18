@@ -1,5 +1,7 @@
 package tp.projekt.go_game.client;
 
+import javax.swing.SwingUtilities;
+
 import tp.project.go_game.gui.MainFrame;
 
 public class ClientInterpreter implements ClientInterpreterInterface {
@@ -8,22 +10,30 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	private int squareX;
 	private int squareY;
 	private boolean doMove = true;
+	public int counter = 0;
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
 	}
 	
 	@Override
 	public String sendMessage() {
-		if(frame.isMousePressed()) {
-			coordinatesConverter(frame.getXclicked(), frame.getYclicked()); 
+		
+		System.out.println(frame.myAdapter.isYourTurn());
+		if(frame.myAdapter.isYourTurn()) {
+			if(frame.isMousePressed()) {
+				coordinatesConverter(frame.getXclicked(), frame.getYclicked()); 
 			return "coordinates" + " " + squareX + " " + squareY;		
 		}
 		else return frame.getButtonClicked();
 	}
+		return "";
+}
 	
 	@Override
+
 	public void handleMessage(String message) {
 	
+
 		String[] convertedMessage;
 		doMove = true;
 		//TODO przerobic na switch case'a
@@ -39,6 +49,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
 					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);
 					frame.setPanelMessage("");
+
 					
 				}
 			}
@@ -46,27 +57,32 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		else if(message.charAt(0) == '1') {
 			
 			frame.setPanelMessage("Naruszona zasada KO");
+
 			
 		}
 		else if(message.charAt(0) == '2') {
 			
 			frame.setPanelMessage("Uzywaj planszy!");
+
 			
 		}
 		else if(message.charAt(0) == '3') {
 			
 			frame.setPanelMessage("Ruch samobojczy!");
 			
+			
 		}
 		else if(message.charAt(0) == '4') {
 			
 			frame.setPanelMessage("Pole zajete!");
+		
 			
 		}
 		else if(message.charAt(0) == '5') {
 			
 			convertedMessage = interpretMessage(message);
 			frame.setPanelMessage("Wygral: " + 	convertedMessage[1]);
+			
 			
 		}
 		else if(message.charAt(0) == '6') {

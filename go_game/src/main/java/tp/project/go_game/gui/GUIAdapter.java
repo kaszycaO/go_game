@@ -23,6 +23,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 
 	private MainFrame myFrame;
 	private ArrayList<Observer> observers;
+	private boolean yourTurn = false;
 	
 	
 	public GUIAdapter(MainFrame myFrame) {
@@ -73,10 +74,22 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 
 	 public void notifyAllObservers(){
 
-      for (Observer observer : observers) {
-    	  observer.update();
-	     }
-	   } 	
+	      for (Observer observer : observers) {
+	         observer.update();
+	      }
+	   }
+
+	public boolean isYourTurn() {
+		return yourTurn;
+	}
+
+	public void setYourTurn(boolean yourTurn) {
+		this.yourTurn = yourTurn;
+	}
+
+	
+
+		
 
 	
 

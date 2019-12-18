@@ -29,6 +29,7 @@ public class Client extends Observer {
     private boolean ifBot;
     private String[] sizes = {"9x9","13x13","19x19"};
     private boolean yourTurn = true;
+
 	
 	public Client() {
 		this.boardSize = -1;
@@ -46,7 +47,7 @@ public class Client extends Observer {
             System.exit(1);
 		}
 	}
-	
+
 	private void getGameParameters() {
 		try {
 			toServer.writeUTF("params");
@@ -63,9 +64,14 @@ public class Client extends Observer {
 			}
 			this.interpreter = new ClientInterpreter(boardSize);
 			interpreter.frame.myAdapter.attach(this);
+			
 			if (line.charAt(0)!='-') {
+				
 				handleOpponentsMove();
 			}
+			else
+				//interpreter.frame.myAdapter.setYourTurn(true);
+				setTurn(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -112,6 +118,7 @@ public class Client extends Observer {
 					closeConnection();
 					return;
 				}
+
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
 			}
@@ -120,26 +127,47 @@ public class Client extends Observer {
 				System.exit(1);
 			}
 			if(!interpreter.isDoMove()) {
+				
 				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						handleOpponentsMove();
-					}
-				});
+				public void run() {
+					setTurn(false);
+					handleOpponentsMove();
+				
+				}});
+				
 			}
 			else return;
+		}
+		else return;
 	}
 	
 	private void handleOpponentsMove() {
 		
 		try {
+			
 			yourTurn = false;
 			String line = fromServer.readUTF();
 			interpreter.handleMessage(line);
 			yourTurn = true;
+			setTurn(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void setTurn(final boolean statement) {
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				
+				interpreter.frame.myAdapter.setYourTurn(statement);
+			
+			}});
+		
+	}
+	
+	
 	
 	@Override
 	public void update() {
