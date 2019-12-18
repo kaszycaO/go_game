@@ -46,6 +46,7 @@ public class Board extends JPanel{
 	private StoneFactory factory;
 
 
+
 	/**
 	 *  Konstruktor klasy
 	 * @param myAdapter GUIAdapter (klient)
@@ -108,6 +109,8 @@ public class Board extends JPanel{
 	    	for(int j = 0; j < boardSize; j++){
 	    		if(stones[i][j] != null) {
 	    			g2d.setColor(stones[i][j].getColor());
+	    			System.out.println("Repaint");
+
 	    			drawConverter(i,j);
 	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
 	    			
@@ -160,18 +163,20 @@ public class Board extends JPanel{
 			
 	    	Stone blackStone = factory.getStone("Black");
 	    	stones[x][y] = blackStone; 
+	    	
 				
 		} else if(color.equals("white")) {
 			
 			Stone whiteStone = factory.getStone("White");
 			stones[x][y] = whiteStone;
+	
 
 			
 		} else if (color.equals("null")) {
 			stones[x][y] = null;
+
 		}
 		
-
 		repaint();
 		
 	}

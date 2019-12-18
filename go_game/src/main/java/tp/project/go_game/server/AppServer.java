@@ -28,19 +28,20 @@ public class AppServer {
     public void listenSocket() throws Exception {
     	
         try {
-			client1 = new ClientHandler(server.accept(), "black");
+			client1 = new ClientHandler(server.accept());
 			this.boardSize = client1.getBoardSize();
 			if (client1.checkIfBot() == 1) {
 				//TODO tu robi sie bot
 			} else if (client1.checkIfBot() == 0) {
-				client2 = new ClientHandler(server.accept(), "white",boardSize);
+				client2 = new ClientHandler(server.accept(), boardSize);
 			}
 			Game game = new Game(client1.getBoardSize(), client1, client2);
-			 while (game != null) {
+			 while (game.isOn()) {
 		        }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+        System.out.println("Zamknieto serwer - brak graczy");
         System.exit(0);
     }
     

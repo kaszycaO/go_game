@@ -23,20 +23,17 @@ public class ClientHandler {
      */
     private DataOutputStream toClient = null;
 	public ClientHandler opponent;
-	private String color;
 	private boolean plays;
 	private int boardSize =-1;
 	private int ifBot = -1;
 	
-	public ClientHandler(Socket socket, String color) {
-		this.color = color;
+	public ClientHandler(Socket socket) {
 		this.socket = socket;
 		this.plays = true;
         initializePlayer();
 	}
 	
-	public ClientHandler(Socket socket, String color, int boardSize) {
-		this.color = color;
+	public ClientHandler(Socket socket, int boardSize) {
 		this.socket = socket;
 		this.plays = true;
 		this.boardSize = boardSize;

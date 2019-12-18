@@ -23,19 +23,20 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		String[] convertedMessage = interpretMessage(message);
 		
 		if (convertedMessage[0].equals("button")) {
-			engine.resetChanges();
-			engine.handleButtons(convertedMessage[1]);
-			//nie dzialalo wczesniej, tu musi byc return
-		
-			response =  "5 ";
+			if(convertedMessage[1].contentEquals("exit")) {
+				response = "6";
+				engine.changeTurn();
+			} else {
+				engine.resetChanges();
+				engine.handleButtons(convertedMessage[1]);
+				//nie dzialalo wczesniej, tu musi byc return
 			
-			response +=engine.getFinalScore();
-			
-			response +=" 2";
-			
-		
-			System.out.println(response);
-			return response;
+				response =  "5 ";
+				//TODO fix
+				response +=engine.getFinalScore();
+				
+				response +=" 2";
+			}
 		}
 		else {
 			engine.resetChanges();
@@ -55,11 +56,10 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 			} catch (IntersectionTakenException e) {
 				return response += "4 ";
 			}
+			response += engine.getChanges();
+			response += engine.getChangesCounter() + 1;
+			engine.setChangesCounter(0);
 		}
-	
-		response += engine.getChanges();
-		response += engine.getChangesCounter() + 1;
-		engine.setChangesCounter(0);
 		return response;
 	}
 

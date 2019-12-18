@@ -26,6 +26,11 @@ public class FeaturesPanel extends JPanel {
 	protected JButton passButton;
 	
 	/**
+	 * Przycisk wyjdz
+	 */
+	protected JButton exitButton;
+	
+	/**
 	 * Panel z wiadomościami dotyczącymi przebiegu gry
 	 */
 	protected JLabel message;
@@ -55,10 +60,14 @@ public class FeaturesPanel extends JPanel {
 		passButton = new JButton("Spasuj");
 		passButton.addActionListener(this.myAdapter);
 		
+		exitButton = new JButton("Wyjdz");
+		exitButton.addActionListener(this.myAdapter);
+		
 		message = new JLabel();
 		
 		add(resignButton);
 		add(passButton);
+		add(exitButton);
 		add(message);
 		
 	}
