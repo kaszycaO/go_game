@@ -31,6 +31,9 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 			
 			response +=engine.getFinalScore();
 			
+			response +=" 2";
+			
+		
 			System.out.println(response);
 			return response;
 		}

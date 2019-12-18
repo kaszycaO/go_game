@@ -4,7 +4,7 @@ import tp.project.go_game.gui.MainFrame;
 
 public class ClientInterpreter implements ClientInterpreterInterface {
 	
-	protected MainFrame frame;
+	public MainFrame frame;
 	private int squareX;
 	private int squareY;
 	public ClientInterpreter(int boardSize) {
@@ -126,7 +126,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		return convertedMessage;
 	}
 	
-	
+
 	
 	private void coordinatesConverter(int X, int Y) {
 
