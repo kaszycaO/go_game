@@ -20,9 +20,7 @@ public class MainFrame extends JFrame {
 	private int yclicked;
 	private boolean mousePressed = false;
 	private String buttonClicked;
-	
-	
-	
+
 	public MainFrame(int boardSize) {
 		
 		this.boardSize = boardSize;
@@ -38,13 +36,12 @@ public class MainFrame extends JFrame {
 		myAdapter = new GUIAdapter(this);
 		myBoard = new Board(myAdapter, boardSize);
 		myFeaturesPanel = new FeaturesPanel(myAdapter);
-		
 		//myBoard.addActionListener(myAdapter);
 	
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, myFeaturesPanel, myBoard);
 		splitPane.setEnabled(false);
 		add(splitPane);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
 		pack();
@@ -100,6 +97,6 @@ public class MainFrame extends JFrame {
 		
 		myFeaturesPanel.message.setText(message);
 	}
-	
+
 	
 }

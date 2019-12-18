@@ -30,7 +30,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
 			doMove = false;
-			System.out.println(message);
 			if(convertedMessage[0].equals("0")) {
 				
 				for(int i = 1; i <= (convertedMessage.length)/3; i++ ) {
@@ -69,8 +68,8 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 			frame.setPanelMessage("Wygral: " + 	convertedMessage[1]);
 			
 		}
-		else if(message.equals("eluwa")) {
-			frame.setPanelMessage("Witamy w gierce!");
+		else if(message.charAt(0) == '6') {
+			frame.setPanelMessage("Twoj przeciwnik uciekl :c");
 		}
 	}
 	
