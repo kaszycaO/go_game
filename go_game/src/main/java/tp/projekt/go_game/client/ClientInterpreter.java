@@ -23,7 +23,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 	
 	@Override
 	public void handleMessage(String message) {
-		
+	
 		String[] convertedMessage;
 		doMove = true;
 		//TODO przerobic na switch case'a
@@ -34,6 +34,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 			if(convertedMessage[0].equals("0")) {
 				
 				for(int i = 1; i <= (convertedMessage.length)/3; i++ ) {
+					
 					
 					int X = Integer.parseInt(convertedMessage[3*i - 2]);
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 

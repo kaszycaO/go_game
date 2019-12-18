@@ -1,10 +1,10 @@
 package tp.project.go_game.server;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import tp.project.go_game.logic.AppEngine;
 
@@ -17,11 +17,11 @@ public class ClientHandler {
 	/**
      * komunikaty od klienta
      */
-    private DataInputStream fromClient = null;
+    private Scanner fromClient = null;
     /**
      * dane wysylane do klienta
      */
-    private DataOutputStream toClient = null;
+    private PrintWriter toClient = null;
 	public ClientHandler opponent;
 	private String color;
 	private boolean plays;
@@ -45,26 +45,46 @@ public class ClientHandler {
 	
 	public void initializePlayer() {
         try {
-        	fromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-			toClient = new DataOutputStream(socket.getOutputStream());
+        	fromClient = new Scanner(socket.getInputStream());
+			toClient = new PrintWriter(socket.getOutputStream(), true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		getParams();
 	}
 	
+	
+	public String getMessage() {
+		
+		String responseMessage = null;
+		
+		while(fromClient.hasNextLine()) {
+			
+			responseMessage = fromClient.nextLine();
+			
+			if(responseMessage!=null) {
+				
+				break;
+			}
+			
+		}
+		
+		return responseMessage;
+	}
+	
 	private void getParams() {
-		try {
-			String recievedMessage = fromClient.readUTF();
+		
+			String recievedMessage = getMessage();
 			if (recievedMessage.equals("params")) {
 				if(this.boardSize == -1) {
-					toClient.writeUTF("-");
+					toClient.println("-");
 				}
 				else {
 					toClient.writeUTF(Integer.toString(boardSize));
+
 				}
 			}
-			recievedMessage = fromClient.readUTF();
+			recievedMessage = getMessage();
 			if (!recievedMessage.equals("got")) {
 				String[] msg = {"",""};
 				int j=0;
@@ -80,9 +100,11 @@ public class ClientHandler {
 				if (msg[1].equals("f")) this.ifBot = 0;
 				else this.ifBot = 1;
 			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 	
 	public void closeConnection() {
@@ -99,6 +121,7 @@ public class ClientHandler {
 	public boolean checkIfPresent() {
 		return this.plays;
 	}
+
 	
 	public String getMove(){
 		String msg = "";
@@ -116,6 +139,7 @@ public class ClientHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 	
 	public int checkIfBot() {
