@@ -110,15 +110,17 @@ public class Client extends Observer {
 		}
 	}
 	
-	private void exchangeWithServer() {
-			try {
-				String msg = interpreter.sendMessage();
+private void exchangeWithServer() {
+		
+		String msg = interpreter.sendMessage();
+		if(msg != "") {
+		try {
+			
 				toServer.writeUTF(msg);
 				if (msg == "button exit") {
 					closeConnection();
 					return;
 				}
-
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
 			}
