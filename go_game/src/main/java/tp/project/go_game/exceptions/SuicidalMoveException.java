@@ -2,9 +2,7 @@ package tp.project.go_game.exceptions;
 
 public class SuicidalMoveException extends Exception {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	/**

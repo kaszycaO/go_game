@@ -1,6 +1,5 @@
 package tp.projekt.go_game.client;
 
-import javax.swing.SwingUtilities;
 
 import tp.project.go_game.gui.MainFrame;
 
@@ -81,8 +80,16 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		else if(message.charAt(0) == '5') {
 			
 			convertedMessage = interpretMessage(message);
-			frame.setPanelMessage("Wygral: " + 	convertedMessage[1]);
+			System.out.println(convertedMessage[2]);
 			
+			if(convertedMessage[1].equals("remis"))
+				frame.setPanelMessage(convertedMessage[1]);
+			else if(convertedMessage[2].equals("Przeciwnik"))
+				frame.setPanelMessage(convertedMessage[2] + " " + convertedMessage[3]);
+			else
+				frame.setPanelMessage("Wygral: " + 	convertedMessage[1] + " o: " + convertedMessage[2] + " pkt");
+			
+		
 			
 		}
 		else if(message.charAt(0) == '6') {
@@ -90,9 +97,8 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		}
 	}
 	
-	private String[] interpretMessage(String message){
-		// TODO rozmiar tablicy to liczba zmian liczona w engine
-		//TODO przerobic na liste
+	public String[] interpretMessage(String message){
+		
 		int changes = 0;
 		StringBuilder sb = new StringBuilder();
 		
@@ -100,10 +106,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		char secondLast = message.charAt(message.length() - 2);
 		char firstLast = message.charAt(message.length() - 1);
 		
-		
-		
-		
-		//gdyby byla 3 cyfrowa liczba zmian xd
 		
 		
 		if(thirdLast != ' ' && secondLast != ' ') {

@@ -68,8 +68,8 @@ public class Client extends Observer {
 				handleOpponentsMove();
 			}
 			else
-				//interpreter.frame.myAdapter.setYourTurn(true);
 				setTurn(true);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -108,7 +108,7 @@ public class Client extends Observer {
 		}
 	}
 	
-private void exchangeWithServer() {
+	private void exchangeWithServer() {
 		
 		String msg = interpreter.sendMessage();
 		System.out.println(msg);
@@ -156,8 +156,7 @@ private void exchangeWithServer() {
 			e.printStackTrace();
 		}
 	}
-	
-	
+		
 	public void setTurn(final boolean statement) {
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -168,7 +167,6 @@ private void exchangeWithServer() {
 			}});
 		
 	}
-	
 	
 	
 	@Override

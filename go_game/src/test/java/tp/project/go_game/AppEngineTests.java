@@ -445,9 +445,32 @@ public class AppEngineTests {
 		
 		engine.addStone(1, 0);
 		engine.handleButtons("resign");
-		assertEquals(engine.getFinalScore(), 1);
+		assertEquals(engine.getFinalScore(), "black 1");
+		
+		engine.changeTurn();
+		engine.addStone(2, 2);
+		engine.addStone(2, 3);
+		
+		engine.resetChanges();
+		engine.handleButtons("resign");
+		
+		assertEquals(engine.getFinalScore(), "white 1");
 		
 		
+	}
+	
+	@Test
+	public void getBMoveTest() {
+		
+		engine.addStone(1, 1);
+		engine.changeTurn();
+		
+		Integer[] coords = new Integer[2];
+		coords[0] = 0;
+		coords[1] = 0;
+		
+		assertEquals(engine.getBMove()[0], coords[0]);
+		assertEquals(engine.getBMove()[1], coords[1]);
 		
 	}
 	

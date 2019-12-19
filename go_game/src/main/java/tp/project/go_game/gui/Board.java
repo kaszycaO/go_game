@@ -2,8 +2,6 @@ package tp.project.go_game.gui;
 
 import tp.project.go_game.logic.StoneFactory;
 
-
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -36,13 +34,30 @@ public class Board extends JPanel{
 	 * Rozmiar planszy podawany przez klienta
 	 */
 	private int boardSize;
+	
+	/**
+	 * rozmiar kwadratu na ktorym odbedzie sie rysowanie 
+	 */
 	private int squareSize;
 	
+	/**
+	 *  zmienna odpowiedzialna za rysowanie współrzędnej X
+	 */
 	private int drawX;
+	
+	/**
+	 *  zmienna odpowiedzialna za rysowanie współrzędnej Y
+	 */
 	private int drawY;
 	
+	/*
+	 *  tablica kamieni
+	 */
 	private Stone stones[][];
 	
+	/**
+	 * fabryka kamieni
+	 */
 	private StoneFactory factory;
 
 
@@ -65,7 +80,7 @@ public class Board extends JPanel{
 
 		initializeBoard();
 		addMouseListener(myAdapter);
-
+		
 	}
 	
 	/**
@@ -75,24 +90,23 @@ public class Board extends JPanel{
 		switch (boardSize) {
 	    
 	    case 9: 
-	    	this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza99.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza99.png").getImage();
+	    	this.img = new ImageIcon("images/plansza99.png").getImage();
 	    	break;
 	    case 13:
-	    	this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1313.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1313.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1313.png").getImage();
 	    	break;
 	    case 19:
-	    	this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
-	    	//this.img = new ImageIcon("images/plansza1919.png").getImage();
+	    	//this.img = new ImageIcon("go_game/images/plansza1919.png").getImage();
+	    	this.img = new ImageIcon("images/plansza1919.png").getImage();
 	    	break;
 	    default:
 	    	System.exit(0);
 	    	break;
 	    
 	    }
-	    
-	  
+	     
 	}
 	
 	
@@ -109,8 +123,7 @@ public class Board extends JPanel{
 	    	for(int j = 0; j < boardSize; j++){
 	    		if(stones[i][j] != null) {
 	    			g2d.setColor(stones[i][j].getColor());
-	    			System.out.println("Repaint");
-
+	    			
 	    			drawConverter(i,j);
 	    			g2d.fillOval(drawX - squareSize/4, drawY - squareSize/4, squareSize/2, squareSize/2);
 	    			
@@ -154,9 +167,6 @@ public class Board extends JPanel{
 		this.drawY = drawY;
 	} 
 
-	//public void setBoard(Stone[][] board) {
-	//	this.stones = board;
-	//}
 	public void addStoneToBoard(int x, int y, String color) {
 		
 		if(color.equals("black")) {
@@ -181,7 +191,12 @@ public class Board extends JPanel{
 		
 	}
 	
-	
-
+	public void clearBoard() {
+		for (int i=0;i<boardSize;i++) {
+			for (int j=0;j<boardSize;j++) {
+				stones[i][j] = null;
+			}
+		}
+	}
 	
 }

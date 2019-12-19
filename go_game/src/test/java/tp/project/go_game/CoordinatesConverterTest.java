@@ -15,6 +15,8 @@ public class CoordinatesConverterTest {
 		
 		ClientInterpreter interpreter = new ClientInterpreter(9);
 		
+		interpreter.frame.myAdapter.setYourTurn(true);
+		
 		interpreter.frame.setXclicked(180);
 		interpreter.frame.setYclicked(180);
 		interpreter.frame.setMousePressed(true);

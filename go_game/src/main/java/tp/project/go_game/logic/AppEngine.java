@@ -20,7 +20,7 @@ public class AppEngine implements EngineInterface {
 	private StoneFactory factory;
 	private String changes;
 	private int changesCounter;
-	private int finalScore = 0;
+	private String finalScore = "";
 
 	
 
@@ -99,30 +99,17 @@ public class AppEngine implements EngineInterface {
 		if (turnCounter < 2) {
 			return false;
 		}
-		//System.out.println("Current: " + currentBoard[2][1]);
-		//System.out.println("Previous: " + previousBoard[2][1]);
-		//System.out.println("Ko: " + koBoard[2][1]);
+
 		boolean outcome = false;
-		
-		
+
 		if(currentBoard[X][Y] != null && koBoard[X][Y] != null) {
-			
 			if(currentBoard[X][Y].getColor() == koBoard[X][Y].getColor()) {
 				
 				outcome = true;
 				
 			}
-			
-			
 		}
-		/*for (int i=0;i<boardSize;i++) {
-			for (int j=0;j<boardSize;j++) {
-				if (currentBoard[i][j] == null) {
-					if(koBoard[i][j] != null) outcome = false;
-				} else {
-					if(koBoard[i][j] == null || koBoard[i][j].getColor()!=currentBoard[i][j].getColor()) outcome = false; 				}
-			}
-		}*/
+		
 		return outcome;
 	}
 
@@ -313,14 +300,44 @@ public class AppEngine implements EngineInterface {
 	public void handleButtons(String button) {
 		if (button.equals("pass")) {
 			passCounter += 1;
+			finalScore += " Przeciwnik spasował \n";
+			
 			if (passCounter == 2) {
-				//finalScore = getScore();
+				setFinalScore();
 			}
 
 		} else if (button.equals("resign")) {
-			finalScore = getScore(Color.black);
+			setFinalScore();
+				
 		}
 	
+	}
+	
+	public void setFinalScore() {
+		
+		int blackPoints = getScore(Color.black);
+		int whitePoints = getScore(Color.white);
+		
+		int delta;
+		
+		if(blackPoints > whitePoints) {
+			
+			delta = blackPoints - whitePoints;
+					finalScore += "black " + delta;
+					System.out.println(finalScore);
+				
+		}
+		
+		else if(blackPoints < whitePoints) {
+			
+			delta = whitePoints - blackPoints;
+			finalScore += "white " + delta;
+			System.out.println(finalScore);
+			
+	}
+		else 
+			finalScore = "remis";
+			
 	}
 	
 	public void switchArrays(Stone[][] array1, Stone[][] array2) {
@@ -412,6 +429,7 @@ public class AppEngine implements EngineInterface {
 		
 	public void resetChanges() {
 		changes = "";
+		finalScore = "";
 	}
 	
 	
@@ -519,7 +537,7 @@ public class AppEngine implements EngineInterface {
 		this.changesCounter = changesCounter;
 	}
 
-	public int getFinalScore() {
+	public String getFinalScore() {
 		return finalScore;
 	}
 

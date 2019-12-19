@@ -1,6 +1,9 @@
 package tp.project.go_game.gui;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -51,8 +54,8 @@ public class FeaturesPanel extends JPanel {
 		
 		this.myAdapter = myAdapter;
 		
-		setSize(200,200);
-		setLayout(new FlowLayout(FlowLayout.CENTER,10,30));
+		setPreferredSize(new Dimension(300,880));
+		setLayout(new BorderLayout());
 		
 		resignButton = new JButton("Zrezygnuj");
 		resignButton.addActionListener(this.myAdapter);
@@ -64,11 +67,18 @@ public class FeaturesPanel extends JPanel {
 		exitButton.addActionListener(this.myAdapter);
 		
 		message = new JLabel();
+		Font font = new Font("Verdana", Font.BOLD, 15);
+		message.setFont(font);
 		
-		add(resignButton);
-		add(passButton);
-		add(exitButton);
-		add(message);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setPreferredSize(new Dimension(300,200));
+		buttonPanel.setLayout(new GridLayout(3,1));
+		buttonPanel.add(resignButton, BorderLayout.NORTH);
+		buttonPanel.add(passButton, BorderLayout.NORTH);
+		buttonPanel.add(exitButton,BorderLayout.SOUTH);
+	
+		add(message, BorderLayout.NORTH);
+		add(buttonPanel, BorderLayout.SOUTH);
 		
 	}
 

@@ -29,13 +29,11 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 			} else {
 				engine.resetChanges();
 				engine.handleButtons(convertedMessage[1]);
-				//nie dzialalo wczesniej, tu musi byc return
 			
 				response =  "5 ";
-				//TODO fix
 				response +=engine.getFinalScore();
 				
-				response +=" 2";
+				response +=" 6";
 			}
 		}
 		else {
@@ -49,10 +47,8 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 				return response += "1 ";
 			} catch (CoordinatesOutOfBoundsException e) {
 				return response += "2 ";
-				//e.printStackTrace();
 			} catch (SuicidalMoveException e) {
 				return response += "3 ";
-				//e.printStackTrace();
 			} catch (IntersectionTakenException e) {
 				return response += "4 ";
 			}
@@ -64,7 +60,7 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 	}
 
 	
-	private String[] interpretMessage(String message){
+	public String[] interpretMessage(String message){
 		String[] convertedMessage = {"","",""};
 		int j = 0;
 		for (int i=0;i<3;i++) {

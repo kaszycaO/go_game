@@ -29,14 +29,12 @@ public class MainFrame extends JFrame {
 	
 	
 	private void initializeWindow() {
-		//setSize(1040, 880);
 		setTitle("Go game");
-		setPreferredSize(new Dimension(1040, 880));
+		setPreferredSize(new Dimension(1140, 880));
 		setLayout(new BorderLayout());
 		myAdapter = new GUIAdapter(this);
 		myBoard = new Board(myAdapter, boardSize);
 		myFeaturesPanel = new FeaturesPanel(myAdapter);
-		//myBoard.addActionListener(myAdapter);
 	
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, myFeaturesPanel, myBoard);
 		splitPane.setEnabled(false);
@@ -96,6 +94,11 @@ public class MainFrame extends JFrame {
 	public void setPanelMessage(String message) {
 		
 		myFeaturesPanel.message.setText(message);
+	}
+	public String getPanelMessage() {
+		
+		return myFeaturesPanel.message.getText();
+		
 	}
 
 	
