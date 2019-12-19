@@ -91,11 +91,11 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 				frame.setPanelMessage(convertedMessage[2] + " " + convertedMessage[3]);
 			else
 			{
+				String score = "Wygral: " + 	convertedMessage[1] + " o: " + convertedMessage[2] + " pkt";
 				frame.setPanelMessage("Wygral: " + 	convertedMessage[1] + " o: " + convertedMessage[2] + " pkt");
-				frame.myAdapter.setYourTurn(false);
-				int n = JOptionPane.showConfirmDialog(null, "Czy chcesz wyjsc?", "Koniec rozgrywki!", JOptionPane.YES_NO_OPTION);
-				if (n == JOptionPane.YES_OPTION)
-					System.exit(1);
+				JOptionPane.showMessageDialog(null, score, "Koniec gry!", JOptionPane.INFORMATION_MESSAGE);
+	
+					
 				
 			}
 			
