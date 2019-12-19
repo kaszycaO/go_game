@@ -1,6 +1,7 @@
 package tp.project.go_game.server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 
 
@@ -18,6 +19,8 @@ public class AppServer {
     public AppServer() {
     	try {
             server = new ServerSocket(4444);
+            InetAddress ip = InetAddress.getByName("localhost");
+            System.out.println(ip);
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

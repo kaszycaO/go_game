@@ -8,15 +8,37 @@ import tp.project.go_game.gui.MainFrame;
 
 public class ClientInterpreter implements ClientInterpreterInterface {
 	
+	/*
+	 * gui klienta
+	 */
 	public MainFrame frame;
+	/*
+	 * x-owa wspolrzedna klikniecia
+	 */
 	private int squareX;
+	/*
+	 * y-owa wspolrzedna klikniecia
+	 */
 	private int squareY;
+	/*
+	 * flaga przechowujaca informacje o turze
+	 */
 	private boolean doMove = true;
+	/*
+	 * counter liczacy wykonane ruchy
+	 */
 	public int counter = 0;
+	
+	/*
+	 * glowny konstruktor
+	 */
 	public ClientInterpreter(int boardSize) {
 		this.frame = new MainFrame(boardSize);
 	}
 	
+	/*
+	 * funkcja generujaca komunikat do serwera w oparciu o klikniecia na planszy
+	 */
 	@Override
 	public String sendMessage() {
 		
@@ -29,57 +51,41 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		else return frame.getButtonClicked();
 	}
 		return "";
-}
+	}
 	
+	/*
+	 * funkcja przetwarzajaca komunikat od serwera
+	 */
 	@Override
-
-	public void handleMessage(String message) {
-	
-
-		String[] convertedMessage;
+	public void handleMessage(String message) {String[] convertedMessage;
 		doMove = true;
-		//TODO przerobic na switch case'a
 		if(message.charAt(0) == '0') {
 			convertedMessage = interpretMessage(message);
 			doMove = false;
 			if(convertedMessage[0].equals("0")) {
-				
 				for(int i = 1; i <= (convertedMessage.length)/3; i++ ) {
-					
-					
 					int X = Integer.parseInt(convertedMessage[3*i - 2]);
 					int Y = Integer.parseInt(convertedMessage[3*i - 1]); 
 					frame.myBoard.addStoneToBoard(X,Y,convertedMessage[3 * i]);
 					frame.setPanelMessage("");
-
-					
 				}
 			}
 		}
 		else if(message.charAt(0) == '1') {
 			
 			frame.setPanelMessage("Naruszona zasada KO");
-
-			
 		}
 		else if(message.charAt(0) == '2') {
 			
 			frame.setPanelMessage("Uzywaj planszy!");
-
-			
 		}
 		else if(message.charAt(0) == '3') {
 			
-			frame.setPanelMessage("Ruch samobojczy!");
-			
-			
+			frame.setPanelMessage("Ruch samobojczy!");	
 		}
 		else if(message.charAt(0) == '4') {
 			
-			frame.setPanelMessage("Pole zajete!");
-		
-			
-		}
+			frame.setPanelMessage("Pole zajete!");}
 		else if(message.charAt(0) == '5') {
 			
 			convertedMessage = interpretMessage(message);
@@ -94,10 +100,7 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 				String score = "Wygral: " + 	convertedMessage[1] + " o: " + convertedMessage[2] + " pkt";
 				frame.setPanelMessage("Wygral: " + 	convertedMessage[1] + " o: " + convertedMessage[2] + " pkt");
 				JOptionPane.showMessageDialog(null, score, "Koniec gry!", JOptionPane.INFORMATION_MESSAGE);
-	
-					
-				
-			}
+				}
 			
 		}
 		else if(message.charAt(0) == '6') {
@@ -105,6 +108,9 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		}
 	}
 	
+	/*
+	 * funcja konwertujaca komunikat z serwera na tablice stringow
+	 */
 	public String[] interpretMessage(String message){
 		
 		int changes = 0;
@@ -113,9 +119,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		char thirdLast = message.charAt(message.length() - 3);
 		char secondLast = message.charAt(message.length() - 2);
 		char firstLast = message.charAt(message.length() - 1);
-		
-		
-		
 		if(thirdLast != ' ' && secondLast != ' ') {
 			sb.append(thirdLast);
 			sb.append(secondLast);
@@ -146,7 +149,6 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 			convertedMessage[i] = "";
 			while(j < message.length() && (message.charAt(j) != ' ')) {
 				convertedMessage[i] += message.charAt(j);
-				
 				j++;
 			}
 			
@@ -157,8 +159,9 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 		return convertedMessage;
 	}
 	
-
-	
+	/*
+	 * funkcja konwertujaca wspolrzedne klikniecia na wspolrzedne planszowe
+	 */
 	private void coordinatesConverter(int X, int Y) {
 
 		int squareSize = 840/(frame.getBoardSize() + 1) ; 
