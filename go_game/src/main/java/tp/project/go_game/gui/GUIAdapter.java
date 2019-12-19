@@ -14,15 +14,25 @@ import tp.projekt.go_game.client.Observer;;
 
 /**
  * 
- * @author Oliwier Kaszyca
+ * @author Oliwier Kaszyca & Dominika Szydlo
  * 
- * Client
+ * Adapter okna i paneli
  */
 public class GUIAdapter extends MouseAdapter implements ActionListener {
 
-
+	/**
+	 * glowne okno
+	 */
 	private MainFrame myFrame;
+	
+	/**
+	 * lista obserwatorow
+	 */
 	private ArrayList<Observer> observers;
+	
+	/**
+	 * czy twoja tura
+	 */
 	private boolean yourTurn = false;
 	
 	
@@ -33,7 +43,6 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	}
 
 	@Override
-
 	public void mousePressed(MouseEvent event) {
 
 		myFrame.setXclicked(event.getX());
@@ -67,11 +76,17 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 		}
 	}
 	
-
-	public void attach(Observer observer){
+	/**
+	 * Dodaj obserwatora do listy
+	 * @param observer
+	 */
+	public void attach(Observer observer) {
       observers.add(observer);		
       }
-
+	 
+	 /**
+	  * Metoda informujaca wszystkich obserwatorow 
+	  */
 	 public void notifyAllObservers(){
 
 	      for (Observer observer : observers) {
@@ -79,6 +94,7 @@ public class GUIAdapter extends MouseAdapter implements ActionListener {
 	      }
 	   }
 
+	 
 	public boolean isYourTurn() {
 		return yourTurn;
 	}

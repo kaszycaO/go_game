@@ -8,17 +8,51 @@ import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
 import tp.project.go_game.server.AppServer;
-
+/**
+ * Glowne okienko
+ * @author Oliwier Kaszyca & Dominika Szydlo
+ *
+ */
 public class MainFrame extends JFrame {
 
-	
+	/**
+	 * Adapter do przyciskow i panelu
+	 */
 	public GUIAdapter myAdapter;
+	
+	/**
+	 * Rozmiar planszy, wybierany pozniej przez gracza
+	 */
 	private int boardSize = -1;
+	
+	/**
+	 * Plansza do gry
+	 */
 	public Board myBoard;
+	
+	/**
+	 * Panel z guzikami
+	 */
 	protected FeaturesPanel myFeaturesPanel;
+	
+	/**
+	 * Wspolrzedne X klikniecia
+	 */
 	private int xclicked;
+	
+	/**
+	 * Wspolrzedne Y klikniecia
+	 */
 	private int yclicked;
+	
+	/**
+	 * Zmienna przechowujaca info o tym czy kliknieto myszka na panel
+	 */
 	private boolean mousePressed = false;
+	
+	/**
+	 * Zmienna przechowujaca info o tym czy kliknieto guzik 
+	 */
 	private String buttonClicked;
 
 	public MainFrame(int boardSize) {
@@ -27,7 +61,9 @@ public class MainFrame extends JFrame {
 		initializeWindow();
 	}
 	
-	
+	/**
+	 * inicjalizacja okna
+	 */
 	private void initializeWindow() {
 		setTitle("Go game");
 		setPreferredSize(new Dimension(1140, 880));
@@ -45,10 +81,9 @@ public class MainFrame extends JFrame {
 		pack();
 	}
 	
+	
 	public int getBoardSize() {
-		
-		return boardSize;
-		
+		return boardSize;	
 	}
 
 

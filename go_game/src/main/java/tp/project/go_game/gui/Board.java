@@ -113,7 +113,6 @@ public class Board extends JPanel{
 	/**
 	 * Metoda odpowiedzialna za rysowanie pionków i planszy
 	 */
-	
 	public void paintComponent(Graphics g) {
 	   
 		g.drawImage(img, 0, 0, null);
@@ -132,7 +131,11 @@ public class Board extends JPanel{
 	    }
 	 }
 	
-	
+	/**
+	 * Konwerter do rysowania
+	 * @param X wspolrzedne X do rysowania
+	 * @param Y wspolrzedne Y do rysowania
+	 */
 	public void drawConverter(int X, int Y) {
 		
 		squareSize = 840/(boardSize + 1); 
@@ -143,30 +146,12 @@ public class Board extends JPanel{
 		
   }
 	
-	
-	public int getBoardSize() {
-		
-		return boardSize;
-		
-	}
-	
-	
-	public int getDrawX() {
-		return drawX;
-	}
-
-	public void setDrawX(int drawX) {
-		this.drawX = drawX;
-	}
-
-	public int getDrawY() {
-		return drawY;
-	}
-
-	public void setDrawY(int drawY) {
-		this.drawY = drawY;
-	} 
-
+	/**
+	 * Dodaj kamienie do planszy
+	 * @param x
+	 * @param y
+	 * @param color
+	 */
 	public void addStoneToBoard(int x, int y, String color) {
 		
 		if(color.equals("black")) {
@@ -191,13 +176,25 @@ public class Board extends JPanel{
 		
 	}
 	
-	public void clearBoard() {
-		for (int i=0;i<boardSize;i++) {
-			for (int j=0;j<boardSize;j++) {
-				stones[i][j] = null;
-				repaint();
-			}
-		}
+	
+	public int getBoardSize() {
+		return boardSize;
 	}
 	
+	public int getDrawX() {
+		return drawX;
+	}
+
+	public void setDrawX(int drawX) {
+		this.drawX = drawX;
+	}
+
+	public int getDrawY() {
+		return drawY;
+	}
+
+	public void setDrawY(int drawY) {
+		this.drawY = drawY;
+	} 
+
 }
