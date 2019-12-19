@@ -8,7 +8,10 @@ import java.net.Socket;
 
 import tp.project.go_game.logic.AppEngine;
 
-public class ClientHandler {
+/*
+ * funkcja obslugujaca klienta
+ */
+public class ClientHandler implements ClientHandlerInterface{
 	
 	/**
      * gniazdko klienta
@@ -22,17 +25,31 @@ public class ClientHandler {
      * dane wysylane do klienta
      */
     private DataOutputStream toClient = null;
-	public ClientHandler opponent;
+    /*
+     * flaga przechowujaca informacje czy klient jest obecny
+     */
 	private boolean plays;
+	/*
+	 * rozmiar planszy
+	 */
 	private int boardSize =-1;
+	/*
+	 * flaga przechowujaca informacje o tym, czy trzeba utworzyc bota
+	 */
 	private int ifBot = -1;
 	
+	/*
+	 * konstruktor klienta, gdy rozmiar planszy nie jest ustalony
+	 */
 	public ClientHandler(Socket socket) {
 		this.socket = socket;
 		this.plays = true;
         initializePlayer();
 	}
 	
+	/*
+	 * konstruktor klienta, gdy rozmiar planszy jest ustalony
+	 */
 	public ClientHandler(Socket socket, int boardSize) {
 		this.socket = socket;
 		this.plays = true;
@@ -40,7 +57,10 @@ public class ClientHandler {
         initializePlayer();
 	}
 	
-	public void initializePlayer() {
+	/*
+	 * funkcja tworzaca strumienie danych od i do klienta
+	 */
+	private void initializePlayer() {
         try {
         	fromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 			toClient = new DataOutputStream(socket.getOutputStream());
@@ -50,6 +70,9 @@ public class ClientHandler {
 		getParams();
 	}
 	
+	/*
+	 * funkcja pobierajaca parametry gry od klienta
+	 */
 	private void getParams() {
 		try {
 			String recievedMessage = fromClient.readUTF();
@@ -82,6 +105,10 @@ public class ClientHandler {
 		}
 	}
 	
+	/*
+	 * funkcja zamykajaca gniazdko klienta i jego strumienie danych
+	 */
+	@Override
 	public void closeConnection() {
 		try {
 			socket.close();
@@ -93,10 +120,18 @@ public class ClientHandler {
 		this.plays = false;
 	}
 	
+	/*
+	 * funkcja sprawdzajaca czy klient jest obecny
+	 */
+	@Override
 	public boolean checkIfPresent() {
 		return this.plays;
 	}
 	
+	/*
+	 * funkcja pobierajaca komunikat od klienta
+	 */
+	@Override
 	public String getMove(){
 		String msg = "";
 		try {
@@ -107,6 +142,10 @@ public class ClientHandler {
 		return msg;
 	}
 	
+	/*
+	 * funkcja wysylajaca komunikat do klienta
+	 */
+	@Override
 	public void sendMessage(String msg) {
 		try {
 			toClient.writeUTF(msg);
@@ -115,10 +154,18 @@ public class ClientHandler {
 		}
 	}
 	
+	/*
+	 * funckja sprawdzajaca czy rozgrywka odbedzie sie z botem
+	 */
+	@Override
 	public int checkIfBot() {
 		return this.ifBot;
 	}
 	
+	/*
+	 * funkcja zwracajaca rozmiar planszy
+	 */
+	@Override
 	public int getBoardSize() {
 		return this.boardSize;
 	}	

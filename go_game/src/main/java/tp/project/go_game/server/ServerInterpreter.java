@@ -6,16 +6,23 @@ import tp.project.go_game.logic.AppEngine;
 
 public class ServerInterpreter implements ServerInterpreterInterface{
 	
+	/*
+	 * silnik gry
+	 */
 	private AppEngine engine;
-	private String messageForServer;
 	
-	
+	/*
+	 * glowny konstruktor
+	 */
 	public ServerInterpreter(AppEngine engine) {
 		
 		this.engine = engine;
 		
 	}
 	
+	/*
+	 * funkcja przetwarzajaca komunikat od klienta, zwracajaca odpoiwedz na niego
+	 */
 	@Override
 	public String handleMessage(String message) {
 		
@@ -59,7 +66,9 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		return response;
 	}
 
-	
+	/*
+	 * funkcja konwertujaca wiadomosc od klienta
+	 */
 	public String[] interpretMessage(String message){
 		String[] convertedMessage = {"","",""};
 		int j = 0;
@@ -72,7 +81,10 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		}
 		return convertedMessage;
 	}
-
+	
+	/*
+	 * funkcja zwracajaca ruch bota
+	 */
 	public String getBotMove() {
 		String move = "coordinates ";
 		Integer[] coords = engine.getBMove();
@@ -80,10 +92,6 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		move += " ";
 		move += Integer.toString(coords[1]);
 		return handleMessage(move);
-	}
-	
-	public String getMessageForServer(String message) {
-		return this.messageForServer;
 	}
 
 }

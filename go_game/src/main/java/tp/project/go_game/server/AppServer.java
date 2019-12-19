@@ -12,10 +12,22 @@ public class AppServer {
      * gniazdko serwera
      */
     public ServerSocket server = null;
+    /*
+     * obiekt obslugujacy klienta 1
+     */
     private ClientHandler client1;
+    /*
+     * obiekt obslugujacy klienta 2
+     */
     private ClientHandler client2;
+    /*
+     * rozmiar planszy
+     */
     private int boardSize;
     
+    /*
+     * konstruktor serwera, tworzy gniazdko serwera
+     */
     public AppServer() {
     	try {
             server = new ServerSocket(4444);
@@ -28,6 +40,9 @@ public class AppServer {
         }
     }
     
+    /*
+     * funkcja nasluchujaca na porcie
+     */
     public void listenSocket() throws Exception {
     	Game game;
         try {
