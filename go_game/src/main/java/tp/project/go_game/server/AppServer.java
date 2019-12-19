@@ -26,16 +26,16 @@ public class AppServer {
     }
     
     public void listenSocket() throws Exception {
-    	
+    	Game game;
         try {
 			client1 = new ClientHandler(server.accept());
 			this.boardSize = client1.getBoardSize();
 			if (client1.checkIfBot() == 1) {
-				//TODO tu robi sie bot
-			} else if (client1.checkIfBot() == 0) {
+				game = new Game(client1.getBoardSize(), client1);
+			} else {
 				client2 = new ClientHandler(server.accept(), boardSize);
+				game = new Game(client1.getBoardSize(), client1, client2);
 			}
-			Game game = new Game(client1.getBoardSize(), client1, client2);
 			 while (game.isOn()) {
 		        }
 		} catch (IOException e) {

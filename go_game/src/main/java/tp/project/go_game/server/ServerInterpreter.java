@@ -77,7 +77,14 @@ public class ServerInterpreter implements ServerInterpreterInterface{
 		return convertedMessage;
 	}
 
-	
+	public String getBotMove() {
+		String move = "coordinates ";
+		Integer[] coords = engine.getBMove();
+		move += Integer.toString(coords[0]);
+		move += " ";
+		move += Integer.toString(coords[1]);
+		return handleMessage(move);
+	}
 	
 	public String getMessageForServer(String message) {
 		return this.messageForServer;

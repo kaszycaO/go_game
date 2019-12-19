@@ -22,6 +22,15 @@ public class Game {
 		runGame();
 	}
 	
+	public Game(int boardSize, ClientHandler client1) {
+		this.client1 = client1;
+		this.oldTurnCounter = 0;
+		engine = new AppEngine(boardSize);
+		interpreter = new ServerInterpreter(engine);
+		isOn = true;
+		runWithBot();
+	}
+	
 	private void runGame() {
 		
 		while (isOn) {
@@ -35,7 +44,6 @@ public class Game {
         		isOn = false;
         		break;
         	}
-        	
         }
 		isOn = false;
 	}
@@ -43,16 +51,19 @@ public class Game {
 	private void runWithBot() {
 		String move;
 		String response;
-		do {
-    		move = client1.getMove();
-    		response = interpreter.handleMessage(move);
-    		client1.sendMessage(response);
-    	} while (oldTurnCounter == engine.getTurnCounter());
-    	oldTurnCounter = engine.getTurnCounter();
-    	/*
-    	 * interpreter.engine.etBotMove()
-    	 * oldTurnCounter = engine.getTurnCounter();
-    	 */
+		while (isOn) {
+			do {
+	    		move = client1.getMove();
+	    		response = interpreter.handleMessage(move);
+	    		client1.sendMessage(response);
+	    	} while (oldTurnCounter == engine.getTurnCounter());
+	    	 oldTurnCounter = engine.getTurnCounter();
+	    	 if (response.equals("6")) break;
+	    	 response = interpreter.getBotMove();
+	    	 oldTurnCounter = engine.getTurnCounter();
+	    	 client1.sendMessage(response);
+		}
+		isOn = false;
 	}
 	
 	private int turn(ClientHandler client1, ClientHandler client2) {
