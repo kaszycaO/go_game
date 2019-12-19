@@ -3,15 +3,34 @@ package tp.project.go_game.server;
 import tp.project.go_game.logic.AppEngine;
 
 public class Game {
-	
+	/*
+	 * silnik gry
+	 */
 	private AppEngine engine;
+	/*
+	 * obiekt obslugujacy klienta 1
+	 */
 	private ClientHandler client1;
+	/*
+	 * obiekt obslugujacy klienta 2
+	 */
 	private ClientHandler client2;
+	/*
+	 * interpreter serwera
+	 */
 	private ServerInterpreter interpreter;
+	/*
+	 * zmienna przechowujaca poprzedni¹ ilosc wykonanych ruchow
+	 */
 	private int oldTurnCounter;
+	/*
+	 * flaga mowiaca o tym czy gra trwa
+	 */
 	private boolean isOn;
 	
-	
+	/*
+	 * konstruktor gry z dwoma uzytkownikami
+	 */
 	public Game(int boardSize, ClientHandler client1, ClientHandler client2) {
 		this.client1 = client1;
 		this.client2 = client2;
@@ -22,6 +41,9 @@ public class Game {
 		runGame();
 	}
 	
+	/*
+	 * konstruktor gry z botem
+	 */
 	public Game(int boardSize, ClientHandler client1) {
 		this.client1 = client1;
 		this.oldTurnCounter = 0;
@@ -31,6 +53,9 @@ public class Game {
 		runWithBot();
 	}
 	
+	/*
+	 * rozgrywka dwoch uzytkownikow
+	 */
 	private void runGame() {
 		
 		while (isOn) {
@@ -48,6 +73,9 @@ public class Game {
 		isOn = false;
 	}
 	
+	/*
+	 * rozgrywka z botem
+	 */
 	private void runWithBot() {
 		String move;
 		String response;
@@ -66,6 +94,9 @@ public class Game {
 		isOn = false;
 	}
 	
+	/*
+	 * pojedyncza tura dwoch uzytkownikow
+	 */
 	private int turn(ClientHandler client1, ClientHandler client2) {
 		String move;
 		String response;
@@ -84,6 +115,9 @@ public class Game {
     	return out;
 	}
 	
+	/*
+	 * funkcja mowiaca o tym czy gra trwa
+	 */
 	public boolean isOn() {
 		return isOn;
 	}

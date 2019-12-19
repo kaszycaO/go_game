@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class Client extends Observer {
-	
+	/*
+	 * interpreter klienta
+	 */
 	private ClientInterpreter interpreter;
 	/**
      * gniazdko klienta
@@ -23,18 +25,35 @@ public class Client extends Observer {
      * komunikaty od serwera
      */
     private DataInputStream fromServer = null;
+    /*
+     * rozmiar planszy
+     */
     private int boardSize;
+    /*
+     * czy gra bedzie z botem
+     */
     private boolean ifBot;
+    /*
+     * tablica opcji rozmiaru planszy
+     */
     private String[] sizes = {"9x9","13x13","19x19"};
+    /*
+     * flaga przetrzymujaca informacje o turze
+     */
     private boolean yourTurn = true;
 
-	
+	/*
+	 * glowny konstruktor
+	 */
 	public Client() {
 		this.boardSize = -1;
 		initializeClient();
 		getGameParameters();
 	}
 	
+	/*
+	 * funkcja inicjujaca gniazdko klienta i strumienie danych
+	 */
 	private void initializeClient() {
 		try {
 			socket = new Socket("localhost", 4444);
@@ -46,6 +65,9 @@ public class Client extends Observer {
 		}
 	}
 
+	/*
+	 * funkcja pobierajaca parametry gry od klienta lub wysylajaca mu je, gdy sa juz ustalone
+	 */
 	private void getGameParameters() {
 		try {
 			toServer.writeUTF("params");
@@ -76,6 +98,9 @@ public class Client extends Observer {
 		
 	}
 	
+	/*
+	 * funkcja pyta uzytkownika o parametry gry
+	 */
 	private void getParsFromClient() {
     	int n = JOptionPane.showConfirmDialog(null, "Czy chcesz grac przeciwko innemu uzytkownikowi?", "Wybierz tryb rozgrywki", JOptionPane.YES_NO_OPTION);
 		String size = (String)JOptionPane.showInputDialog(null, "Wybierz rozmiar planszy", "Nowa gra", JOptionPane.QUESTION_MESSAGE,null, sizes,sizes[0]);
@@ -95,6 +120,9 @@ public class Client extends Observer {
 		}
 	}
 	
+	/*
+	 * funckja zamykajaca gniazdko klienta i strumienie danych
+	 */
 	private void closeConnection() {
 		interpreter.frame.dispose();
 		try {
@@ -108,20 +136,19 @@ public class Client extends Observer {
 		}
 	}
 	
+	/*
+	 * funkcja wysylajaca komunikaty na serwer
+	 */
 	private void exchangeWithServer() {
 		
 		String msg = interpreter.sendMessage();
 		System.out.println(msg);
 		if(msg != "") {
 		try {
-			
 				toServer.writeUTF(msg);
 				if (msg.equals("button exit")) {
-					closeConnection();
-					
+					closeConnection();	
 				}
-				
-			
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
 			}
@@ -144,6 +171,9 @@ public class Client extends Observer {
 		else return;
 	}
 	
+	/**
+	 * funkcja czekajaca na ruch przeciwnika i przetwarzajaca go
+	 */
 	private void handleOpponentsMove() {
 		
 		try {
@@ -157,7 +187,11 @@ public class Client extends Observer {
 			e.printStackTrace();
 		}
 	}
-		
+	
+	
+	/*
+	 * funkcja manipulucjaca flaga z tura
+	 */
 	public void setTurn(final boolean statement) {
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -169,7 +203,9 @@ public class Client extends Observer {
 		
 	}
 	
-	
+	/*
+	 * funcja wywolywana po wcisnieciu czegokolwiek na planszy
+	 */
 	@Override
 	public void update() {
 		if (yourTurn) {
