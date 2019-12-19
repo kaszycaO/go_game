@@ -117,10 +117,11 @@ public class Client extends Observer {
 			
 				toServer.writeUTF(msg);
 				if (msg.equals("button exit")) {
-					System.out.println("siup");
 					closeConnection();
 					
 				}
+				
+			
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
 			}

@@ -1,6 +1,9 @@
 package tp.projekt.go_game.client;
 
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import tp.project.go_game.gui.MainFrame;
 
 public class ClientInterpreter implements ClientInterpreterInterface {
@@ -87,9 +90,14 @@ public class ClientInterpreter implements ClientInterpreterInterface {
 			else if(convertedMessage[2].equals("Przeciwnik"))
 				frame.setPanelMessage(convertedMessage[2] + " " + convertedMessage[3]);
 			else
+			{
 				frame.setPanelMessage("Wygral: " + 	convertedMessage[1] + " o: " + convertedMessage[2] + " pkt");
-			
-		
+				frame.myAdapter.setYourTurn(false);
+				int n = JOptionPane.showConfirmDialog(null, "Czy chcesz wyjsc?", "Koniec rozgrywki!", JOptionPane.YES_NO_OPTION);
+				if (n == JOptionPane.YES_OPTION)
+					System.exit(1);
+				
+			}
 			
 		}
 		else if(message.charAt(0) == '6') {

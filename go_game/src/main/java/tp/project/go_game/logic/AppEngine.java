@@ -301,6 +301,7 @@ public class AppEngine implements EngineInterface {
 		if (button.equals("pass")) {
 			passCounter += 1;
 			finalScore += " Przeciwnik spasował \n";
+			changeTurn();
 			
 			if (passCounter == 2) {
 				setFinalScore();
@@ -324,7 +325,6 @@ public class AppEngine implements EngineInterface {
 			
 			delta = blackPoints - whitePoints;
 					finalScore += "black " + delta;
-					System.out.println(finalScore);
 				
 		}
 		
@@ -332,7 +332,6 @@ public class AppEngine implements EngineInterface {
 			
 			delta = whitePoints - blackPoints;
 			finalScore += "white " + delta;
-			System.out.println(finalScore);
 			
 	}
 		else 
@@ -363,7 +362,6 @@ public class AppEngine implements EngineInterface {
 	}
 
 
-	//TODO ogarnac bledy + sposob przesylania info o kolorze
 	private int getScore(Color color) {
 		
 		int score = 0;
@@ -397,18 +395,14 @@ public class AppEngine implements EngineInterface {
 					
 						
 					}
-					
 					if(isEye)
 						score+=1;
 					
 				}
-				
-				
+						
 			}
 			
 		}
-	
-		
 	
 		return score;
 		

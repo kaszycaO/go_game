@@ -195,6 +195,7 @@ public class Board extends JPanel{
 		for (int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
 				stones[i][j] = null;
+				repaint();
 			}
 		}
 	}
