@@ -22,7 +22,7 @@ public class Game {
 		runGame();
 	}
 	
-	public void runGame() {
+	private void runGame() {
 		
 		while (isOn) {
         	int out = turn(client1, client2);
@@ -40,7 +40,22 @@ public class Game {
 		isOn = false;
 	}
 	
-	public int turn (ClientHandler client1, ClientHandler client2) {
+	private void runWithBot() {
+		String move;
+		String response;
+		do {
+    		move = client1.getMove();
+    		response = interpreter.handleMessage(move);
+    		client1.sendMessage(response);
+    	} while (oldTurnCounter == engine.getTurnCounter());
+    	oldTurnCounter = engine.getTurnCounter();
+    	/*
+    	 * interpreter.engine.etBotMove()
+    	 * oldTurnCounter = engine.getTurnCounter();
+    	 */
+	}
+	
+	private int turn(ClientHandler client1, ClientHandler client2) {
 		String move;
 		String response;
 		int out = 0;
