@@ -21,6 +21,7 @@ public class AppEngine implements EngineInterface {
 	private String changes;
 	private int changesCounter;
 	private int finalScore = 0;
+
 	
 
 	public AppEngine(int boardSize) {
@@ -98,9 +99,9 @@ public class AppEngine implements EngineInterface {
 		if (turnCounter < 2) {
 			return false;
 		}
-		System.out.println("Current: " + currentBoard[2][1]);
-		System.out.println("Previous: " + previousBoard[2][1]);
-		System.out.println("Ko: " + koBoard[2][1]);
+		//System.out.println("Current: " + currentBoard[2][1]);
+		//System.out.println("Previous: " + previousBoard[2][1]);
+		//System.out.println("Ko: " + koBoard[2][1]);
 		boolean outcome = false;
 		
 		
@@ -265,7 +266,6 @@ public class AppEngine implements EngineInterface {
 	}
 
 	public void removeStone(int X, int Y) {
-
 		
 		currentBoard[X][Y] = null;
 
@@ -314,11 +314,11 @@ public class AppEngine implements EngineInterface {
 		if (button.equals("pass")) {
 			passCounter += 1;
 			if (passCounter == 2) {
-				finalScore = getScore();
+				//finalScore = getScore();
 			}
 
 		} else if (button.equals("resign")) {
-			finalScore = getScore();
+			finalScore = getScore(Color.black);
 		}
 	
 	}
@@ -347,27 +347,42 @@ public class AppEngine implements EngineInterface {
 
 
 	//TODO ogarnac bledy + sposob przesylania info o kolorze
-	private int getScore() {
+	private int getScore(Color color) {
 		
-		int whiteScore = 0;
-		int blackScore = 0;
+		int score = 0;
+		boolean isEye = true; 
+		ArrayList<Integer> coords = new ArrayList<Integer>();
+		
 		
 		for(int i = 0; i<boardSize; i++) {
 			for(int j = 0; j<boardSize; j++) {
 				
+				coords.clear();
+				
 				if(currentBoard[i][j] != null){
 					
-					if( currentBoard[i][j].getColor() == Color.white) {
+					if(currentBoard[i][j].getColor() == color) {
 						
-						whiteScore+=1;
-					}
-					else if( currentBoard[i][j].getColor() == Color.black) {
+						score+=1;
+					}	
+				}
+				else
+				{
+					coords = getCoordsToCheck(i,j);
+					 isEye = true;
+					for(int x = 0; x<coords.size()/2; x++) {
 						
-						blackScore+=1;
+						if(currentBoard[coords.get(2*x)][coords.get(2*x+1)] == null ) {
+							isEye = false;
+						}
+						else if (currentBoard[coords.get(2*x)][coords.get(2*x+1)] != null && currentBoard[coords.get(2*x)][coords.get(2*x+1)].getColor() != color)
+							isEye = false;
+					
 						
 					}
 					
-					
+					if(isEye)
+						score+=1;
 					
 				}
 				
@@ -375,14 +390,10 @@ public class AppEngine implements EngineInterface {
 			}
 			
 		}
-		System.out.println("Biale: " + whiteScore);
-		System.out.println("Czarne: " + blackScore);
+	
 		
-		if(blackScore > whiteScore)
-			return blackScore - whiteScore;
-		
-		else
-			return whiteScore - blackScore; 
+	
+		return score;
 		
 	
 	}

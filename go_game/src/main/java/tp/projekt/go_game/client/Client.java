@@ -113,13 +113,15 @@ public class Client extends Observer {
 private void exchangeWithServer() {
 		
 		String msg = interpreter.sendMessage();
+		System.out.println(msg);
 		if(msg != "") {
 		try {
 			
 				toServer.writeUTF(msg);
-				if (msg == "button exit") {
+				if (msg.equals("button exit")) {
+					System.out.println("siup");
 					closeConnection();
-					return;
+					
 				}
 				String line = fromServer.readUTF();
 				interpreter.handleMessage(line);
