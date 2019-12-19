@@ -460,20 +460,54 @@ public class AppEngine implements EngineInterface {
 	}
 
 	public Integer[] getBMove() {
-		Integer[] coords = {0,0};
-		int delta;
-		//TODO licze czy przegrywa czy wygrywa
+		int delta = getScore(Color.white) - getScore(Color.black);
+		Integer[] coords = new Integer[2];
 		
 		for(int i=0;i<boardSize;i++) {
 			for (int j=0;j<boardSize;j++) {
-				if (!(checkIfTaken(i,j) || checkIfSuicidal(i,j))) {
+				
+				if (!checkIfTaken(i,j)) {
+					
 					addStone(i,j);
-					//tu sprawdzanko
+					if(!checkIfSuicidal(i,j) && !checkIfKo(i,j)) {
+							coords[0] = i;
+							coords[1] = j;
+							
+							
+						
+						}
+					
 					removeStone(i,j);
+					break;
+					
+					}
+					
+					System.out.println(i);
+					
+				}
+				
+			}
+		
+		
+		for(int i=0;i<boardSize;i++) {
+			for (int j=0;j<boardSize;j++) {
+				
+				if (!checkIfTaken(i,j)) {
+						addStone(i,j);
+						if(!checkIfSuicidal(i,j) && !checkIfKo(i,j)) {
+							int tmp = getScore(Color.white) - getScore(Color.black);
+							if (tmp > delta) {
+								coords[0] = i;
+								coords[1] = j;
+								delta = tmp;
+							
+							}
+						}
+						
+						removeStone(i,j);
+					}
 				}
 			}
-		}
-		
 		return coords;
 	}
 	
