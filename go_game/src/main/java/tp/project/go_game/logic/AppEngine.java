@@ -459,6 +459,24 @@ public class AppEngine implements EngineInterface {
 		return this.changes;
 	}
 
+	public Integer[] getBMove() {
+		Integer[] coords = {0,0};
+		int delta;
+		//TODO licze czy przegrywa czy wygrywa
+		
+		for(int i=0;i<boardSize;i++) {
+			for (int j=0;j<boardSize;j++) {
+				if (!(checkIfTaken(i,j) || checkIfSuicidal(i,j))) {
+					addStone(i,j);
+					//tu sprawdzanko
+					removeStone(i,j);
+				}
+			}
+		}
+		
+		return coords;
+	}
+	
 	public int getChangesCounter() {
 		return changesCounter;
 	}
@@ -475,6 +493,5 @@ public class AppEngine implements EngineInterface {
 
 		return this.turnCounter;
 	}
-
 	
 }
