@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
+  router="FAN">  
+  <class id="1" language="java" name="tp.project.go_game.ClientInterpreterTest" project="go_game" 
+    file="/go_game/src/test/java/tp/project/go_game/ClientInterpreterTest.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="142" width="184" x="2761" y="2008"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="tp.project.go_game.BoardTests" project="go_game" 
+    file="/go_game/src/test/java/tp/project/go_game/BoardTests.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="106" width="165" x="2871" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="tp.project.go_game.ServerInterpreterTests" project="go_game" 
+    file="/go_game/src/test/java/tp/project/go_game/ServerInterpreterTests.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="160" width="189" x="2165" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="tp.project.go_game.AppEngineTests" project="go_game" 
+    file="/go_game/src/test/java/tp/project/go_game/AppEngineTests.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="502" width="357" x="1744" y="291"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="tp.project.go_game.StoneFactoryTest" project="go_game" 
+    file="/go_game/src/test/java/tp/project/go_game/StoneFactoryTest.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="106" width="188" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="tp.project.go_game.CoordinatesConverterTest" project="go_game" 
+    file="/go_game/src/test/java/tp/project/go_game/CoordinatesConverterTest.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="106" width="215" x="1442" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="tp.project.go_game.exceptions.SuicidalMoveException" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/exceptions/SuicidalMoveException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="124" width="226" x="839" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="tp.project.go_game.exceptions.CoordinatesOutOfBoundsException" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/exceptions/CoordinatesOutOfBoundsException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="124" width="297" x="1105" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="tp.project.go_game.exceptions.KoRuleViolatedException" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/exceptions/KoRuleViolatedException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="124" width="239" x="560" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="tp.project.go_game.exceptions.IntersectionTakenException" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/exceptions/IntersectionTakenException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="124" width="251" x="269" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="tp.project.go_game.gui.MainFrame" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/gui/MainFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="394" width="210" x="3096" y="291"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="tp.project.go_game.gui.FeaturesPanel" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/gui/FeaturesPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="160" width="185" x="2890" y="833"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="tp.project.go_game.gui.Board" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/gui/Board.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="358" width="232" x="2618" y="833"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="tp.project.go_game.gui.GUIAdapter" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/gui/GUIAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="214" width="223" x="2954" y="1609"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="tp.project.go_game.logic.BlackStone" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/BlackStone.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="145" x="1714" y="1863"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="tp.project.go_game.logic.ConcreteStoneFactory" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/ConcreteStoneFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="106" width="184" x="2394" y="833"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="tp.project.go_game.logic.Stone" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/Stone.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="196" width="174" x="1806" y="1609"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="tp.project.go_game.logic.WhiteStone" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/WhiteStone.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="145" x="1899" y="1863"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="tp.project.go_game.logic.AppEngine" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/AppEngine.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="736" width="295" x="1806" y="833"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="20" language="java" name="tp.project.go_game.logic.EngineInterface" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/EngineInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="124" width="177" x="1589" y="1609"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="21" language="java" name="tp.project.go_game.logic.StoneFactory" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/logic/StoneFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="88" width="158" x="2394" y="1609"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="tp.project.go_game.mainpackage.HostMain" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/mainpackage/HostMain.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="106" width="194" x="1697" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="tp.project.go_game.mainpackage.ClientMain" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/mainpackage/ClientMain.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="106" width="194" x="1931" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="tp.project.go_game.server.ClientHandler" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/server/ClientHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="358" width="189" x="2531" y="291"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="tp.project.go_game.server.Game" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/server/Game.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="214" width="244" x="2394" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="tp.project.go_game.server.AppServer" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/server/AppServer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="142" width="153" x="2678" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="tp.project.go_game.server.ServerInterpreter" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/server/ServerInterpreter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="178" width="232" x="2141" y="291"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="28" language="java" name="tp.project.go_game.server.ServerInterpreterInterface" project="go_game" 
+    file="/go_game/src/main/java/tp/project/go_game/server/ServerInterpreterInterface.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="106" width="213" x="2141" y="833"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="29" language="java" name="tp.projekt.go_game.client.Client" project="go_game" 
+    file="/go_game/src/main/java/tp/projekt/go_game/client/Client.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="358" width="192" x="2985" y="2008"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="tp.projekt.go_game.client.Observer" project="go_game" 
+    file="/go_game/src/main/java/tp/projekt/go_game/client/Observer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="105" width="148" x="2954" y="1863"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="tp.projekt.go_game.client.ClientInterpreter" project="go_game" 
+    file="/go_game/src/main/java/tp/projekt/go_game/client/ClientInterpreter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="250" width="214" x="3035" y="2406"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="32" language="java" name="tp.projekt.go_game.client.ClientInterpreterInterface" project="go_game" 
+    file="/go_game/src/main/java/tp/projekt/go_game/client/ClientInterpreterInterface.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="106" width="206" x="3035" y="2696"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <association id="33">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="34" name="engine"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="37">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="38" name="previousBoard"/>      
+      <multiplicity id="39" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="41" name="koBoard"/>      
+      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="44" name="myAdapter"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="47" name="factory"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <bendpoint x="3105" y="833"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="50" name="myAdapter"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="53" name="subject"/>      
+      <multiplicity id="54" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="56" name="observers"/>      
+      <multiplicity id="57" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="59" name="factory"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="62" name="myFeaturesPanel"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="65" name="engine"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="68" name="client1"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="71" name="client1"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="73">    
+    <bendpoint x="2403" y="291"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="74" name="engine"/>      
+      <multiplicity id="75" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="76">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <association id="77">    
+    <bendpoint x="3126" y="833"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="78" name="myFrame"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="81" name="opponent"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="84" name="frame"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="87" name="interpreter"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="90">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="91" name="client2"/>      
+      <multiplicity id="92" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="94" name="interpreter"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="96">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="32"/>  
+  </realization>  
+  <association id="97">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="98" name="client2"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="100">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="28"/>  
+  </realization>  
+  <generalization id="101">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="102">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="103" name="currentBoard"/>      
+      <multiplicity id="104" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="105">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="106" name="interpreter"/>      
+      <multiplicity id="107" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="108">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="109" name="interpreter"/>      
+      <multiplicity id="110" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="111">    
+    <bendpoint x="2760" y="291"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="112" name="board"/>      
+      <multiplicity id="113" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="114">    
+    <bendpoint x="3207" y="2008"/>    
+    <bendpoint x="3207" y="1863"/>    
+    <bendpoint x="3207" y="1609"/>    
+    <bendpoint x="3207" y="833"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="115" name="frame"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="117">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="118" name="myAdapter"/>      
+      <multiplicity id="119" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="120">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="121" name="engineN"/>      
+      <multiplicity id="122" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="123">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="124" name="engineT"/>      
+      <multiplicity id="125" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="126">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="127" name="stones"/>      
+      <multiplicity id="128" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="129">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="130" name="myBoard"/>      
+      <multiplicity id="131" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="132">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
